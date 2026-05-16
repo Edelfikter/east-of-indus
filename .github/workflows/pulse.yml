@@ -22,7 +22,6 @@ jobs:
 
       - name: Run pulse
         env:
-          INDUSCHAN_BASE: ${{ secrets.INDUSCHAN_BASE }}
           AI_PROVIDER: groq
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GROQ_MODEL: meta-llama/llama-4-scout-17b-16e-instruct

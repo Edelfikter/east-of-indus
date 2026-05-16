@@ -25,8 +25,6 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Scrape Induschan
-        env:
-          INDUSCHAN_BASE: ${{ secrets.INDUSCHAN_BASE }}
         run: python scrape.py
 
       - name: Compose issue
