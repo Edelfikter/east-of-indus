@@ -187,7 +187,22 @@ def main() -> int:
 
         # Within the recency window, rank by reply count descending (most-discussed today)
         ranked = sorted(pool, key=reply_count, reverse=True)[:TOP_N]
-        print(f"Top {len(ranked)} threads picked.")
+
+        # Always include !eastofindus marker threads from the full catalog, even if they
+        # didn't make the top N by reply count (guest submissions are usually brand new).
+        marker_threads = [
+            t for t in catalog
+            if (t.get("subject") or "").lower().lstrip().startswith("!eastofindus")
+        ]
+        existing_ids = {t.get("postId") or t.get("no") for t in ranked}
+        added = 0
+        for mt in marker_threads:
+            mt_id = mt.get("postId") or mt.get("no")
+            if mt_id not in existing_ids:
+                ranked.append(mt)
+                existing_ids.add(mt_id)
+                added += 1
+        print(f"Top {len(ranked)} threads picked (+{added} guest-submission marker thread{'s' if added != 1 else ''}).")
 
         threads_out = []
         for i, op in enumerate(ranked, 1):
