@@ -10,6 +10,7 @@ Multi-pass design:
 Usage: python compose.py
 Env: AI_PROVIDER=groq|anthropic|openai, corresponding API key.
 """
+import hashlib
 import json
 import os
 import random
@@ -434,12 +435,106 @@ def compose_quote(candidates: list[dict]) -> dict | None:
 MARKER_RE = re.compile(r"^\s*!\s*eastofindus\s*[:\-]?\s*(.*)$", re.IGNORECASE)
 MIN_LETTER_WORDS = 50
 MAX_LETTERS_PER_ISSUE = 3
+AUTHOR_RATE_LIMIT_DAYS = 7
+
+CONSECUTIVE_CHAR_RE = re.compile(r"(.)\1{10,}", re.UNICODE)  # 11+ of same char in a row
+LONG_WORD_RE = re.compile(r"\S{45,}")  # any token over 45 chars
 
 
-def collect_guest_letters(raw_threads: list, published_post_nos: set) -> list[dict]:
-    """Find OPs whose subject starts with `!eastofindus`. Return up to 3, oldest first,
-    that haven't been published before, meet the 50-word minimum, contain no URLs,
-    and aren't authored by a known bot."""
+def body_hash(body: str) -> str:
+    """Stable 16-char hash of the body for cross-thread duplicate detection."""
+    normalized = re.sub(r"\s+", " ", body).strip().lower()
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
+
+
+def passes_cheap_heuristics(body: str) -> tuple[bool, str]:
+    """Returns (ok, reason). Catches low-effort trolling that survives word count."""
+    letters = [c for c in body if c.isalpha()]
+    if letters:
+        upper_ratio = sum(1 for c in letters if c.isupper()) / len(letters)
+        if upper_ratio > 0.6:
+            return False, "all-caps shouting"
+    # Word repetition: same word >5x in a row
+    words = body.lower().split()
+    if words:
+        consec = 1
+        for i in range(1, len(words)):
+            if words[i] == words[i - 1]:
+                consec += 1
+                if consec > 5:
+                    return False, "word repetition"
+            else:
+                consec = 1
+    # Same character repeated 11+ in a row (aaaaaaaaaaaa)
+    if CONSECUTIVE_CHAR_RE.search(body):
+        return False, "character spam"
+    # Any single token >45 chars (concatenated slur or url-without-protocol)
+    if LONG_WORD_RE.search(body):
+        return False, "abnormal token"
+    return True, ""
+
+
+QUALITY_GATE_SYSTEM = """You are screening guest submissions to East of Indus for spam / low-effort trolling.
+
+Each candidate is supposed to be a piece of writing the author wanted published in a small newspaper.
+
+REJECT (ok: false) if the submission is one of:
+- lorem ipsum, gibberish, or random keyboard mash
+- pure repetition (same word, phrase, or idea over and over)
+- shouting with no content
+- advertising, sales pitch, or shilling
+- a single sentence padded out with filler
+- copy-paste of obviously well-known text (song lyrics, famous book passages, anthems)
+
+ACCEPT (ok: true) if the submission is coherent prose making at least one real point. The paper is uncensored, so accept profane, crude, controversial, racist, or obscene content as long as it is REAL WRITING and not spam.
+
+Return ONE JSON object only:
+{"verdicts": [{"i": 0, "ok": true}, {"i": 1, "ok": false}, ...]}
+"""
+
+
+def quality_gate(letters: list[dict]) -> list[dict]:
+    """Final AI screen for letters that passed heuristics. Drops spam/troll."""
+    if not letters:
+        return []
+    payload = [{"i": i, "body": l["body"]} for i, l in enumerate(letters)]
+    user = "Submissions to screen:\n" + json.dumps(payload, ensure_ascii=False, indent=2)
+    try:
+        raw_resp = call_ai(QUALITY_GATE_SYSTEM, user, max_tokens=400)
+        obj = extract_json(raw_resp)
+    except Exception as e:
+        print(f"  [letters quality gate] FAILED ({e}); passing all candidates")
+        return letters
+    verdicts = {}
+    for v in (obj.get("verdicts") or []):
+        if isinstance(v, dict) and isinstance(v.get("i"), int):
+            verdicts[v["i"]] = bool(v.get("ok"))
+    accepted = []
+    for i, l in enumerate(letters):
+        ok = verdicts.get(i, True)  # default-accept if AI missed an index
+        if ok:
+            accepted.append(l)
+        else:
+            print(f"    AI rejected guest No. {l.get('post_no')}: spam/troll")
+    return accepted
+
+
+def collect_guest_letters(raw_threads: list, published: dict) -> list[dict]:
+    """Find OPs whose subject starts with `!eastofindus`. Returns up to 3 letters,
+    oldest first, after passing 4 defense layers:
+      1. Hard filters (word count, URLs, bots, post-no dedup)
+      2. Body-hash dedup (same text different post)
+      3. Per-handle rate limit (named authors only)
+      4. Cheap heuristics (caps, repetition, character spam)
+      5. AI quality gate (final spam/troll screen)
+    """
+    from scrape import parse_iso as _parse_iso
+
+    post_nos = published["post_nos"]
+    body_hashes = published["body_hashes"]
+    authors = published["authors"]
+    now = datetime.now(timezone.utc)
+
     candidates = []
     for t in raw_threads:
         op = t.get("op") or {}
@@ -447,15 +542,22 @@ def collect_guest_letters(raw_threads: list, published_post_nos: set) -> list[di
         m = MARKER_RE.match(subject)
         if not m:
             continue
-        # Title is whatever follows the marker
         title = m.group(1).strip()
         body = (op.get("body") or "").strip()
-        # Strip >>NNN reply references (rare in OPs but possible)
         body_clean = REPLY_REF_RE.sub("", body).strip()
-        # Word count gate
+        post_no = op.get("no")
+
+        # Layer 1: hard filters
         if len(body_clean.split()) < MIN_LETTER_WORDS:
             continue
-        # Title fallback: if marker had no title after it, take first ~8 words of body
+        if URL_RE.search(body_clean):
+            continue
+        if is_bot_author(op.get("name")):
+            continue
+        if post_no in post_nos:
+            continue
+
+        # Title fallback
         if not title:
             words = body_clean.split()
             title = " ".join(words[:8])
@@ -463,59 +565,78 @@ def collect_guest_letters(raw_threads: list, published_post_nos: set) -> list[di
                 title = title[:60].rstrip() + "..."
             if not title:
                 continue
-        # No URLs
-        if URL_RE.search(body_clean):
-            continue
-        # No bots
-        raw_name = op.get("name")
-        if is_bot_author(raw_name):
-            continue
-        # Already published
-        post_no = op.get("no")
-        if post_no in published_post_nos:
+
+        # Layer 2: body hash dedup (same text reposted)
+        bhash = body_hash(body_clean)
+        if bhash in body_hashes:
+            print(f"    skip No. {post_no}: body already printed")
             continue
 
+        # Layer 4: cheap heuristics (caps, repetition, etc.)
+        ok, reason = passes_cheap_heuristics(body_clean)
+        if not ok:
+            print(f"    skip No. {post_no}: {reason}")
+            continue
+
+        # Layer 3: per-handle rate limit for named authors
+        raw_name = op.get("name")
         name = raw_name if raw_name and raw_name.strip().lower() not in DEFAULT_NAMES else "Anon"
+        if name != "Anon":
+            last = authors.get(name)
+            if last:
+                last_dt = _parse_iso(last)
+                if last_dt:
+                    days_ago = (now - last_dt).days
+                    if days_ago < AUTHOR_RATE_LIMIT_DAYS:
+                        print(f"    skip No. {post_no}: '{name}' rate-limited ({days_ago}d ago)")
+                        continue
+
         candidates.append({
             "title": title,
             "body": body_clean,
+            "body_hash": bhash,
             "name": name,
             "post_no": post_no,
             "thread_id": t.get("id"),
             "created": op.get("created"),
         })
 
-    # Oldest first (FIFO submission queue)
-    def created_key(c):
-        ts = parse_iso(c.get("created")) if "parse_iso" in globals() else None
-        return ts or datetime.max.replace(tzinfo=timezone.utc)
-
-    # parse_iso lives in scrape.py — import lazily
-    from scrape import parse_iso as _parse_iso
-
+    # FIFO: oldest first
     def _key(c):
         ts = _parse_iso(c.get("created"))
         return ts or datetime.max.replace(tzinfo=timezone.utc)
 
     candidates.sort(key=_key)
-    return candidates[:MAX_LETTERS_PER_ISSUE]
+    candidates = candidates[:MAX_LETTERS_PER_ISSUE]
+
+    # Layer 5: AI quality gate (only call if we have something)
+    if candidates:
+        candidates = quality_gate(candidates)
+
+    return candidates
 
 
-def fetch_published_guests() -> set:
-    """Pull the set of already-published guest post numbers from Supabase."""
+def fetch_published_guests() -> dict:
+    """Returns dict with sets of published post_nos, body hashes, and a {name → last
+    published timestamp} map for rate limiting."""
+    default = {"post_nos": set(), "body_hashes": set(), "authors": {}}
     base = (os.getenv("SUPABASE_URL") or "").rstrip("/")
     bucket = os.getenv("EOI_BUCKET") or "eoi"
     if not base:
-        return set()
+        return default
     import httpx
     try:
         r = httpx.get(f"{base}/storage/v1/object/public/{bucket}/guests_published.json", timeout=15)
         if r.status_code == 200:
             data = r.json() or {}
-            return set(data.get("published_post_nos") or [])
+            return {
+                "post_nos": set(data.get("published_post_nos") or []),
+                "body_hashes": set(data.get("published_body_hashes") or []),
+                "authors": data.get("named_authors") or {},
+            }
     except Exception:
         pass
-    return set()
+    return default
 
 
 def split_long_paragraphs(body: str) -> str:

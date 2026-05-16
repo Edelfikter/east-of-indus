@@ -96,29 +96,44 @@ def issue_period(composed_at: str | None) -> str:
 
 
 def update_published_guests(client: httpx.Client, issue_obj: dict) -> None:
-    """Append the post_nos of guest letters in this issue to guests_published.json
-    so they don't get reprinted in future issues."""
+    """Append this issue's guest letters to guests_published.json.
+    Tracks post_nos (cross-issue dedup), body hashes (cross-thread dedup), and
+    {name: last-published-iso} per named author (rate limiting)."""
     letters = issue_obj.get("guest_letters") or []
     if not letters:
         return
     url = f"{SUPABASE_URL}/storage/v1/object/public/{BUCKET}/guests_published.json"
-    existing = []
+    existing = {"published_post_nos": [], "published_body_hashes": [], "named_authors": {}}
     try:
         r = httpx.get(url, timeout=15)
         if r.status_code == 200:
             data = r.json() or {}
-            existing = data.get("published_post_nos") or []
+            for k in existing.keys():
+                if k in data:
+                    existing[k] = data[k]
     except Exception:
         pass
-    new_nos = [l.get("post_no") for l in letters if l.get("post_no")]
-    combined = list(dict.fromkeys(existing + new_nos))  # dedup, preserve order
+
+    composed_at = issue_obj.get("composed_at") or datetime.now(timezone.utc).isoformat()
+    for l in letters:
+        if l.get("post_no") and l["post_no"] not in existing["published_post_nos"]:
+            existing["published_post_nos"].append(l["post_no"])
+        if l.get("body_hash") and l["body_hash"] not in existing["published_body_hashes"]:
+            existing["published_body_hashes"].append(l["body_hash"])
+        if l.get("name") and l["name"] != "Anon":
+            existing["named_authors"][l["name"]] = composed_at
+
     out = {
         "updated_at": datetime.now(timezone.utc).isoformat(),
-        "published_post_nos": combined,
+        "published_post_nos": existing["published_post_nos"],
+        "published_body_hashes": existing["published_body_hashes"],
+        "named_authors": existing["named_authors"],
     }
     body = json.dumps(out, ensure_ascii=False, indent=2).encode("utf-8")
     upload(client, "guests_published.json", body, upsert=True)
-    print(f"  guests_published.json updated, {len(combined)} total guest post(s) ever printed")
+    print(f"  guests_published.json: {len(out['published_post_nos'])} post_nos, "
+          f"{len(out['published_body_hashes'])} body hashes, "
+          f"{len(out['named_authors'])} named authors tracked")
 
 
 def update_index(client: httpx.Client, issue_filename: str, issue_obj: dict) -> None:
