@@ -10,8 +10,10 @@ Usage: python pulse.py
 """
 import json
 import os
+import random
 import re
 import sys
+import time
 from datetime import datetime, timedelta, timezone
 from html import unescape
 
@@ -30,6 +32,7 @@ from scrape import (
     rate_activity,
     strip_html,
 )
+from compose import BOT_NAMES, is_bot_author
 
 load_dotenv()
 
@@ -41,28 +44,48 @@ PROVIDER = (os.getenv("AI_PROVIDER") or "groq").lower().strip()
 GROQ_MODEL = os.getenv("GROQ_MODEL") or "meta-llama/llama-4-scout-17b-16e-instruct"
 
 
-TICKER_SYSTEM = """You are writing the live ticker line for East of Indus, a small newspaper covering the Induschan /b/ imageboard.
+TICKER_SHARED = """You are writing the LIVE TICKER line for East of Indus, a small newspaper covering the Induschan /b/ imageboard.
 
-You are given the subjects and first lines of the most-active threads on /b/ right now. Write ONE sentence summarising what Anon is currently doing, in the form:
+You are given the MOST RECENT posts on /b/ right now, freshly from the wire. Use these specific posts as your raw material; the ticker should reflect what Anon JUST said, not what the day's debates were.
 
-"Anon is currently [doing X], [doing Y], and [doing Z]."
-
-Examples of the right shape (do not reuse subject matter, only form):
-"Anon is currently arguing caste, asking how to bulk, and posting fish gore."
-"Anon is currently planning a town, mourning a streamer, and rejecting his mother."
-
-Rules:
-- One sentence. Three clauses joined by commas, last with "and".
-- Each clause is a short verb phrase (gerund preferred). 4-9 words each.
-- Concrete and specific to today's actual threads. No abstractions.
-- No moralising, no quotes, no labels.
-- No em dashes. No "the board is..." or "today's discussion..." framing. Just what Anon is doing.
+Hard rules:
+- Concrete and specific to the actual posts given. No abstractions.
+- No moralising. No labels. No quotes around clauses.
+- No em dashes. No "the board is...", "the discussion of...", "today's threads..." framing. Just what Anon is doing or just said.
 - No clichés ("a range of", "diverse", "lively"). Plain, dry register.
-- Profanity allowed where it serves the sentence.
-
-Return ONE JSON object only:
-{"ticker": "Anon is currently ..."}
+- Profanity is allowed where it lands.
+- No bot patterns (@jaggu, indusLLM, "Available tools", etc).
 """
+
+
+TICKER_MODES = [
+    {
+        "name": "currently",
+        "instr": """Write ONE sentence of the form:
+"Anon is currently [doing X], [doing Y], and [doing Z]."
+Three clauses, comma-joined, last with "and". Each clause a short verb phrase (gerund preferred), 4-9 words. Build each clause from a different post in the source.""",
+    },
+    {
+        "name": "just_now",
+        "instr": """Write THREE short separate sentences, each starting with one of "Just now:", "A moment ago:", or "Right now:". One short clause each, 5-10 words, naming what one anon just said or did. Pick three different posts.""",
+    },
+    {
+        "name": "on_the_board",
+        "instr": """Write ONE compact dispatch: "On the board: X. Y. Z." Three claims separated by periods. Each 4-8 words. No "currently", no "and", no "is" verb except where unavoidable. Plain telegraphic register.""",
+    },
+    {
+        "name": "verbs_first",
+        "instr": """Write THREE comma-joined verb-phrase fragments with no subject: "Arguing X. Asking Y. Posting Z." Start each with a present-participle verb. 5-9 words each.""",
+    },
+]
+
+
+def pick_ticker_mode() -> dict:
+    return random.choice(TICKER_MODES)
+
+
+def build_ticker_system(mode: dict) -> str:
+    return TICKER_SHARED + "\nFORMAT FOR THIS CALL:\n" + mode["instr"] + "\n\nReturn ONE JSON object only:\n{\"ticker\": \"...\"}"
 
 
 def fetch_catalog():
@@ -98,48 +121,102 @@ def count_threads_since(catalog: list, since: datetime | None) -> int:
     return n
 
 
-def top_thread_briefs(catalog: list, k: int = 7) -> list[dict]:
-    """Pick top-k bumped-recently threads and return compact OP briefs."""
-    now = datetime.now(timezone.utc)
-    cutoff = now - timedelta(hours=24)
-    recent = [
-        t for t in catalog
-        if (parse_iso(t.get("bumped") or t.get("date")) or datetime.min.replace(tzinfo=timezone.utc)) >= cutoff
-    ]
-    recent.sort(key=lambda t: int(t.get("replyposts") or 0), reverse=True)
-    briefs = []
-    for t in recent[:k]:
-        briefs.append({
-            "subject": (t.get("subject") or "").strip()[:80],
-            "opener": strip_html(t.get("message") or t.get("nomarkup") or "")[:160],
-            "replies": int(t.get("replyposts") or 0),
-        })
-    return briefs
+def freshest_replies(catalog: list, top_k_threads: int = 5, max_posts: int = 10) -> list[dict]:
+    """Fetch the K most-recently-bumped threads in full, then return the N most recent
+    posts across them (by timestamp). This drives a ticker that actually moves hour to
+    hour, since replies happen every few minutes even when threads barely change."""
+    def bumped_at(t):
+        return parse_iso(t.get("bumped") or t.get("date")) or datetime.min.replace(tzinfo=timezone.utc)
+
+    recent_threads = sorted(catalog, key=bumped_at, reverse=True)[:top_k_threads]
+    print(f"  Fetching {len(recent_threads)} most-recently-bumped threads for fresh replies...")
+
+    all_posts = []
+    for t in recent_threads:
+        tid = t.get("postId") or t.get("no")
+        if not tid:
+            continue
+        try:
+            url = f"{BASE}/{BOARD}/thread/{tid}.json"
+            r = cffi_requests.get(url, headers=BROWSER_HEADERS, timeout=20, impersonate="chrome131")
+            if r.status_code != 200:
+                continue
+            thread = r.json()
+        except Exception as e:
+            print(f"    skip thread {tid}: {e}")
+            continue
+        time.sleep(0.3)
+
+        subject = (thread.get("subject") or "").strip()[:60]
+        # OP post itself
+        op_body = strip_html(thread.get("message") or thread.get("nomarkup") or "")
+        if op_body and len(op_body) > 20 and not is_bot_author(thread.get("name")):
+            all_posts.append({
+                "no": thread.get("postId") or thread.get("no"),
+                "body": op_body[:220],
+                "created": thread.get("date"),
+                "thread_subject": subject,
+            })
+        # Replies
+        for r_post in (thread.get("replies") or []):
+            if is_bot_author(r_post.get("name")):
+                continue
+            body = strip_html(r_post.get("message") or r_post.get("nomarkup") or "")
+            if not body or len(body) < 20:
+                continue
+            # Skip obvious bot-tool content
+            if re.search(r"@jaggu|indusLLM|IMPORTANT:\s*Respond|Available\s+tools|Write_file", body, re.IGNORECASE):
+                continue
+            all_posts.append({
+                "no": r_post.get("postId") or r_post.get("no"),
+                "body": body[:220],
+                "created": r_post.get("date"),
+                "thread_subject": subject,
+            })
+
+    def created_at(p):
+        return parse_iso(p.get("created")) or datetime.min.replace(tzinfo=timezone.utc)
+
+    all_posts.sort(key=created_at, reverse=True)
+    return all_posts[:max_posts]
 
 
-def call_groq_ticker(briefs: list[dict]) -> str:
+def call_groq_ticker(posts: list[dict], mode: dict) -> str:
     from groq import Groq
     key = os.getenv("GROQ_API_KEY")
     if not key:
         sys.exit("GROQ_API_KEY not set.")
     client = Groq(api_key=key)
-    user = "Active threads on /b/ right now:\n" + json.dumps(briefs, ensure_ascii=False, indent=2)
-    resp = client.chat.completions.create(
-        model=GROQ_MODEL,
-        messages=[
-            {"role": "system", "content": TICKER_SYSTEM},
-            {"role": "user", "content": user},
-        ],
-        response_format={"type": "json_object"},
-        temperature=0.8,
-        max_tokens=200,
-    )
-    raw = resp.choices[0].message.content
-    try:
-        obj = json.loads(raw)
-        return (obj.get("ticker") or "").strip()
-    except Exception:
-        return ""
+    system = build_ticker_system(mode)
+    payload = [{"body": p["body"]} for p in posts]
+    user = "Most recent posts on /b/ (newest first):\n" + json.dumps(payload, ensure_ascii=False, indent=2)
+    for attempt in range(2):
+        try:
+            resp = client.chat.completions.create(
+                model=GROQ_MODEL,
+                messages=[
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": user},
+                ],
+                response_format={"type": "json_object"},
+                temperature=1.0,
+                max_tokens=250,
+            )
+            raw = resp.choices[0].message.content
+            obj = json.loads(raw)
+            t = obj.get("ticker") or ""
+            # Llama sometimes returns a list of clauses; flatten it
+            if isinstance(t, list):
+                t = " ".join(str(x) for x in t)
+            ticker = str(t).strip()
+            ticker = ticker.replace("—", ", ").replace("–", "-")
+            if ticker:
+                return ticker
+        except Exception as e:
+            print(f"    ticker call failed (attempt {attempt+1}): {str(e)[:200]}")
+            if attempt == 0:
+                time.sleep(2)
+    return ""
 
 
 def upload(path: str, body: bytes) -> None:
@@ -177,9 +254,10 @@ def main() -> int:
     delta = count_threads_since(catalog, issue_composed_at)
     print(f"  New threads since last issue: {delta}")
 
-    briefs = top_thread_briefs(catalog)
-    print(f"  Generating ticker from top {len(briefs)} threads...")
-    ticker = call_groq_ticker(briefs)
+    fresh = freshest_replies(catalog)
+    mode = pick_ticker_mode()
+    print(f"  Ticker source: {len(fresh)} freshest posts. Mode: {mode['name']}")
+    ticker = call_groq_ticker(fresh, mode) if fresh else ""
     if not ticker:
         ticker = "Anon is currently posting, replying, and refusing to leave."
         print("  (ticker generation failed; using fallback)")
