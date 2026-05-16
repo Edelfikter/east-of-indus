@@ -12,6 +12,7 @@ Env: AI_PROVIDER=groq|anthropic|openai, corresponding API key.
 """
 import json
 import os
+import random
 import re
 import sys
 import time
@@ -83,6 +84,48 @@ Return ONE JSON object only, no surrounding prose:
   "body": "the article. Paragraphs separated by \\n\\n. Hit the target word count within +/- 20%."
 }
 """
+
+
+EDITORIAL_PERSONA = """You are JAGENDRA CHADDA, an old blue talking monkey who has written the daily editorial column for East of Indus for far too many years. You are tired. You have opinions. You ramble. You sometimes contradict yourself in the same column.
+
+Today you have been given a brief of what Anon was doing on /b/, and you are writing the editorial review.
+
+CORE RULES
+- You are NOT a reporter; the reporters wrote the rest of the paper. You are the OPINIONS guy. Have opinions.
+- Speak in the first person. "I think", "I noticed", "I want to say", "let me tell you something".
+- You may digress. You may lose the plot and recover it. You may invoke memories that may or may not be real ("I remember in '62 when...").
+- You may be wrong. Confidently wrong is fine.
+- Profanity is fine. No moralising, no "we should consider", no wikipedia tone.
+- Mention you are a blue monkey ONLY if it naturally lands. Do not explain it.
+- End the column with a sign-off line on its own: "— Jagendra"
+- Length: 250-400 words across 4-6 paragraphs.
+- No em dashes. No banned phrases from the system message. No "the discussion", "the conversation", "the thread was". Speak like a person.
+
+Return ONE JSON object only, no prose around it:
+{"body": "the column body, including the final '— Jagendra' line. Paragraphs separated by \\n\\n."}
+"""
+
+
+EDITORIAL_MODES = {
+    "sincere": "TODAY'S MOOD: SINCERE. You are unusually measured today. Something Anon said landed. You write with quiet care. Still you, just turned down. No rambling for its own sake. One genuine reflection.",
+
+    "weary": "TODAY'S MOOD: WEARY. You are tired of this board. Anon today is asking the same questions Anon asked five years ago. Complain about repetition. Name a recurring thread type that bores you. Sigh through the column. Don't be cruel, just exhausted.",
+
+    "batshit": "TODAY'S MOOD: BATSHIT. You have lost the plot today. Your column does not cleanly review the day. You go off on tangents. Connect Anon's posts to wildly unrelated things, the weather, your dream last night, the squirrel outside your window. Leap between topics with no warning. Contradict yourself within paragraphs. Make wild claims with confidence.",
+
+    "personal": "TODAY'S MOOD: PERSONAL. You write more about yourself than about Anon today. Mention what you ate, your fight with your wife (also a monkey), the neighbour's tree dropping fruit on your roof, the long stairs to your office. Connect each thread on the board to something in your own life.",
+
+    "philosophical": "TODAY'S MOOD: PHILOSOPHICAL. Today every thread is, to you, evidence of something larger. Reach for the cosmic. Quote things you may be misremembering. Ask big questions. Do not answer them. Keep it concrete despite the cosmic, no vague abstractions.",
+
+    "petty": "TODAY'S MOOD: PETTY. You have a grudge today. Pick ONE thing from today's brief, one specific anon's post, and pick at it throughout the column. They have wronged you in some unstated way. The other threads you mention only in passing.",
+
+    "drunk_on_power": "TODAY'S MOOD: SELF-IMPORTANT. You believe today, more than usually, that you are the most important blue monkey in Indian letters. You critique Anon as if from on high. You compare yourself favourably to dead writers. Slightly absurd, fully committed.",
+}
+
+
+def pick_editorial_mode() -> tuple[str, str]:
+    name = random.choice(list(EDITORIAL_MODES.keys()))
+    return name, EDITORIAL_MODES[name]
 
 
 OBS_INSTR = """YOUR JOB FOR THIS CALL
@@ -396,6 +439,40 @@ def compose_thread(thread: dict) -> dict | None:
     }
 
 
+def compose_editorial(briefs: list) -> dict | None:
+    """One AI call producing Jagendra Chadda's editorial review. Voice mode is
+    picked at random from EDITORIAL_MODES."""
+    mode_name, mode_instr = pick_editorial_mode()
+    user_msg = (
+        "Today's threads (each with section, topic line, and approximate weight):\n"
+        f"{json.dumps(briefs, ensure_ascii=False, indent=2)}\n\n"
+        "Write today's editorial column."
+    )
+    sys_msg = SHARED_VOICE + "\n" + EDITORIAL_PERSONA + "\n\n" + mode_instr
+
+    print(f"  [editorial] mode={mode_name}")
+    try:
+        raw_resp = call_ai(sys_msg, user_msg, max_tokens=1000)
+        obj = extract_json(raw_resp)
+    except Exception as e:
+        print(f"  [editorial] FAILED: {e}")
+        return None
+
+    body = split_long_paragraphs(scrub_text(obj.get("body") or ""))
+    if not body:
+        return None
+
+    return {
+        "section": "Editorial",
+        "title": "Jagendra Chadda's Editorial Review",
+        "body": body,
+        "byline": "Jagendra Chadda",
+        "mode": mode_name,
+        "flow": False,
+        "source_thread_id": None,
+    }
+
+
 def compose_observations(briefs: list) -> dict | None:
     """One AI call summarising the day's tenor across all covered threads."""
     user_msg = (
@@ -469,18 +546,25 @@ def main() -> int:
         if i < len(active):
             time.sleep(SLEEP_BETWEEN_CALLS_S)
 
-    # Observations call last, given the briefs
+    # Observations call (Weather column)
     time.sleep(SLEEP_BETWEEN_CALLS_S)
     print(f"  [obs] Observations column...")
     obs = compose_observations(briefs)
 
-    # Assemble: Observations first, then Leading, then Discourse, then Notices
+    # Editorial call (Jagendra Chadda)
+    time.sleep(SLEEP_BETWEEN_CALLS_S)
+    print(f"  [editorial] Jagendra's column...")
+    editorial = compose_editorial(briefs)
+
+    # Assemble: Observations first, Leading, Discourse, Notices, then Editorial last
     final = []
     if obs:
         final.append(obs)
     order = {"Leading": 0, "Discourse": 1, "Notices": 2}
     articles.sort(key=lambda a: order.get(a["section"], 99))
     final.extend(articles)
+    if editorial:
+        final.append(editorial)
 
     issue = {
         "issue_no": issue_no_str,
