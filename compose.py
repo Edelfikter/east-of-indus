@@ -449,14 +449,20 @@ def collect_guest_letters(raw_threads: list, published_post_nos: set) -> list[di
             continue
         # Title is whatever follows the marker
         title = m.group(1).strip()
-        if not title:
-            continue  # marker with no title
         body = (op.get("body") or "").strip()
         # Strip >>NNN reply references (rare in OPs but possible)
         body_clean = REPLY_REF_RE.sub("", body).strip()
         # Word count gate
         if len(body_clean.split()) < MIN_LETTER_WORDS:
             continue
+        # Title fallback: if marker had no title after it, take first ~8 words of body
+        if not title:
+            words = body_clean.split()
+            title = " ".join(words[:8])
+            if len(title) > 60:
+                title = title[:60].rstrip() + "..."
+            if not title:
+                continue
         # No URLs
         if URL_RE.search(body_clean):
             continue
