@@ -1,0 +1,32 @@
+name: East of Indus Pulse
+
+on:
+  schedule:
+    - cron: '7 * * * *'   # 7 past every hour (offset from main issue cron)
+  workflow_dispatch:
+
+jobs:
+  pulse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Run pulse
+        env:
+          INDUSCHAN_BASE: ${{ secrets.INDUSCHAN_BASE }}
+          AI_PROVIDER: groq
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GROQ_MODEL: meta-llama/llama-4-scout-17b-16e-instruct
+          SUPABASE_URL: https://nfpdtjqncwibgyrzvffr.supabase.co
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          EOI_BUCKET: eoi
+        run: python pulse.py
