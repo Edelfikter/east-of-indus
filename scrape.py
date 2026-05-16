@@ -25,7 +25,16 @@ LOOKBACK_HOURS = int(os.getenv("LOOKBACK_HOURS", "48"))
 DATA_DIR = Path(__file__).parent / "data"
 DATA_DIR.mkdir(exist_ok=True)
 
-UA = "EastOfIndus/0.1 (+iac-press.blogspot.com)"
+BROWSER_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    "Accept": "application/json, text/javascript, */*; q=0.01",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Sec-Fetch-Dest": "empty",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Site": "same-origin",
+    "Referer": "https://induschan.site/b/",
+}
 
 TAG_RE = re.compile(r"<[^>]+>")
 WS_RE = re.compile(r"\s+")
@@ -59,7 +68,7 @@ def normalize_post(post: dict) -> dict:
 
 def fetch_json(client: httpx.Client, path: str) -> dict | list:
     url = f"{BASE}/{path.lstrip('/')}"
-    r = client.get(url, headers={"User-Agent": UA}, timeout=30)
+    r = client.get(url, headers=BROWSER_HEADERS, timeout=30)
     r.raise_for_status()
     return r.json()
 
