@@ -131,6 +131,11 @@ def latest_raw() -> Path:
 
 
 DEFAULT_NAMES = {"ananmas", "anonymous", "anon", "", None}
+BOT_NAMES = {"jaggu", "indusllm"}  # exclude these handles from quotes / guest letters
+
+
+def is_bot_author(raw_name) -> bool:
+    return (raw_name or "").strip().lower() in BOT_NAMES
 
 
 def fmt_post(p: dict) -> dict:
@@ -340,8 +345,10 @@ def collect_quote_candidates(raw_threads: list) -> list[dict]:
                 continue
             if body in seen_bodies:
                 continue
-            seen_bodies.add(body)
             raw_name = post.get("name") or "Anonymous"
+            if is_bot_author(raw_name):
+                continue
+            seen_bodies.add(body)
             name = raw_name if raw_name.strip().lower() not in DEFAULT_NAMES else "Anon"
             out.append({
                 "body": body,
@@ -364,8 +371,11 @@ AVOID:
 - Generic agreement ("based", "kek", "this", "saged")
 - Sales talk, spam, bot prompts
 - Posts that need the thread context to make sense
+- Posts containing em dashes (—). Prefer posts with regular punctuation. If every candidate has em dashes, still pick the best one — the body will be scrubbed.
 
 You may pick posts containing profanity or controversial views if the voice is good. The paper is uncensored. Do not moralise.
+
+The "topic" label you return MUST NOT contain em dashes. Use commas or periods.
 
 Return ONE JSON object only:
 {
@@ -373,6 +383,14 @@ Return ONE JSON object only:
   "topic": "short label, 3-7 words, of what the post is about, e.g. 'incel transformation advice', 'caste hatred', 'a strange dream'"
 }
 """
+
+
+def strip_em_dashes(text: str) -> str:
+    """Replace em dashes (and en dashes) with hyphens. Paper-wide typographic rule."""
+    if not text:
+        return text
+    # U+2014 em dash, U+2013 en dash, U+2015 horizontal bar
+    return text.replace("—", ", ").replace("–", "-").replace("―", "-")
 
 
 def compose_quote(candidates: list[dict]) -> dict | None:
@@ -393,10 +411,10 @@ def compose_quote(candidates: list[dict]) -> dict | None:
         return None
 
     chosen = candidates[idx]
-    topic = (obj.get("topic") or "").strip()[:80]
+    topic = strip_em_dashes((obj.get("topic") or "").strip()[:80])
 
     # Sanity scrub on output
-    text = chosen["body"].strip()
+    text = strip_em_dashes(chosen["body"].strip())
     if URL_RE.search(text) or BOT_QUOTE_RE.search(text):
         return None
     if len(text) > 320:
@@ -409,6 +427,89 @@ def compose_quote(candidates: list[dict]) -> dict | None:
         "topic": topic,
         "source_thread_id": chosen["thread_id"],
     }
+
+
+# ---------- Letters from /b/ — !eastofindus marker submissions ----------
+
+MARKER_RE = re.compile(r"^\s*!\s*eastofindus\s*[:\-]?\s*(.*)$", re.IGNORECASE)
+MIN_LETTER_WORDS = 50
+MAX_LETTERS_PER_ISSUE = 3
+
+
+def collect_guest_letters(raw_threads: list, published_post_nos: set) -> list[dict]:
+    """Find OPs whose subject starts with `!eastofindus`. Return up to 3, oldest first,
+    that haven't been published before, meet the 50-word minimum, contain no URLs,
+    and aren't authored by a known bot."""
+    candidates = []
+    for t in raw_threads:
+        op = t.get("op") or {}
+        subject = (op.get("subject") or "").strip()
+        m = MARKER_RE.match(subject)
+        if not m:
+            continue
+        # Title is whatever follows the marker
+        title = m.group(1).strip()
+        if not title:
+            continue  # marker with no title
+        body = (op.get("body") or "").strip()
+        # Strip >>NNN reply references (rare in OPs but possible)
+        body_clean = REPLY_REF_RE.sub("", body).strip()
+        # Word count gate
+        if len(body_clean.split()) < MIN_LETTER_WORDS:
+            continue
+        # No URLs
+        if URL_RE.search(body_clean):
+            continue
+        # No bots
+        raw_name = op.get("name")
+        if is_bot_author(raw_name):
+            continue
+        # Already published
+        post_no = op.get("no")
+        if post_no in published_post_nos:
+            continue
+
+        name = raw_name if raw_name and raw_name.strip().lower() not in DEFAULT_NAMES else "Anon"
+        candidates.append({
+            "title": title,
+            "body": body_clean,
+            "name": name,
+            "post_no": post_no,
+            "thread_id": t.get("id"),
+            "created": op.get("created"),
+        })
+
+    # Oldest first (FIFO submission queue)
+    def created_key(c):
+        ts = parse_iso(c.get("created")) if "parse_iso" in globals() else None
+        return ts or datetime.max.replace(tzinfo=timezone.utc)
+
+    # parse_iso lives in scrape.py — import lazily
+    from scrape import parse_iso as _parse_iso
+
+    def _key(c):
+        ts = _parse_iso(c.get("created"))
+        return ts or datetime.max.replace(tzinfo=timezone.utc)
+
+    candidates.sort(key=_key)
+    return candidates[:MAX_LETTERS_PER_ISSUE]
+
+
+def fetch_published_guests() -> set:
+    """Pull the set of already-published guest post numbers from Supabase."""
+    base = (os.getenv("SUPABASE_URL") or "").rstrip("/")
+    bucket = os.getenv("EOI_BUCKET") or "eoi"
+    if not base:
+        return set()
+    import httpx
+    try:
+        r = httpx.get(f"{base}/storage/v1/object/public/{bucket}/guests_published.json", timeout=15)
+        if r.status_code == 200:
+            data = r.json() or {}
+            return set(data.get("published_post_nos") or [])
+    except Exception:
+        pass
+    return set()
 
 
 def split_long_paragraphs(body: str) -> str:
@@ -602,6 +703,13 @@ def main() -> int:
     if quote:
         print(f"  [quote] picked No. {quote['post_no']} ({quote['name']}): {quote['text'][:60]}...")
 
+    # Letters from /b/: OP submissions with !eastofindus marker
+    published_post_nos = fetch_published_guests()
+    guest_letters = collect_guest_letters(raw.get("threads") or [], published_post_nos)
+    print(f"  [letters] {len(guest_letters)} new guest submission(s) this issue")
+    for l in guest_letters:
+        print(f"    No. {l['post_no']} ({l['name']}): {l['title'][:50]}")
+
     # Assemble: Observations first, Leading, Discourse, Notices
     final = []
     if obs:
@@ -615,6 +723,7 @@ def main() -> int:
         "date": date_str,
         "metrics": raw.get("metrics") or {},
         "quote_of_day": quote,
+        "guest_letters": guest_letters,
         "articles": final,
         "composed_at": datetime.now(timezone.utc).isoformat(),
         "source_raw": raw_path.name,

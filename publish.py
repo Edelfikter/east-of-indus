@@ -95,6 +95,32 @@ def issue_period(composed_at: str | None) -> str:
         return ""
 
 
+def update_published_guests(client: httpx.Client, issue_obj: dict) -> None:
+    """Append the post_nos of guest letters in this issue to guests_published.json
+    so they don't get reprinted in future issues."""
+    letters = issue_obj.get("guest_letters") or []
+    if not letters:
+        return
+    url = f"{SUPABASE_URL}/storage/v1/object/public/{BUCKET}/guests_published.json"
+    existing = []
+    try:
+        r = httpx.get(url, timeout=15)
+        if r.status_code == 200:
+            data = r.json() or {}
+            existing = data.get("published_post_nos") or []
+    except Exception:
+        pass
+    new_nos = [l.get("post_no") for l in letters if l.get("post_no")]
+    combined = list(dict.fromkeys(existing + new_nos))  # dedup, preserve order
+    out = {
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "published_post_nos": combined,
+    }
+    body = json.dumps(out, ensure_ascii=False, indent=2).encode("utf-8")
+    upload(client, "guests_published.json", body, upsert=True)
+    print(f"  guests_published.json updated, {len(combined)} total guest post(s) ever printed")
+
+
 def update_index(client: httpx.Client, issue_filename: str, issue_obj: dict) -> None:
     """Append (or replace) this issue's metadata in index.json and re-upload."""
     index = fetch_index()
@@ -135,6 +161,8 @@ def main() -> int:
         upload(client, "latest.json", body, upsert=True)
         # Maintain the public index of all archived issues
         update_index(client, issue_path.name, issue_obj)
+        # Mark any guest letters in this issue as published so they don't reprint
+        update_published_guests(client, issue_obj)
 
     public_url = f"{SUPABASE_URL}/storage/v1/object/public/{BUCKET}/latest.json"
     print(f"Published. latest.json now at:\n  {public_url}")
