@@ -13,6 +13,7 @@ from html import unescape
 from pathlib import Path
 
 import httpx
+from curl_cffi import requests as cffi_requests
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -66,10 +67,12 @@ def normalize_post(post: dict) -> dict:
     }
 
 
-def fetch_json(client: httpx.Client, path: str) -> dict | list:
+def fetch_json(client, path: str) -> dict | list:
+    """Use curl_cffi with Chrome TLS impersonation to bypass Cloudflare fingerprint checks."""
     url = f"{BASE}/{path.lstrip('/')}"
-    r = client.get(url, headers=BROWSER_HEADERS, timeout=30)
-    r.raise_for_status()
+    r = cffi_requests.get(url, headers=BROWSER_HEADERS, timeout=30, impersonate="chrome131")
+    if r.status_code >= 400:
+        raise RuntimeError(f"GET {url} -> {r.status_code}")
     return r.json()
 
 
