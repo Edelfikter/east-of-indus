@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BASE = os.getenv("INDUSCHAN_BASE", "https://induschan.site").rstrip("/")
+BASE = os.getenv("INDUSCHAN_BASE", "https://induschan-proxy.asphocal.workers.dev").rstrip("/")
 BOARD = os.getenv("INDUSCHAN_BOARD", "b")
 TOP_N = int(os.getenv("TOP_N_THREADS", "10"))
 LOOKBACK_HOURS = int(os.getenv("LOOKBACK_HOURS", "48"))
