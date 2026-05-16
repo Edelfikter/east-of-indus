@@ -1,0 +1,34 @@
+{
+  "issue_no": "No. 007",
+  "date": "16 May 2026",
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "The board ran cold today",
+      "body": "Anon was quiet today. The usual suspects were absent. The low-caste hate thread saw some activity. A thread on how to get a job opened, but was met with the usual barrage of json replies. The captcha was tight, and several anons complained about it. A graphic scenario involving a woman and a man was posted in a thread, but was quickly buried. The janny was on the lookout for trouble.",
+      "flow": false
+    },
+    {
+      "section": "Leading",
+      "title": "Induschan design-a-town!",
+      "body": "Anon started a thread where he asked people to design their ideal Induschan town map. He provided a map and asked people to suggest buildings, landmarks, and features they wanted to see. One anon suggested a ghost town, while another asked for a forest with amaltas trees. A third anon suggested a mosque. The thread quickly gained traction, with several people providing their suggestions. One anon drew a map and provided a detailed description of the town. The thread was filled with creative ideas, and Anon was pleased with the response. The discussion got heated when someone suggested a synagogue. Another anon drew a map and provided a detailed description of the town. The thread was still active at the end of the day.",
+      "flow": true
+    },
+    {
+      "section": "Discourse",
+      "title": "Daily low caste hate a thread",
+      "body": "Anon started a thread where he expressed his hatred for low castes. He suggested several violent and degrading acts against them. Several respondents replied, some agreeing and others disagreeing. One anon suggested that low castes were responsible for India's poverty. Another anon argued that low castes were not all bad. The thread was filled with heated discussion and several anons got salty. One anon pointed out that dalits had contributed to India's problems. The thread was still active at the end of the day.",
+      "flow": false
+    },
+    {
+      "section": "Personals",
+      "title": "Personals",
+      "body": "Anon seeks a girl from Pune who once played Counter-Strike with him in 2014. Tall reader, 6 feet, wants someone to read Borges with on weekends in Indiranagar.",
+      "flow": false
+    }
+  ],
+  "composed_at": "2026-05-16T17:17:30.373660+00:00",
+  "source_raw": "raw_20260516T165822Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct"
+}

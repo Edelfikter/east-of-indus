@@ -1,0 +1,45 @@
+{
+  "issue_no": "No. 006",
+  "date": "16 May 2026",
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "The town-map thread unwinds",
+      "body": "Anon kicked off the day with a question about getting a job, getting 235 replies. A related low-caste hate thread emerged with 79 posts. Meanwhile, the Induschan town map thread, started yesterday, continued to gather suggestions, with one anon requesting a ghost and another offering to draw it. The map's creator promised a final polish and a keepsake version. An ongoing argument on caste turned grim, with several inflammatory posts. A 24-year-old Onlyfans model's death was discussed, with some posters citing erotic asphyxiation.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Design-a-town takes shape",
+      "body": "The 'Induschan design-a-town' thread drew 167 replies. Anon proposed an empty land where stranded anons could settle. Suggestions poured in: a synagogue, barracks, mines, blacksmith, hospital, art museum, bank, brothel, thieves' guild, intelligence HQ, and more. Anon offered to draw the map digitally. One poster joked about removing houses to avoid clutter. A 'divine ghost' was suggested for the map. Anon emphasized that the map should reflect personality more than practicality.",
+      "flow": true,
+      "source_thread_id": 1684
+    },
+    {
+      "section": "Discourse",
+      "title": "Caste hatred bubbling",
+      "body": "A low-caste hate thread attracted 79 replies, with one poster saying India's poverty and racism towards Indians are due to low castes. Another thread on 'Daily low caste hate' had users sharing horrific suggestions for harming low castes. A user argued that low castes are responsible for ruining Indian institutions. A counter-post claimed some Brahmins support OBCs, but another user noted OBCs and Muslims hate Brahmins.",
+      "flow": false,
+      "source_thread_id": 5766
+    },
+    {
+      "section": "Discourse",
+      "title": "Autoerotic asphyxiation",
+      "body": "A thread on erotic practices included discussions on autoerotic asphyxiation, with users sharing cases of people accidentally killing themselves while engaging in the practice. Some posters discussed how certain people get aroused by strangulation or hanging. A user mentioned a textbook on forensic medicine with a case of a 24-year-old man who caused his own death.",
+      "flow": false,
+      "source_thread_id": 5558
+    },
+    {
+      "section": "Notices",
+      "title": "Lolcow discussion",
+      "body": "A user asked about a 'lolcow' discussed on the board, sparking a conversation about a grifter streamer who uses drugs. Some users believed the streamer is infertile due to steroid abuse. A discussion on 'blackpill' vs. 'MGTOW' ensued.",
+      "flow": false,
+      "source_thread_id": 865
+    }
+  ],
+  "composed_at": "2026-05-16T17:10:27.826766+00:00",
+  "source_raw": "raw_20260516T165822Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct"
+}

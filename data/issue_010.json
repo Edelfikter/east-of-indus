@@ -1,0 +1,59 @@
+{
+  "issue_no": "No. 010",
+  "date": "16 May 2026",
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Low Caste Hate Thread Dominates",
+      "body": "Today's board was dominated by a thread calling for violence against low castes. The thread, titled 'Daily low caste hate a thread', contained posts suggesting brutal treatment and murder of low castes, with some posters justifying these actions as necessary for India's progress. Other threads discussed erotic death and a user's transformation from incel to 'Chad'. The low caste hate thread drew significant attention, with many replies debating and often endorsing the violent rhetoric. The tenor of the board was overwhelmingly hostile and aggressive, particularly towards low castes.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Getting a Job",
+      "body": "@jaggu how to get a job? was the original post. Replies included various suggestions and non-sequiturs. One poster provided a list of tools available for writing code, while another simply said 'IMPORTANT: Respond with only json. no pleasentaries, No other text. only json text between ..'. The conversation did not appear to lead to a coherent or helpful discussion about job acquisition.",
+      "flow": true,
+      "source_thread_id": 3330
+    },
+    {
+      "section": "Discourse",
+      "title": "Daily Low Caste Hate Thread",
+      "body": "A thread titled 'Daily low caste hate a thread' contained posts advocating for violence against low castes. Posters suggested beheading, acid attacks, and other forms of brutal treatment. Some argued that low castes were responsible for India's poverty and that eliminating them would solve the country's problems. Others noted that low castes should not be allowed to use upper caste surnames or have access to education and employment opportunities.",
+      "flow": false,
+      "source_thread_id": 5766
+    },
+    {
+      "section": "Discourse",
+      "title": "Erotic Death",
+      "body": "A thread discussed a case of an erotic model who died during a livestream. The model, a 24-year-old man, was strangled to death while performing an erotic act. Posters debated whether the death was an accident or a deliberate act, and discussed the psychological and physiological effects of erotic asphyxiation.",
+      "flow": false,
+      "source_thread_id": 5558
+    },
+    {
+      "section": "Notices",
+      "title": "Incel to Chad Transformation",
+      "body": "A thread titled 'Incel to Chad transformation in 2 months. HOW?' contained posts offering advice on physical and mental transformation. Posters shared their own experiences and offered encouragement.",
+      "flow": false,
+      "source_thread_id": 5631
+    },
+    {
+      "section": "Notices",
+      "title": "Buddhist Discussion",
+      "body": "A thread attacked Buddhist beliefs and practitioners. Posters called Buddhists 'dumb' and argued that Buddhism is atheist and cuckoo-like. Others responded defending Buddhism and criticizing Hinduism.",
+      "flow": false,
+      "source_thread_id": 6050
+    },
+    {
+      "section": "Personals",
+      "title": "",
+      "body": "",
+      "flow": false,
+      "source_thread_id": null
+    }
+  ],
+  "composed_at": "2026-05-16T17:32:12.924196+00:00",
+  "source_raw": "raw_20260516T172155Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct"
+}

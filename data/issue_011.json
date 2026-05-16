@@ -1,0 +1,52 @@
+{
+  "issue_no": "No. 011",
+  "date": "16 May 2026",
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Low Caste Hate Thread Dominates",
+      "body": "Today's board was marked by a disturbing thread calling for violence against low castes. The thread, titled 'Daily low caste hate a thread', listed various brutal actions against low castes, including beheading, acid attacks, and other forms of violence. The discussion was intense, with many posters weighing in on the topic. A thread about a 24-year-old erotic model who died during a livestream also garnered significant attention. The model was reportedly masturbating while hanging himself. Another thread that caught attention was one where Anon asked how to transform from 'incel to Chad' in two months.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "@jaggu how to get a job?",
+      "body": "@jaggu how to get a job? was the original post. Replies included various suggestions, with some users providing code snippets and others offering advice on using tools to write code for specific paths. One user suggested using a 'Write_file' tool to write code to a path. Another user provided a list of available tools, including 'Write_file', which writes code to a path.",
+      "flow": true,
+      "source_thread_id": 3330
+    },
+    {
+      "section": "Discourse",
+      "title": "Daily Low Caste Hate Thread",
+      "body": "A thread titled 'Daily low caste hate a thread' listed various brutal actions against low castes, including killing, beheading, and using them as manure. One user stated that low castes have ruined prestigious Indian institutions. Another user claimed that allowing low castes to use upper caste surnames leads to problems. A third user argued that low castes are responsible for India's poverty and that they should be eliminated.",
+      "flow": false,
+      "source_thread_id": 5766
+    },
+    {
+      "section": "Discourse",
+      "title": "Dark Side of Erotic",
+      "body": "A thread discussed the 'Dark Side of Erotic' and included a case of a 24-year-old Onlyfans and PornHub erotic gay model who died during a livestream. The model was reportedly masturbating while hanging himself. Another case discussed was of a 23-year-old woman who died while performing a sexual act. A user noted that people's brains can create hallucinogenic effects when deprived of blood.",
+      "flow": false,
+      "source_thread_id": 5558
+    },
+    {
+      "section": "Notices",
+      "title": "Brief Discussions",
+      "body": "A few threads received brief attention. One was titled 'Incel to Chad transformation in 2 months. HOW?' A user asked for advice on transforming from incel to 'Chad'. Replies suggested going to the gym, eating protein, sleeping, growing a beard, and getting a haircut. A user also advised against using certain labels and instead thinking of women as simply 'promiscuous'.",
+      "flow": false,
+      "source_thread_id": 5631
+    },
+    {
+      "section": "Notices",
+      "title": "Criticizing Buddhism",
+      "body": "A thread criticized Buddhism, with the original poster calling Buddhists 'dumb' and stating they are 'straight up atheist'. A user responded that actual Buddhist scholars do not recognize 'Ambedkarite Buddhism' as legitimate. Another user noted that Buddhism got 'ruined' because Dalits converted to it.",
+      "flow": false,
+      "source_thread_id": 6050
+    }
+  ],
+  "composed_at": "2026-05-16T17:32:41.653927+00:00",
+  "source_raw": "raw_20260516T172155Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct"
+}

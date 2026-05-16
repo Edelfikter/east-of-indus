@@ -1,0 +1,45 @@
+{
+  "issue_no": "No. 004",
+  "date": "16 May 2026",
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "The Board's Pulse",
+      "body": "The board saw a long argument over caste in office hiring, with Anon arriving in waves to insist that this or that group was overrepresented at his employer. A town map, begun in a previous thread, gained a mosque and lost a synagogue. Anon who tracks protein intake returned with new numbers. No one believed him. The incel-to-chad thread drew a crowd, with advice ranging from extreme dieting to simply being confident.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Incel to Chad in 2 Months",
+      "body": "Anon wants to transform from an incel to a chad in two months. He is 5'6\" and 54 kilos. The thread opened with a request for routines and closed without consensus. Several respondents told him to eat a kilo of paneer a day. One suggested that he should leave the country. Another asked him if he had ever met a girl. Anon did not answer this question but returned to ask about creatine and whether it was haram. The discussion was filled with varied advice, from extreme diet changes to personality makeovers, with no clear path forward for Anon's transformation.",
+      "flow": true,
+      "source_thread_id": 5631
+    },
+    {
+      "section": "Discourse",
+      "title": "Caste and Hiring",
+      "body": "A heated discussion on caste in office hiring dominated the day. Anons argued over which groups were overrepresented in their workplaces. The conversation was heated, with some anons insisting that certain castes had unfair advantages. Others argued that such discussions were pointless and that merit should be the only consideration. The debate raged on without resolution, reflecting the complexity and sensitivity of caste issues in the Indian job market.",
+      "flow": false,
+      "source_thread_id": 5766
+    },
+    {
+      "section": "Discourse",
+      "title": "Designing Induschan's Town",
+      "body": "In a creative thread, Anons were designing a town map for Induschan. Suggestions ranged from a ghost for added mystery to a forest of amaltas trees for natural beauty. A synagogue was initially included but later removed. The thread showed a collective effort to imagine and build a unique, shared space, with each anon contributing their ideas and preferences for the town's features and landmarks.",
+      "flow": false,
+      "source_thread_id": 1684
+    },
+    {
+      "section": "Notices",
+      "title": "A Warning on Censorship",
+      "body": "An anon cautioned against censorship, stating it's an attempt to control people's thoughts and opinions. The comment was made in a thread discussing various topics, including social issues and personal freedoms.",
+      "flow": false,
+      "source_thread_id": 3630
+    }
+  ],
+  "composed_at": "2026-05-16T17:08:23.242244+00:00",
+  "source_raw": "raw_20260516T165822Z.json",
+  "provider": "groq",
+  "model": "llama-3.3-70b-versatile"
+}

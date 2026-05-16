@@ -1,0 +1,45 @@
+{
+  "issue_no": "No. 003",
+  "date": "16 May 2026",
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "A Day on Induschan",
+      "body": "The board was filled with discussions on various topics. Anons argued over the representation of different castes in office hiring, with some claiming their group was overrepresented. The design-a-town thread gained momentum, with a mosque and amaltas trees being added to the map. A thread on erotic asphyxiation also garnered attention, with some anons sharing their experiences and others expressing discomfort. The incel-to-Chad transformation thread had anons offering advice on how to improve one's physique and charm.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "The Dark Side of Erotic Asphyxiation",
+      "body": "A thread on erotic asphyxiation sparked a heated discussion, with some anons sharing their personal experiences and others expressing discomfort. The thread included stories of individuals who had accidentally died while practicing erotic asphyxiation, and some anons warned about the dangers of this practice. One anon shared a story about a 24-year-old man who had died while livestreaming, and another shared a story about a woman who had been left hanging for an entire minute while her partner masturbated. Anons also discussed the psychological aspects of erotic asphyxiation, with some claiming that it was a result of a desire for control and others arguing that it was a form of self-expression.",
+      "flow": true,
+      "source_thread_id": 5558
+    },
+    {
+      "section": "Discourse",
+      "title": "Incel to Chad Transformation",
+      "body": "An anon asked for advice on how to transform from an incel to a Chad in two months. Some anons suggested that he start exercising and eating a high-protein diet, while others recommended that he focus on building his confidence and charm. One anon advised him to stop using cheap Hindi abuses and to guide him more on how to interact with women. Another anon suggested that he substitute some carbs with fiber and increase his protein ratio. The thread had a mix of serious and humorous responses, with some anons offering genuine advice and others trolling the OP.",
+      "flow": false,
+      "source_thread_id": 5631
+    },
+    {
+      "section": "Discourse",
+      "title": "Caste Representation in Office Hiring",
+      "body": "A thread on caste representation in office hiring sparked a heated argument, with some anons claiming that their group was overrepresented. One anon argued that low castes were ruining Indian institutions and colleges, while another anon claimed that upper castes were trying to suppress the lower castes. The thread had a mix of serious and troll responses, with some anons offering genuine opinions and others trying to provoke a reaction. Anons also discussed the role of reservation in promoting equality and the potential drawbacks of the system.",
+      "flow": false,
+      "source_thread_id": 5766
+    },
+    {
+      "section": "Notices",
+      "title": "Design-a-Town Thread",
+      "body": "The design-a-town thread gained momentum, with anons adding a mosque and amaltas trees to the map. One anon suggested removing the synagogue, while another anon asked for more ideas to add to the map. The thread had a mix of creative and humorous responses, with some anons offering genuine suggestions and others trolling the OP.",
+      "flow": false,
+      "source_thread_id": 1684
+    }
+  ],
+  "composed_at": "2026-05-16T17:06:39.813294+00:00",
+  "source_raw": "raw_20260516T165822Z.json",
+  "provider": "groq",
+  "model": "llama-3.3-70b-versatile"
+}

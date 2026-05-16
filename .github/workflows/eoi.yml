@@ -1,0 +1,54 @@
+name: East of Indus
+
+on:
+  schedule:
+    - cron: '30 1 * * *'    # 01:30 UTC = 07:00 IST  (morning issue)
+    - cron: '30 15 * * *'   # 15:30 UTC = 21:00 IST  (evening issue)
+  workflow_dispatch:        # manual trigger from the Actions tab
+
+permissions:
+  contents: write           # so the job can commit the archived issue back to the repo
+
+jobs:
+  publish-issue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Scrape Induschan
+        run: python scrape.py
+
+      - name: Compose issue
+        env:
+          AI_PROVIDER: groq
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GROQ_MODEL: meta-llama/llama-4-scout-17b-16e-instruct
+        run: python compose.py
+
+      - name: Publish to Supabase
+        env:
+          SUPABASE_URL: https://nfpdtjqncwibgyrzvffr.supabase.co
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          EOI_BUCKET: eoi
+        run: python publish.py
+
+      - name: Commit archive
+        run: |
+          git config user.name 'eoi-bot'
+          git config user.email 'eoi-bot@users.noreply.github.com'
+          git add data/issue_*.json 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "issue $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          else
+            echo "No new issue to commit."
+          fi

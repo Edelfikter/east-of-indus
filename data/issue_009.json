@@ -1,0 +1,59 @@
+{
+  "issue_no": "No. 009",
+  "date": "16 May 2026",
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "The board ran hot on caste today",
+      "body": "The town-map thread sparked a heated debate about Bangalore's parks being seeded with predators by builders. A long argument on caste developed, with Anon offering to take volunteers leopard-spotting. A separate thread on low-caste hate had many respondents. The crypto-bagholder returned with another chart. A user enquired if they could shill a website on Instagram and Reddit. A perennial thread on why low castes are subhuman ran its course. Anon continues to struggle with getting a job, asking how to get employment. A user questioned if they were a cuck for BBC, possibly born that way or due to genetics. A thread on 'chad transformation' in two months had many replies asking if this was possible. Several graphic scenarios were posted, including a disturbing case from Italy where an erotic model died on a livestream. A forensic textbook was referenced to explain similar deaths. A debate on erectile dysfunction and caste also ran. The janny was busy deleting threads, as usual.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "How to get a job?",
+      "body": "Anon posted a simple question: '@jaggu how to get a job?' Several respondents gave replies. One suggested using 'indusLLM as the llm.' Another posted a list of available tools. A third just said it was not possible. The thread., making it the most-replied thread of the day.",
+      "flow": true,
+      "source_thread_id": 3330
+    },
+    {
+      "section": "Discourse",
+      "title": "Daily low-caste hate thread",
+      "body": "Anon opened a thread titled 'Daily low-caste hate a thread.' The original post listed violent and dehumanizing actions against low castes. Many respondents contributed to the discussion. One wrote that low castes are responsible for India's poverty and bad reputation. Another argued that low castes are not worthy of respect. A third claimed that low castes are intellectually inferior. The thread ran its course.",
+      "flow": false,
+      "source_thread_id": 5766
+    },
+    {
+      "section": "Discourse",
+      "title": "Dark Side of Erotic",
+      "body": "Anon posted a graphic scenario involving an erotic model who died on a livestream. The model was Italian and 24 years old. Several respondents discussed similar cases. One referenced a German forensic medicine textbook. Another debated the desensitization of people to gore. A third described a case of accidental death during an erotic activity. The thread.",
+      "flow": false,
+      "source_thread_id": 5558
+    },
+    {
+      "section": "Notices",
+      "title": "Notices",
+      "body": "Anon posted a notice saying 'Good Night, anons must rest now.' Another thread. discussing transformation from incel to 'chad' in two months. A user asked if Pakistan's existence was necessary for Indian nationalism. A fourth thread. questioning why Buddhists are 'dumb.'",
+      "flow": false,
+      "source_thread_id": 5631
+    },
+    {
+      "section": "Notices",
+      "title": "More Notices",
+      "body": "Another thread. on whether low castes should be treated like subhumans. A user argued that Buddhism got 'ruined' because dalits started converting to it. A third thread discussed 'varna sankara,' or the mixing of castes. A fourth thread. on the topic of 'Dim^ag ka B#0sd@.'",
+      "flow": false,
+      "source_thread_id": 6050
+    },
+    {
+      "section": "Personals",
+      "title": "Personals",
+      "body": "No personals were posted today.",
+      "flow": false,
+      "source_thread_id": null
+    }
+  ],
+  "composed_at": "2026-05-16T17:22:56.121050+00:00",
+  "source_raw": "raw_20260516T172155Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct"
+}
