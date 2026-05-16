@@ -30,7 +30,9 @@ export default {
         "Accept-Language": "en-US,en;q=0.9",
         "Referer": ORIGIN + "/b/",
       },
-      cf: { cacheTtl: 30 },
+      // No edge caching — always fetch fresh from Induschan so freshly posted
+      // !eastofindus threads land in the next pipeline run without a stale snapshot.
+      cf: { cacheTtl: 0, cacheEverything: false },
     });
 
     const body = await upstream.arrayBuffer();
@@ -38,7 +40,7 @@ export default {
       status: upstream.status,
       headers: {
         "Content-Type": upstream.headers.get("Content-Type") || "application/json",
-        "Cache-Control": "public, max-age=30",
+        "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
         "Access-Control-Allow-Origin": "*",
       },
     });

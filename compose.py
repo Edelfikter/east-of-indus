@@ -330,6 +330,14 @@ def is_good_quote_candidate(body: str) -> bool:
         return False
     if " " not in stripped:
         return False
+    # Caps shouting, char spam, word repetition — same filters letters use
+    letters = [c for c in s if c.isalpha()]
+    if letters and sum(1 for c in letters if c.isupper()) / len(letters) > 0.6:
+        return False
+    if CONSECUTIVE_CHAR_RE.search(s):
+        return False
+    if LONG_WORD_RE.search(s):
+        return False
     return True
 
 
