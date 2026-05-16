@@ -21,7 +21,7 @@ load_dotenv()
 BASE = os.getenv("INDUSCHAN_BASE", "https://induschan-proxy.asphocal.workers.dev").rstrip("/")
 BOARD = os.getenv("INDUSCHAN_BOARD", "b")
 TOP_N = int(os.getenv("TOP_N_THREADS", "10"))
-LOOKBACK_HOURS = int(os.getenv("LOOKBACK_HOURS", "48"))
+LOOKBACK_HOURS = int(os.getenv("LOOKBACK_HOURS", "14"))
 
 DATA_DIR = Path(__file__).parent / "data"
 DATA_DIR.mkdir(exist_ok=True)
