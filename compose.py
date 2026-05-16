@@ -482,19 +482,24 @@ def passes_cheap_heuristics(body: str) -> tuple[bool, str]:
     return True, ""
 
 
-QUALITY_GATE_SYSTEM = """You are screening guest submissions to East of Indus for spam / low-effort trolling.
+QUALITY_GATE_SYSTEM = """You are screening guest submissions to East of Indus for outright spam only.
 
-Each candidate is supposed to be a piece of writing the author wanted published in a small newspaper.
+DEFAULT to ACCEPTING. The bar for rejection is HIGH. When in doubt, accept.
 
-REJECT (ok: false) if the submission is one of:
-- lorem ipsum, gibberish, or random keyboard mash
-- pure repetition (same word, phrase, or idea over and over)
-- shouting with no content
-- advertising, sales pitch, or shilling
-- a single sentence padded out with filler
-- copy-paste of obviously well-known text (song lyrics, famous book passages, anthems)
+Reject (ok: false) only if the submission is UNAMBIGUOUSLY one of:
+- lorem ipsum, random keyboard mash, or no real words
+- the same word or phrase literally repeated over and over with nothing else
+- clearly an advertisement or sale ("buy my X", "DM me at Y", crypto shilling)
+- copy-paste of a famous song, anthem, or well-known book passage
+- under 20 words of actual content (after stripping repetition)
 
-ACCEPT (ok: true) if the submission is coherent prose making at least one real point. The paper is uncensored, so accept profane, crude, controversial, racist, or obscene content as long as it is REAL WRITING and not spam.
+ACCEPT (ok: true) everything else, including:
+- rants, opinions, manifestos, complaints, advice
+- meta-discussion about the paper, the board, the world
+- crude, profane, racist, obscene, controversial, insincere, dark content
+- short pieces, weird pieces, low-quality but real writing
+- announcements, explanations of how something works
+- anything written by a real person trying to say a real thing
 
 Return ONE JSON object only:
 {"verdicts": [{"i": 0, "ok": true}, {"i": 1, "ok": false}, ...]}
