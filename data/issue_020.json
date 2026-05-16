@@ -1,0 +1,89 @@
+{
+  "issue_no": "No. 020",
+  "date": "16 May 2026",
+  "metrics": {
+    "threads_in_catalog": 200,
+    "threads_active_24h": 75,
+    "threads_active_7d": 136,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      2,
+      2,
+      1,
+      0,
+      1,
+      0,
+      2,
+      1,
+      3,
+      5,
+      6,
+      4,
+      4,
+      6,
+      5,
+      5,
+      9,
+      12,
+      6
+    ],
+    "hourly_sparkline": "▁▁▁▁▁▂▂▁▁▁▁▂▁▂▃▄▃▃▄▃▃▆█▄",
+    "peak_hour_ist": "23:00 IST",
+    "rating": "Normal",
+    "total_lifetime_posts": 3213,
+    "computed_at": "2026-05-16T19:16:14.185631+00:00"
+  },
+  "quote_of_day": {
+    "text": "Abe, taking a rotational shift customer support job will probably fk up your sleep cycle and overall health, dekho, irregular schedules can lead to chronic stress, diabetes, and heart disease, so yeah, it might just cut your lifespan short, lmao, not worth it, be.",
+    "post_no": 3520,
+    "name": "Jaggu",
+    "topic": "toxic work culture warning",
+    "source_thread_id": 3330
+  },
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather for Indus today",
+      "body": "A low-pressure system of morb fascination moved over the board, as Anon discussed a 24-year-old Italian erotic model's livestream that ended in death. The topic drew a steady drizzle of comments.\n\nA heat wave of incel frustration flared up when an anon asked for advice on transforming into a 'Chad' in just two months. The usual scattered showers of unhelpful comments and insults followed.\n\nA cold snap of hostility towards Buddhism settled over a part of the board, with an anon calling Buddhists 'dumb' and 'atheist'.\n\nNearby, a high-pressure ridge of nationalist sentiment emerged, as another anon mused that Indians' patriotic fervor would wane if Pakistan ceased to exist.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Discourse",
+      "title": "Erotic Model's Livestream Ends in Death",
+      "body": "Anon described a 24-year-old Onlyfans and PornHub erotic gay model who died during a livestream in Italy, amid the COVID-19 pandemic. The model was talking about the latest news with a radio station playing in the background.\n\nAnother anon shared a case from a German Forensic Medicine textbook, where a 24-year-old man intentionally caused the death of his 28-year-old gay partner.\n\nAnon also mentioned an 18-year-old man streaming on an erotic platform who was asked by a viewer to masturbate while hanging himself in exchange for a donation.\n\nThe viewer suggested using a bed sheet since the streamer didn't have a rope.\n\nA respondent questioned whether a similar incident was a suicide or an accidental death, with the streamer possibly wanting to make his death stand out by masturbating as he died.\n\nAnon noted that some people get aroused by imagining being killed by hanging or strangulation. They also mentioned that a brain deprived of blood can create a hallucinogenic effect.\n\nOne anon shared a personal experience of watching gore videos since they were 13, but found hanging videos to be particularly uncomfortable.\n\nOther cases were mentioned, including a 23-year-old woman who died while doing it with her partner, and a 27-year-old man who streamed on LiveJasmin, wearing a condom, but passed out and got strangled to death, with his stream continuing for 23 minutes after his death.",
+      "flow": false,
+      "source_thread_id": 5558
+    },
+    {
+      "section": "Discourse",
+      "title": "Incel to Chad Transformation Advice",
+      "body": "Anon asked how to achieve an 'Incel to Chad transformation in 2 months.' One respondent suggested taking practical steps such as going to the gym, eating protein, sleeping, growing a beard, getting a haircut, and stopping masturbation.\n\nAnother anon advised the original poster to stop using labels like 'randi' and instead think of promiscuous women as simply that, which they claimed would enhance their chances of success with women.\n\nA different approach was proposed when one anon suggested getting a vasectomy, stating that having children in the current economy was not worth it.\n\nThe original poster also received some harsh advice, with one anon telling them to 'just do it' and stop being a 'fucking loser.' The conversation also touched on the topic of language and behavior around women, with one anon advising against using cheap Hindi abuses and women-centric slang, especially in front of women.\n\nThe thread also included some personal and aggressive exchanges between users, with one anon accusing another of being a 'fagyush' and 'confirmed' as such, though the specifics of these claims were not elaborated upon.",
+      "flow": false,
+      "source_thread_id": 5631
+    },
+    {
+      "section": "Notices",
+      "title": "Anon Calls Buddhists 'Dumb', Atheist",
+      "body": "Anon questioned the intelligence of Buddhists, calling them 'dumb' and 'atheist'. They claimed Buddhism made 90% of North Indians 'vegan and subhuman'.\n\nAnon responded, suggesting Buddhism emerged from one person, turned the subcontinent vegan, and was later chosen by non-Indians as a better religion. Another Anon noted that actual Buddhist scholars do not recognise Ambedkarite Buddhism as it is more of a political ideology.\n\nAnon also stated Buddhism operates like parasitism and relies on moral high ground. Others joked about the decline of Hinduism and caste dynamics.",
+      "flow": false,
+      "source_thread_id": 6050
+    },
+    {
+      "section": "Notices",
+      "title": "Indians on Pakistan's Existence",
+      "body": "Anon posted that if Pakistan vanishes, Indian patriotic zeal will plummet to historical lows. Anon replied that Indians do not obsess over Pakistan, having better things to do.\n\nAnother anon disagreed, citing coexistence issues with Islam. Anon also mentioned that low castes are a problem and that Pakistan's military capabilities are exaggerated. A respondent suggested Aryans should follow Vedic dharma.\n\nAnon noted Pakistan keeps its low castes under control, unlike India.",
+      "flow": false,
+      "source_thread_id": 5447
+    }
+  ],
+  "composed_at": "2026-05-16T21:50:21.316276+00:00",
+  "source_raw": "raw_20260516T191621Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}

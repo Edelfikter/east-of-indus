@@ -302,6 +302,115 @@ SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?])\s+(?=[A-Z'\"])")
 MAX_PARA_WORDS = 70
 
 
+# ---------- Quote of the Day filter + AI pick ----------
+
+URL_RE = re.compile(r"https?://", re.IGNORECASE)
+BOT_QUOTE_RE = re.compile(r"@jaggu|indusLLM|IMPORTANT:\s*Respond|Available\s+tools|Write_file|Args:|Returns:", re.IGNORECASE)
+REPLY_REF_RE = re.compile(r">>\d+")
+PURE_NOISE_RE = re.compile(r"^(based|kek|bump|saged?|sage|cope|seethe|this|same|true|kys|kms|lol|lmao|hmm+|ok)\.?$", re.IGNORECASE)
+
+
+def is_good_quote_candidate(body: str) -> bool:
+    s = (body or "").strip()
+    if len(s) < 60 or len(s) > 300:
+        return False
+    if URL_RE.search(s) or BOT_QUOTE_RE.search(s):
+        return False
+    if PURE_NOISE_RE.match(s):
+        return False
+    # Strip reply refs and require >50 chars of actual content
+    stripped = REPLY_REF_RE.sub("", s).strip()
+    if len(stripped) < 50:
+        return False
+    if " " not in stripped:
+        return False
+    return True
+
+
+def collect_quote_candidates(raw_threads: list) -> list[dict]:
+    """Walk every post in the raw scrape, keep ones that pass the heuristic filter."""
+    out = []
+    seen_bodies = set()
+    for t in raw_threads:
+        op = t.get("op") or {}
+        op_subject = (op.get("subject") or "").strip()[:80]
+        for post in [op] + (t.get("replies") or []):
+            body = (post.get("body") or "").strip()
+            if not is_good_quote_candidate(body):
+                continue
+            if body in seen_bodies:
+                continue
+            seen_bodies.add(body)
+            raw_name = post.get("name") or "Anonymous"
+            name = raw_name if raw_name.strip().lower() not in DEFAULT_NAMES else "Anon"
+            out.append({
+                "body": body,
+                "no": post.get("no"),
+                "name": name,
+                "thread_id": t.get("id"),
+                "thread_subject": op_subject,
+            })
+    # Prefer longer, more substantive candidates; cap at 30
+    out.sort(key=lambda x: len(x["body"]), reverse=True)
+    return out[:30]
+
+
+QUOTE_SYSTEM = """You are picking the QUOTE OF THE DAY for East of Indus, a newspaper covering the Induschan /b/ imageboard.
+
+From the candidates the user gives you, pick exactly ONE post that could be printed verbatim on the front page of a small paper and survive without context. Good quotes have at least one of: distinctive voice, a strange specific image, a memorable line, sincere admission, dry wit, or genuinely bleak honesty.
+
+AVOID:
+- Pure slurs with no surrounding sentence
+- Generic agreement ("based", "kek", "this", "saged")
+- Sales talk, spam, bot prompts
+- Posts that need the thread context to make sense
+
+You may pick posts containing profanity or controversial views if the voice is good. The paper is uncensored. Do not moralise.
+
+Return ONE JSON object only:
+{
+  "index": <integer index of the chosen candidate>,
+  "topic": "short label, 3-7 words, of what the post is about, e.g. 'incel transformation advice', 'caste hatred', 'a strange dream'"
+}
+"""
+
+
+def compose_quote(candidates: list[dict]) -> dict | None:
+    if not candidates:
+        return None
+    payload = [{"i": i, "body": c["body"]} for i, c in enumerate(candidates)]
+    user = "Candidates from today's /b/:\n" + json.dumps(payload, ensure_ascii=False, indent=2)
+    try:
+        raw_resp = call_ai(QUOTE_SYSTEM, user, max_tokens=200)
+        obj = extract_json(raw_resp)
+    except Exception as e:
+        print(f"  [quote] FAILED: {e}")
+        return None
+
+    idx = obj.get("index")
+    if not isinstance(idx, int) or idx < 0 or idx >= len(candidates):
+        print(f"  [quote] AI returned bad index: {idx}")
+        return None
+
+    chosen = candidates[idx]
+    topic = (obj.get("topic") or "").strip()[:80]
+
+    # Sanity scrub on output
+    text = chosen["body"].strip()
+    if URL_RE.search(text) or BOT_QUOTE_RE.search(text):
+        return None
+    if len(text) > 320:
+        text = text[:300].rstrip() + "..."
+
+    return {
+        "text": text,
+        "post_no": chosen["no"],
+        "name": chosen["name"],
+        "topic": topic,
+        "source_thread_id": chosen["thread_id"],
+    }
+
+
 def split_long_paragraphs(body: str) -> str:
     """If any paragraph exceeds MAX_PARA_WORDS, split it at sentence boundaries near
     the middle so the rendered article has visible breaks. Keeps existing paragraph
@@ -356,7 +465,8 @@ def extract_json(s: str) -> dict:
 # ---------- composers ----------
 
 def compose_thread(thread: dict) -> dict | None:
-    """One AI call for a single thread. Returns the article dict, or None on failure."""
+    """One AI call for a single thread. Returns the article dict, or None on failure.
+    Retries once on transient JSON validation errors from the model."""
     section = thread["assignment"]
     target = thread["target_words"]
     payload = {
@@ -376,11 +486,20 @@ def compose_thread(thread: dict) -> dict | None:
     )
     sys_msg = SHARED_VOICE + "\n" + THREAD_INSTR
 
-    try:
-        raw_resp = call_ai(sys_msg, user_msg, max_tokens=1400)
-        obj = extract_json(raw_resp)
-    except Exception as e:
-        print(f"  [{section} | thread {thread['id']}] FAILED: {e}")
+    obj = None
+    last_err = None
+    for attempt in range(2):
+        try:
+            raw_resp = call_ai(sys_msg, user_msg, max_tokens=1400)
+            obj = extract_json(raw_resp)
+            break
+        except Exception as e:
+            last_err = e
+            if attempt == 0:
+                print(f"  [{section} | thread {thread['id']}] retry after: {str(e)[:80]}")
+                time.sleep(2)
+    if obj is None:
+        print(f"  [{section} | thread {thread['id']}] FAILED after retry: {last_err}")
         return None
 
     title = scrub_text(obj.get("title") or "")
@@ -475,6 +594,14 @@ def main() -> int:
     print(f"  [obs] Observations column...")
     obs = compose_observations(briefs)
 
+    # Quote of the Day: heuristic prefilter + one AI pick
+    time.sleep(SLEEP_BETWEEN_CALLS_S)
+    quote_candidates = collect_quote_candidates(raw.get("threads") or [])
+    print(f"  [quote] {len(quote_candidates)} candidates after heuristic filter")
+    quote = compose_quote(quote_candidates)
+    if quote:
+        print(f"  [quote] picked No. {quote['post_no']} ({quote['name']}): {quote['text'][:60]}...")
+
     # Assemble: Observations first, Leading, Discourse, Notices
     final = []
     if obs:
@@ -487,6 +614,7 @@ def main() -> int:
         "issue_no": issue_no_str,
         "date": date_str,
         "metrics": raw.get("metrics") or {},
+        "quote_of_day": quote,
         "articles": final,
         "composed_at": datetime.now(timezone.utc).isoformat(),
         "source_raw": raw_path.name,
