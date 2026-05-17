@@ -97,11 +97,12 @@ def sparkline(values: list[int]) -> str:
 
 
 def rate_activity(bumps_last_hour: int) -> str:
-    """Rating is based on the most recent hour of activity, so it swings
-    dramatically through the day instead of sitting at one daily average."""
-    if bumps_last_hour >= 15: return "Crazy"
-    if bumps_last_hour >= 10: return "Hyper"
-    if bumps_last_hour >= 5:  return "Brisk"
+    """Rating based on the most recent hour of activity, so it swings through the day.
+    Order (low -> high): Dead, Rotting, Stale, Brisk, Active, Hyper, Crazy."""
+    if bumps_last_hour >= 14: return "Crazy"
+    if bumps_last_hour >= 9:  return "Hyper"
+    if bumps_last_hour >= 6:  return "Active"
+    if bumps_last_hour >= 4:  return "Brisk"
     if bumps_last_hour >= 2:  return "Stale"
     if bumps_last_hour >= 1:  return "Rotting"
     return "Dead"

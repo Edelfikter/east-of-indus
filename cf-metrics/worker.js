@@ -22,11 +22,13 @@ function sparkline(values) {
   return values.map(v => SPARK_BLOCKS[Math.min(7, Math.floor((v / max) * 7))]).join("");
 }
 
-// Rating based on bumps in the most recent hour, so it swings through the day.
+// Rating based on bumps in the most recent hour.
+// Order (low -> high): Dead, Rotting, Stale, Brisk, Active, Hyper, Crazy.
 function rateActivity(bumpsLastHour) {
-  if (bumpsLastHour >= 15) return "Crazy";
-  if (bumpsLastHour >= 10) return "Hyper";
-  if (bumpsLastHour >= 5)  return "Brisk";
+  if (bumpsLastHour >= 14) return "Crazy";
+  if (bumpsLastHour >= 9)  return "Hyper";
+  if (bumpsLastHour >= 6)  return "Active";
+  if (bumpsLastHour >= 4)  return "Brisk";
   if (bumpsLastHour >= 2)  return "Stale";
   if (bumpsLastHour >= 1)  return "Rotting";
   return "Dead";
