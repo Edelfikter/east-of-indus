@@ -96,14 +96,15 @@ def sparkline(values: list[int]) -> str:
     return "".join(SPARK_BLOCKS[min(7, int(v / m * 7))] for v in values)
 
 
-def rate_activity(threads_active_24h: int) -> str:
-    if threads_active_24h > 200: return "Hyper Active"
-    if threads_active_24h > 120: return "Active"
-    if threads_active_24h > 60:  return "Normal"
-    if threads_active_24h > 30:  return "Slow"
-    if threads_active_24h > 15:  return "Quite Slow"
-    if threads_active_24h > 5:   return "Rotting"
-    return "Ultra Rot"
+def rate_activity(bumps_last_hour: int) -> str:
+    """Rating is based on the most recent hour of activity, so it swings
+    dramatically through the day instead of sitting at one daily average."""
+    if bumps_last_hour >= 15: return "Crazy"
+    if bumps_last_hour >= 10: return "Hyper"
+    if bumps_last_hour >= 5:  return "Brisk"
+    if bumps_last_hour >= 2:  return "Stale"
+    if bumps_last_hour >= 1:  return "Rotting"
+    return "Dead"
 
 
 def compute_metrics(catalog: list, now: datetime) -> dict:
@@ -152,7 +153,7 @@ def compute_metrics(catalog: list, now: datetime) -> dict:
         "peak_hour_ist": peak_ist.strftime("%H:00 IST"),
         "peak_count": peak_count,
         "quiet_hour_ist": quiet_ist.strftime("%H:00 IST"),
-        "rating": rate_activity(len(bumps_24h)),
+        "rating": rate_activity(hourly[23] if hourly else 0),
         "total_lifetime_posts": total_lifetime_posts,
         "computed_at": now.isoformat(),
     }

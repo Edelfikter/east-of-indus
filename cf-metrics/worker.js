@@ -22,17 +22,14 @@ function sparkline(values) {
   return values.map(v => SPARK_BLOCKS[Math.min(7, Math.floor((v / max) * 7))]).join("");
 }
 
-function rateActivity(n) {
-  if (n >= 130) return "Frenzied";
-  if (n >= 100) return "Hyper Active";
-  if (n >= 85)  return "Active";
-  if (n >= 70)  return "Brisk";
-  if (n >= 55)  return "Normal";
-  if (n >= 40)  return "Lulling";
-  if (n >= 25)  return "Slow";
-  if (n >= 12)  return "Quite Slow";
-  if (n >= 5)   return "Rotting";
-  return "Ultra Rot";
+// Rating based on bumps in the most recent hour, so it swings through the day.
+function rateActivity(bumpsLastHour) {
+  if (bumpsLastHour >= 15) return "Crazy";
+  if (bumpsLastHour >= 10) return "Hyper";
+  if (bumpsLastHour >= 5)  return "Brisk";
+  if (bumpsLastHour >= 2)  return "Stale";
+  if (bumpsLastHour >= 1)  return "Rotting";
+  return "Dead";
 }
 
 function parseISO(s) {
@@ -88,7 +85,7 @@ function computeMetrics(catalog) {
     peak_hour_ist: istHourLabel(peakHourMs),
     peak_count: hourly[peakBucket],
     quiet_hour_ist: istHourLabel(quietHourMs),
-    rating: rateActivity(bumps24.length),
+    rating: rateActivity(hourly[23]),
     computed_at: new Date(now).toISOString(),
   };
 }
