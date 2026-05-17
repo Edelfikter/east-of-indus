@@ -95,6 +95,43 @@ def issue_period(composed_at: str | None) -> str:
         return ""
 
 
+def update_covered_threads(client: httpx.Client, issue_obj: dict) -> None:
+    """Track which thread IDs this issue covered so the next compose can exclude them.
+    Keeps a rolling window of the last 1 issue (1-issue cooldown). Bump the slice
+    to recent_issues[:2] if you want a stricter "no repeats in 2 consecutive issues"."""
+    ids = []
+    for art in (issue_obj.get("articles") or []):
+        tid = art.get("source_thread_id")
+        if tid is not None and tid not in ids:
+            ids.append(tid)
+    if not ids:
+        return
+    url = f"{SUPABASE_URL}/storage/v1/object/public/{BUCKET}/covered_threads.json"
+    existing = {"recent_issues": []}
+    try:
+        r = httpx.get(url, timeout=15)
+        if r.status_code == 200:
+            existing = r.json() or existing
+    except Exception:
+        pass
+    new_entry = {
+        "issue_no": issue_obj.get("issue_no"),
+        "composed_at": issue_obj.get("composed_at"),
+        "thread_ids": ids,
+    }
+    recent = existing.get("recent_issues") or []
+    recent.insert(0, new_entry)
+    recent = recent[:1]  # 1-issue cooldown; change to [:2] for stricter
+    out = {
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "recent_issues": recent,
+    }
+    body = json.dumps(out, ensure_ascii=False, indent=2).encode("utf-8")
+    upload(client, "covered_threads.json", body, upsert=True)
+    total = sum(len(e.get("thread_ids") or []) for e in recent)
+    print(f"  covered_threads.json: {total} thread IDs across {len(recent)} recent issue(s)")
+
+
 def update_published_guests(client: httpx.Client, issue_obj: dict) -> None:
     """Append this issue's guest letters to guests_published.json.
     Tracks post_nos (cross-issue dedup), body hashes (cross-thread dedup), and
@@ -176,6 +213,8 @@ def main() -> int:
         upload(client, "latest.json", body, upsert=True)
         # Maintain the public index of all archived issues
         update_index(client, issue_path.name, issue_obj)
+        # Track covered thread IDs so the next compose skips them (1-issue cooldown)
+        update_covered_threads(client, issue_obj)
         # Mark any guest letters in this issue as published so they don't reprint
         update_published_guests(client, issue_obj)
 

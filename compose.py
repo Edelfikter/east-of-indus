@@ -171,14 +171,20 @@ def is_bot_thread(thread: dict) -> bool:
     return bot_count >= max(2, len(replies) // 2)
 
 
-def assign_threads(raw: dict) -> list:
+def assign_threads(raw: dict, covered_ids: set | None = None) -> list:
     """Trim threads, rank by reply count, demote bot-spam threads, assign sections.
     Returns list of thread dicts with: id, reply_count, op, replies, assignment, target_words.
-    Excludes !eastofindus marker threads completely — those go to Letters via their own path."""
+    Excludes !eastofindus marker threads completely — those go to Letters via their own path.
+    Also excludes any thread IDs in `covered_ids` (threads covered in the most recent issue),
+    so consecutive issues don't repeat the same coverage."""
+    covered_ids = covered_ids or set()
     threads = []
     for t in raw.get("threads", []):
         # Wall: marker threads never enter the news article pipeline
         if MARKER_RE.match((t["op"].get("subject") or "").strip()):
+            continue
+        # Cooldown: skip threads already covered in the most recent issue
+        if t.get("id") in covered_ids:
             continue
         op_body = (t["op"].get("body") or "").strip()
         if len(op_body) < MIN_OP_CHARS:
@@ -638,6 +644,29 @@ def collect_guest_letters(raw_threads: list, published: dict) -> list[dict]:
     return candidates
 
 
+def fetch_covered_threads() -> set:
+    """Returns the set of thread IDs covered in the most recent issues (within the
+    cooldown window). These are excluded from the next issue's candidate pool so
+    consecutive issues don't repeat the same coverage."""
+    base = (os.getenv("SUPABASE_URL") or "").rstrip("/")
+    bucket = os.getenv("EOI_BUCKET") or "eoi"
+    if not base:
+        return set()
+    import httpx
+    try:
+        r = httpx.get(f"{base}/storage/v1/object/public/{bucket}/covered_threads.json", timeout=15)
+        if r.status_code == 200:
+            data = r.json() or {}
+            ids = set()
+            for entry in (data.get("recent_issues") or []):
+                for tid in (entry.get("thread_ids") or []):
+                    ids.add(tid)
+            return ids
+    except Exception:
+        pass
+    return set()
+
+
 def fetch_published_guests() -> dict:
     """Returns dict with sets of published post_nos, body hashes, and a {name → last
     published timestamp} map for rate limiting."""
@@ -822,7 +851,10 @@ def main() -> int:
         "openai": OPENAI_MODEL,
     }.get(PROVIDER, "?")
 
-    threads = assign_threads(raw)
+    covered_ids = fetch_covered_threads()
+    if covered_ids:
+        print(f"  Cooldown: excluding {len(covered_ids)} thread(s) covered in last issue")
+    threads = assign_threads(raw, covered_ids=covered_ids)
     active = [t for t in threads if t["assignment"] != "skip"]
     print(f"Composing {issue_no_str} via {PROVIDER} ({model_label}).")
     print(f"  {len(active)} threads to cover + 1 Observations column.")
