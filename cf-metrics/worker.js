@@ -25,9 +25,9 @@ function sparkline(values) {
 // Rating based on bumps in the most recent hour.
 // Order (low -> high): Dead, Rotting, Stale, Brisk, Active, Hyper, Crazy.
 function rateActivity(bumpsLastHour) {
-  if (bumpsLastHour >= 14) return "Crazy";
-  if (bumpsLastHour >= 9)  return "Hyper";
-  if (bumpsLastHour >= 6)  return "Active";
+  if (bumpsLastHour >= 20) return "Crazy";
+  if (bumpsLastHour >= 14) return "Hyper";
+  if (bumpsLastHour >= 7)  return "Active";
   if (bumpsLastHour >= 4)  return "Brisk";
   if (bumpsLastHour >= 2)  return "Stale";
   if (bumpsLastHour >= 1)  return "Rotting";
