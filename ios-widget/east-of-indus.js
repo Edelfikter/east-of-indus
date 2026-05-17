@@ -276,8 +276,10 @@ async function build() {
   else if (family === "large")  renderLarge(w, issue, pulse, syncedISO);
   else                          renderMedium(w, issue, pulse, syncedISO);
 
-  // Hint to iOS — actual refresh cadence is at iOS's discretion (typically 15-30 min)
-  w.refreshAfterDate = new Date(Date.now() + 15 * 60 * 1000);
+  // Hint to iOS — actual refresh cadence is at iOS's discretion. Setting 5 min
+  // matches our backend metrics cadence, but iOS will rate-limit as it sees fit
+  // (home screen ~15-30 min typically, lock screen widgets more often).
+  w.refreshAfterDate = new Date(Date.now() + 5 * 60 * 1000);
   return w;
 }
 
