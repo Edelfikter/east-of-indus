@@ -56,23 +56,25 @@ function renderSmall(w, issue, pulse) {
     color: INK,
   });
 
-  w.addSpacer(2);
+  w.addSpacer(4);
   addText(w, m.rating || "—", {
-    font: Font.boldRoundedSystemFont(26),
+    font: Font.boldSystemFont(24),
     color: BRICK,
     lines: 1,
   });
 
-  w.addSpacer(4);
+  w.addSpacer(6);
+  // 12-hour sparkline fits a small widget's width
   if (m.hourly_sparkline) {
-    addText(w, m.hourly_sparkline, {
-      font: Font.boldMonospacedSystemFont(13),
+    const spark = m.hourly_sparkline.slice(-12);
+    addText(w, spark, {
+      font: Font.boldMonospacedSystemFont(11),
       color: BRICK,
       lines: 1,
     });
   }
 
-  w.addSpacer(3);
+  w.addSpacer(4);
   addText(w, `${m.threads_active_24h ?? "—"} thr · ${m.peak_hour_ist || ""}`, {
     font: Font.systemFont(9),
     color: MUTED,
@@ -157,12 +159,12 @@ function renderMedium(w, issue, pulse) {
 function renderLarge(w, issue, pulse) {
   const m = (pulse && pulse.metrics) || (issue && issue.metrics) || {};
 
-  // Masthead
+  // Masthead row
   const head = w.addStack();
   head.layoutHorizontally();
   head.bottomAlignContent();
   addText(head, "East of Indus", {
-    font: new Font("Times New Roman", 24),
+    font: new Font("Times New Roman", 22),
     color: INK,
   });
   head.addSpacer();
@@ -172,23 +174,13 @@ function renderLarge(w, issue, pulse) {
   });
 
   w.addSpacer(4);
-  brickRule(w, 4);
+  brickRule(w, 3);
 
-  // Issue line
-  w.addSpacer(6);
-  if (issue) {
-    addText(w, `${(issue.date || "").toUpperCase()}  ·  ${(issue.issue_no || "").toUpperCase()}`, {
-      font: Font.monospacedSystemFont(9),
-      color: MUTED,
-      align: "right",
-    });
-  }
-
-  // Sparkline + stats
-  w.addSpacer(8);
+  // Sparkline (sized to fit large widget width: 24 chars × ~12px = 288px, fits)
+  w.addSpacer(10);
   if (m.hourly_sparkline) {
     addText(w, m.hourly_sparkline, {
-      font: Font.boldMonospacedSystemFont(17),
+      font: Font.boldMonospacedSystemFont(12),
       color: BRICK,
       lines: 1,
     });
@@ -207,11 +199,11 @@ function renderLarge(w, issue, pulse) {
       color: MUTED,
     });
     w.addSpacer(2);
-    const q = quote.text.length > 220 ? quote.text.slice(0, 217).trim() + "…" : quote.text;
+    const q = quote.text.length > 180 ? quote.text.slice(0, 177).trim() + "…" : quote.text;
     addText(w, '"' + q + '"', {
       font: Font.italicSystemFont(11),
       color: INK,
-      lines: 6,
+      lines: 5,
     });
     w.addSpacer(2);
     addText(w, `— ${quote.name || "Anon"} · No. ${quote.post_no || "—"}`, {
@@ -221,7 +213,7 @@ function renderLarge(w, issue, pulse) {
   }
 
   // Leading headline
-  w.addSpacer();
+  w.addSpacer(10);
   const lead = issue && (issue.articles || []).find(function (a) { return a.section === "Leading"; });
   if (lead) {
     addText(w, "LEADING", {
@@ -232,19 +224,17 @@ function renderLarge(w, issue, pulse) {
     addText(w, lead.title, {
       font: Font.semiboldSystemFont(13),
       color: INK,
-      lines: 3,
+      lines: 2,
     });
   }
 
-  // Ticker at bottom
-  if (pulse && pulse.ticker) {
-    w.addSpacer(8);
-    brickRule(w, 1);
-    w.addSpacer(4);
-    addText(w, pulse.ticker, {
-      font: Font.italicSystemFont(9),
+  w.addSpacer();
+  // Issue marker at the very bottom
+  if (issue) {
+    addText(w, `${(issue.date || "")} · ${(issue.issue_no || "")}`, {
+      font: Font.monospacedSystemFont(9),
       color: MUTED,
-      lines: 2,
+      align: "right",
     });
   }
 }
