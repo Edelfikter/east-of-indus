@@ -173,9 +173,13 @@ def is_bot_thread(thread: dict) -> bool:
 
 def assign_threads(raw: dict) -> list:
     """Trim threads, rank by reply count, demote bot-spam threads, assign sections.
-    Returns list of thread dicts with: id, reply_count, op, replies, assignment, target_words."""
+    Returns list of thread dicts with: id, reply_count, op, replies, assignment, target_words.
+    Excludes !eastofindus marker threads completely — those go to Letters via their own path."""
     threads = []
     for t in raw.get("threads", []):
+        # Wall: marker threads never enter the news article pipeline
+        if MARKER_RE.match((t["op"].get("subject") or "").strip()):
+            continue
         op_body = (t["op"].get("body") or "").strip()
         if len(op_body) < MIN_OP_CHARS:
             substantial = sum(1 for r in (t.get("replies") or []) if len((r.get("body") or "").strip()) > 30)
@@ -342,12 +346,17 @@ def is_good_quote_candidate(body: str) -> bool:
 
 
 def collect_quote_candidates(raw_threads: list) -> list[dict]:
-    """Walk every post in the raw scrape, keep ones that pass the heuristic filter."""
+    """Walk every post in the raw scrape, keep ones that pass the heuristic filter.
+    Skips !eastofindus marker threads entirely — guest submissions are never fed
+    to AI, they go through their own moderation queue."""
     out = []
     seen_bodies = set()
     for t in raw_threads:
         op = t.get("op") or {}
         op_subject = (op.get("subject") or "").strip()[:80]
+        # Wall: never include marker-thread content in the quote pool
+        if MARKER_RE.match(op_subject):
+            continue
         for post in [op] + (t.get("replies") or []):
             body = (post.get("body") or "").strip()
             if not is_good_quote_candidate(body):

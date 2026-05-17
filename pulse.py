@@ -32,7 +32,7 @@ from scrape import (
     rate_activity,
     strip_html,
 )
-from compose import BOT_NAMES, is_bot_author
+from compose import BOT_NAMES, MARKER_RE, is_bot_author
 
 load_dotenv()
 
@@ -128,7 +128,9 @@ def freshest_replies(catalog: list, top_k_threads: int = 5, max_posts: int = 10)
     def bumped_at(t):
         return parse_iso(t.get("bumped") or t.get("date")) or datetime.min.replace(tzinfo=timezone.utc)
 
-    recent_threads = sorted(catalog, key=bumped_at, reverse=True)[:top_k_threads]
+    # Exclude !eastofindus marker threads — guest submissions don't feed the AI ticker
+    pool = [t for t in catalog if not MARKER_RE.match((t.get("subject") or "").strip())]
+    recent_threads = sorted(pool, key=bumped_at, reverse=True)[:top_k_threads]
     print(f"  Fetching {len(recent_threads)} most-recently-bumped threads for fresh replies...")
 
     all_posts = []
