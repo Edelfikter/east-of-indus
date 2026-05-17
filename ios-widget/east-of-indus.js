@@ -10,9 +10,10 @@
 // Tap the widget to open the full paper at iac-press.blogspot.com/?eoi.
 // Widget refreshes ~every 15 min (iOS controls the actual schedule).
 
-const ISSUE_URL = "https://nfpdtjqncwibgyrzvffr.supabase.co/storage/v1/object/public/eoi/latest.json";
-const PULSE_URL = "https://nfpdtjqncwibgyrzvffr.supabase.co/storage/v1/object/public/eoi/pulse.json";
-const OPEN_URL  = "https://iac-press.blogspot.com/?eoi";
+const ISSUE_URL   = "https://nfpdtjqncwibgyrzvffr.supabase.co/storage/v1/object/public/eoi/latest.json";
+const PULSE_URL   = "https://nfpdtjqncwibgyrzvffr.supabase.co/storage/v1/object/public/eoi/pulse.json";
+const METRICS_URL = "https://nfpdtjqncwibgyrzvffr.supabase.co/storage/v1/object/public/eoi/metrics.json";
+const OPEN_URL    = "https://iac-press.blogspot.com/?eoi";
 
 // Palette matches the paper
 const PAPER = new Color("#e6e0c8");
@@ -48,8 +49,8 @@ function brickRule(parent, height) {
   return stack;
 }
 
-function renderSmall(w, issue, pulse) {
-  const m = (pulse && pulse.metrics) || (issue && issue.metrics) || {};
+function renderSmall(w, issue, pulse, syncedISO) {
+  const m = (issue && issue.metrics) || {};
 
   addText(w, "EAST OF INDUS", {
     font: Font.boldSystemFont(9),
@@ -89,8 +90,8 @@ function renderSmall(w, issue, pulse) {
   });
 }
 
-function renderMedium(w, issue, pulse) {
-  const m = (pulse && pulse.metrics) || (issue && issue.metrics) || {};
+function renderMedium(w, issue, pulse, syncedISO) {
+  const m = (issue && issue.metrics) || {};
 
   // Masthead row
   const head = w.addStack();
@@ -117,11 +118,11 @@ function renderMedium(w, issue, pulse) {
 
   const left = cols.addStack();
   left.layoutVertically();
-  addText(left, `${m.threads_active_24h ?? "—"} threads (24h)`, {
-    font: Font.systemFont(11),
+  addText(left, `${m.bumps_last_hour ?? "—"} bumps (1h)`, {
+    font: Font.boldSystemFont(11),
     color: INK,
   });
-  addText(left, `Catalog  ${m.threads_in_catalog ?? "—"}`, {
+  addText(left, `${m.threads_active_24h ?? "—"} threads (24h)`, {
     font: Font.systemFont(10),
     color: MUTED,
   });
@@ -157,10 +158,20 @@ function renderMedium(w, issue, pulse) {
       lines: 2,
     });
   }
+
+  // Last updated footer
+  const mins = minutesAgo(syncedISO);
+  if (mins != null) {
+    addText(w, mins === 0 ? "Updated just now" : `Updated ${mins}m ago`, {
+      font: Font.systemFont(8),
+      color: MUTED,
+      align: "right",
+    });
+  }
 }
 
-function renderLarge(w, issue, pulse) {
-  const m = (pulse && pulse.metrics) || (issue && issue.metrics) || {};
+function renderLarge(w, issue, pulse, syncedISO) {
+  const m = (issue && issue.metrics) || {};
 
   // Masthead row
   const head = w.addStack();
@@ -243,7 +254,17 @@ function renderLarge(w, issue, pulse) {
 }
 
 async function build() {
-  const [issue, pulse] = await Promise.all([fetchJSON(ISSUE_URL), fetchJSON(PULSE_URL)]);
+  const [issue, pulse, metrics] = await Promise.all([
+    fetchJSON(ISSUE_URL),
+    fetchJSON(PULSE_URL),
+    fetchJSON(METRICS_URL),
+  ]);
+  // Live metrics from the 5-min worker take precedence
+  const freshest = (metrics && metrics.metrics) || (pulse && pulse.metrics) || (issue && issue.metrics);
+  if (freshest && issue) {
+    issue.metrics = freshest;
+  }
+  const syncedISO = (metrics && metrics.synced_at) || (pulse && pulse.synced_at) || (issue && issue.composed_at);
 
   const w = new ListWidget();
   w.backgroundColor = PAPER;
@@ -251,13 +272,20 @@ async function build() {
   w.url = OPEN_URL; // tap opens the paper in Safari
 
   const family = config.widgetFamily || "medium";
-  if (family === "small")       renderSmall(w, issue, pulse);
-  else if (family === "large")  renderLarge(w, issue, pulse);
-  else                          renderMedium(w, issue, pulse);
+  if (family === "small")       renderSmall(w, issue, pulse, syncedISO);
+  else if (family === "large")  renderLarge(w, issue, pulse, syncedISO);
+  else                          renderMedium(w, issue, pulse, syncedISO);
 
   // Hint to iOS — actual refresh cadence is at iOS's discretion (typically 15-30 min)
   w.refreshAfterDate = new Date(Date.now() + 15 * 60 * 1000);
   return w;
+}
+
+function minutesAgo(iso) {
+  if (!iso) return null;
+  const t = Date.parse(iso);
+  if (isNaN(t)) return null;
+  return Math.max(0, Math.floor((Date.now() - t) / 60000));
 }
 
 const widget = await build();

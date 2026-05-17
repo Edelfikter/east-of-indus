@@ -82,6 +82,7 @@ function computeMetrics(catalog) {
     threads_in_catalog: catalog.length,
     threads_active_24h: bumps24.length,
     threads_active_7d: bumps7d.length,
+    bumps_last_hour: hourly[23],
     hourly_buckets_24h: hourly,
     hourly_sparkline: sparkline(hourly),
     peak_hour_ist: istHourLabel(peakHourMs),

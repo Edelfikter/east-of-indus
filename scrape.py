@@ -146,6 +146,7 @@ def compute_metrics(catalog: list, now: datetime) -> dict:
         "threads_in_catalog": len(catalog),
         "threads_active_24h": len(bumps_24h),
         "threads_active_7d": len(bumps_7d),
+        "bumps_last_hour": hourly[23] if hourly else 0,
         "hourly_buckets_24h": hourly,
         "hourly_sparkline": sparkline(hourly),
         "peak_hour_ist": peak_ist.strftime("%H:00 IST"),
