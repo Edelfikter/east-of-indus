@@ -83,7 +83,7 @@ function renderSmall(w, issue, pulse) {
 
   w.addSpacer();
   addText(w, issue ? issue.issue_no : "", {
-    font: Font.monospacedSystemFont(8),
+    font: Font.regularMonospacedSystemFont(8),
     color: MUTED,
     align: "right",
   });
@@ -232,7 +232,7 @@ function renderLarge(w, issue, pulse) {
   // Issue marker at the very bottom
   if (issue) {
     addText(w, `${(issue.date || "")} · ${(issue.issue_no || "")}`, {
-      font: Font.monospacedSystemFont(9),
+      font: Font.regularMonospacedSystemFont(9),
       color: MUTED,
       align: "right",
     });
