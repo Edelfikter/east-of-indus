@@ -73,20 +73,6 @@ Three clauses, comma-joined, last with "and". Each clause a short verb phrase (g
         "name": "on_the_board",
         "instr": """Write ONE compact dispatch: "On the board: X. Y. Z." Three claims separated by periods. Each 4-8 words. No "currently", no "and", no "is" verb except where unavoidable. Plain telegraphic register.""",
     },
-    {
-        "name": "verbs_first",
-        "instr": """Write THREE short present-participle verb fragments, period-joined. Each MUST name a specific topic, claim, slur, person, place, or thing from the source. 5-9 words each.
-
-FORBIDDEN: generic words like "a post", "someone", "another anon", "something", "a topic" used without a concrete noun. Forbidden: bare gerunds like "posting", "referencing", "mentioning", "insulting" if not followed by what specifically.
-
-Examples of the right shape (use the form, not the content):
-- "Calling Hindi cinema cucked. Defending NEET cutoffs. Asking why Bangalore is cooked."
-- "Praising paneer over chicken. Mourning a livestream death. Naming the janny."
-
-Examples to avoid (too abstract):
-- "Posting something. Referencing a post. Insulting someone."
-- "Sharing a story. Mentioning a person. Asking a question." """,
-    },
 ]
 
 
