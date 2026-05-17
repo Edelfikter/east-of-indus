@@ -140,10 +140,13 @@ function renderMedium(w, issue, pulse) {
       color: BRICK,
       lines: 1,
     });
-    addText(right, "24h ago        now", {
-      font: Font.systemFont(7),
-      color: MUTED,
-    });
+    const axis = right.addStack();
+    axis.layoutHorizontally();
+    addText(axis, "24h", { font: Font.systemFont(7), color: MUTED });
+    axis.addSpacer();
+    addText(axis, "12h", { font: Font.systemFont(7), color: MUTED });
+    axis.addSpacer();
+    addText(axis, "now", { font: Font.systemFont(7), color: MUTED });
   }
 
   w.addSpacer();
