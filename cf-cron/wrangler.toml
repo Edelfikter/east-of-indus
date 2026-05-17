@@ -1,0 +1,11 @@
+name = "eoi-cron"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+workers_dev = true
+
+[triggers]
+crons = [
+  "7 * * * *",     # pulse, every hour at :07
+  "30 1 * * *",    # morning issue, 07:00 IST
+  "30 15 * * *",   # evening issue, 21:00 IST
+]
