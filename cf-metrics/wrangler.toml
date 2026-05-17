@@ -1,0 +1,13 @@
+name = "eoi-metrics"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+workers_dev = true
+
+[triggers]
+crons = ["*/5 * * * *"]   # every 5 minutes
+
+# Service binding so we can call the induschan-proxy worker without going via
+# its public .workers.dev URL (which CF blocks for worker-to-worker calls).
+[[services]]
+binding = "PROXY"
+service = "induschan-proxy"
