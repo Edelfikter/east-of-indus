@@ -1,0 +1,110 @@
+{
+  "issue_no": "No. 035",
+  "date": "19 May 2026",
+  "metrics": {
+    "threads_in_catalog": 165,
+    "threads_active_24h": 100,
+    "threads_active_7d": 165,
+    "bumps_last_hour": 11,
+    "hourly_buckets_24h": [
+      2,
+      5,
+      3,
+      3,
+      1,
+      15,
+      7,
+      1,
+      1,
+      1,
+      0,
+      2,
+      1,
+      0,
+      3,
+      3,
+      10,
+      6,
+      6,
+      2,
+      8,
+      3,
+      6,
+      11
+    ],
+    "hourly_sparkline": "▁▃▂▂▁█▄▁▁▁▁▁▁▁▂▂▅▃▃▁▄▂▃▆",
+    "peak_hour_ist": "03:00 IST",
+    "peak_count": 15,
+    "quiet_hour_ist": "08:00 IST",
+    "rating": "Active",
+    "total_lifetime_posts": 2335,
+    "computed_at": "2026-05-19T15:30:26.582834+00:00"
+  },
+  "quote_of_day": {
+    "text": "Having a sacred animal is the most retarded thing a culture could do. Eating beef is based, it's just a fucking animal. If you think it's a god get your malnutritioned brain checked. >muh milk Every other mammal gives milk, why is cow special.",
+    "post_no": 7725,
+    "name": "Savarkar-pilled",
+    "topic": "cultural critique, animal worship",
+    "source_thread_id": 7725
+  },
+  "guest_letters": [
+    {
+      "title": "Based website",
+      "body": "Why aren’t we talking more about this IAC guy?? I just woke uop and checked bahut interesting site hai, there’s quotes and funny articles and board status?? We need more anons like iac to make cool shit. Im a very impressed pajeet. Writing this to see if it will get featured on the newspaper or not, im not sure how he set it up but if the !thing works then hello indus news! Im on da news niggaaaaaa",
+      "body_hash": "2e30db8f5760a90a",
+      "name": "Anon",
+      "post_no": 7326,
+      "thread_id": 7326,
+      "created": "2026-05-18T06:18:12.269Z"
+    }
+  ],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather for Indus today",
+      "body": "A low-pressure system of curiosity moved over the board this morning, as Anon inquired about BharatChan, Gayush, and board ownership. This drew a gentle sprinkle of explanatory replies.\n\nA heat wave of reactionary fervor swept in during the late morning, as Anon called for British colonization of India, sparking intense debate. This brought scattered thunderstorms of criticism and dissent.\n\nA scattered drizzle of self-promotion occurred in the afternoon, as Anons discussed shilling Induschan on social media.\n\nMeanwhile, a brief fog of speculation rolled in, with Anon guessing about an upcoming idol group and questioning sacred cow status.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Anon Asks About BharatChan, Gayush, and Board Ownership",
+      "body": "Anon started a thread asking what happened with BharatChan, why it was \"gayush\"-ed, and who the owner of the board is. The original poster had been offline for weeks and was seeking information.\n\nAnon responded that the previous owner, referred to as \"bharatchan,\" had issues with constant reports, raids from Reddit and Twitter, and internal caste conflicts.\n\nAnother anon added that bharatchan had been letting the community know he was struggling for months, and the \"caste war\" had become too much to handle.\n\nThe thread also discussed the doxxing of a user named \"motivanon\" or \"bharatchan.\" Anon explained that motivanon was doxxed after referencing a conversation from his workplace in a thread, using a name that was easily identifiable.\n\nSome anons discussed the user \"swissfag shiller vegcuckery,\" who was also doxxed and accused of being a Muslim trying to incite civil war in India.\n\nAnon noted that this user was likely not an Indian Muslim and might be a state-backed asset. The conversation also touched on the topic of rape and consent.\n\nAnon stated that \"sex is only penis in vagina\" and made light of rape allegations. Another anon responded with a dismissive comment about the possibility of a woman raping a man.\n\nThe thread included various other discussions, including speculation about the current state of the board and the identity of its owner. Anon mentioned that the board's owner had likely quit due to the constant pressure and stress.\n\nThe conversation remained focused on the topics of doxxing, board ownership, and the struggles of running an imageboard.\n\nThe thread did not provide a clear resolution or definitive answers to the original questions but offered insights into the community's dynamics and challenges.",
+      "flow": true,
+      "source_thread_id": 7641
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Calls for British Colonization of India, Sparks Debate",
+      "body": "Anon opened the thread by expressing a desire for the British to colonize India again, calling Indians 'shit lovers' and 'low IQ insects.' The post advocated for a 50% reservation for women in parliament and criticized the current political parties.\n\nAnon responded by referencing a statement from the Chief Justice of India, calling the movement 'retarded.' Another anon suggested that the group's manifesto was not clear and expressed enmity towards the CJP.\n\nOne respondent proposed creating a counter-movement against the group, while another suggested trolling them to make them 'hopeless' about their cause. Übermensch discussed the security of protonmail, stating that while it has server-side encryption, it can still be decrypted if required by authorities.\n\nThe conversation also touched on cybersecurity and online security practices, with one anon advising against using a Tor proxy on a daily driving OS.\n\nCalls for British colonization and criticism of Indian society continued throughout the thread, with one poster stating that Indians need to be 'flogged' to learn how to behave.\n\nThe thread also included discussions on privacy and security, with Übermensch expressing skepticism about protonmail's privacy features and seeking a more secure alternative.",
+      "flow": false,
+      "source_thread_id": 9356
+    },
+    {
+      "section": "Discourse",
+      "title": "Anons Discuss Shilling Induschan on Social Media",
+      "body": "Anon started a thread by suggesting that the site needs more traffic and proposed shilling it on Instagram and Reddit.\n\nAnother anon responded, seemingly addressing a separate topic, mentioning that some users get annoyed with minor issues, such as spoiler tags, and that these issues take focus away from moderation and shitposting.\n\nA respondent suggested that the OP's proposal to shill the site could be done by paying for Google ads or spamming on Reddit ads.\n\nAnon also mentioned that the site's UI needs improvement, specifically to reward quality posters by featuring their threads.\n\nOne anon expressed frustration with certain groups, describing them as \"retarded\" and \"clout-hungry whore spawns.\" Another anon suggested that old users are tired of debating the same topics and that new users are needed to bring fresh perspectives.\n\nA different approach was proposed by an anon, who suggested doing SEO optimization on the site to make it more discoverable in search engines.\n\nSome anons also discussed the idea of showing spoiler images on the homepage and implementing a new CAPTCHA system.\n\nThe discussion also touched on the topic of user behavior and moderation, with one anon warning that it will be challenging to moderate the site when it starts attracting \"bad actors\" posting random content.",
+      "flow": false,
+      "source_thread_id": 1412
+    },
+    {
+      "section": "Notices",
+      "title": "Anon Speculates on Upcoming Idol Group",
+      "body": "Anon expressed interest in an upcoming idol group called 'gobarjeeta kumari', asking if others' sisters were auditioning. The poster joked about the group's potential to fail like DEL48.\n\nOne respondent mused about the hypothetical scenario of secretly dating an idol, deeming it a 'peak achievement' for a man. Another poster fantasized about a VTuber, speculating about her sexual encounters.\n\nAnon discussed the group's potential makeup, with one expressing disappointment if the group wasn't comprised of 'nep/yaaris or pahadi pyaaris'. Others joked about the group's potential for 'larping and baiting'.",
+      "flow": false,
+      "source_thread_id": 5955
+    },
+    {
+      "section": "Notices",
+      "title": "Anon questions sacred cow status",
+      "body": "Anon, going by the name 'Savarkar-pilled', posted that having a sacred animal is 'retarded' and that eating beef is 'based'. They questioned the special status of cows, pointing out that other mammals also give milk. Other anons responded, with one noting that religions often have illogical rules. Another anon described the OP as 'fence sitting centrist'. The discussion drew various comments, including one comparing American food to 'slop'.",
+      "flow": false,
+      "source_thread_id": 7725
+    }
+  ],
+  "composed_at": "2026-05-19T15:32:25.450442+00:00",
+  "source_raw": "raw_20260519T153040Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
