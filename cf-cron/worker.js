@@ -13,7 +13,7 @@ const REPO = "east-of-indus";
 const SCHEDULES = {
   "7 * * * *":   "pulse.yml",  // hourly pulse: ticker + live metrics
   "30 1 * * *":  "eoi.yml",    // 01:30 UTC = 07:00 IST  morning issue
-  "30 15 * * *": "eoi.yml",    // 15:30 UTC = 21:00 IST  evening issue
+  "30 12 * * *": "eoi.yml",    // 12:30 UTC = 18:00 IST  evening issue
 };
 
 async function trigger(workflow, token) {
