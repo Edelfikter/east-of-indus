@@ -1,10 +1,10 @@
 name: East of Indus
 
 on:
-  schedule:
-    - cron: '30 1 * * *'    # 01:30 UTC = 07:00 IST  (morning issue)
-    - cron: '30 12 * * *'   # 12:30 UTC = 18:00 IST  (evening issue)
-  workflow_dispatch:        # manual trigger from the Actions tab
+  # Scheduling is done exclusively by the eoi-cron Cloudflare Worker calling
+  # workflow_dispatch on this workflow. GitHub Actions native cron is too
+  # unreliable on the free tier (delayed runs caused duplicate issues per day).
+  workflow_dispatch:
 
 permissions:
   contents: write           # so the job can commit the archived issue back to the repo
@@ -32,6 +32,10 @@ jobs:
           AI_PROVIDER: groq
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GROQ_MODEL: meta-llama/llama-4-scout-17b-16e-instruct
+          # Read-only fetches: cooldown (covered_threads.json), guest dedup,
+          # quote dedup. No service-role key needed for public reads.
+          SUPABASE_URL: https://nfpdtjqncwibgyrzvffr.supabase.co
+          EOI_BUCKET: eoi
         run: python compose.py
 
       - name: Publish to Supabase

@@ -351,10 +351,30 @@ def is_good_quote_candidate(body: str) -> bool:
     return True
 
 
-def collect_quote_candidates(raw_threads: list) -> list[dict]:
+def fetch_published_quotes() -> set:
+    """Returns the set of post_nos used as Quote of the Day in the recent issue
+    window, so the next pick rotates to a different post."""
+    base = (os.getenv("SUPABASE_URL") or "").rstrip("/")
+    bucket = os.getenv("EOI_BUCKET") or "eoi"
+    if not base:
+        return set()
+    import httpx
+    try:
+        r = httpx.get(f"{base}/storage/v1/object/public/{bucket}/published_quotes.json", timeout=15)
+        if r.status_code == 200:
+            data = r.json() or {}
+            return set(data.get("recent_post_nos") or [])
+    except Exception:
+        pass
+    return set()
+
+
+def collect_quote_candidates(raw_threads: list, recently_quoted: set | None = None) -> list[dict]:
     """Walk every post in the raw scrape, keep ones that pass the heuristic filter.
     Skips !eastofindus marker threads entirely — guest submissions are never fed
-    to AI, they go through their own moderation queue."""
+    to AI, they go through their own moderation queue. Also skips post_nos that
+    have been recently used as Quote of the Day so quotes rotate."""
+    recently_quoted = recently_quoted or set()
     out = []
     seen_bodies = set()
     for t in raw_threads:
@@ -371,6 +391,9 @@ def collect_quote_candidates(raw_threads: list) -> list[dict]:
                 continue
             raw_name = post.get("name") or "Anonymous"
             if is_bot_author(raw_name):
+                continue
+            # Quote dedup: skip post_nos used recently
+            if post.get("no") in recently_quoted:
                 continue
             seen_bodies.add(body)
             name = raw_name if raw_name.strip().lower() not in DEFAULT_NAMES else "Anon"
@@ -878,7 +901,10 @@ def main() -> int:
 
     # Quote of the Day: heuristic prefilter + one AI pick
     time.sleep(SLEEP_BETWEEN_CALLS_S)
-    quote_candidates = collect_quote_candidates(raw.get("threads") or [])
+    recently_quoted = fetch_published_quotes()
+    if recently_quoted:
+        print(f"  [quote] excluding {len(recently_quoted)} recently-quoted post_no(s)")
+    quote_candidates = collect_quote_candidates(raw.get("threads") or [], recently_quoted=recently_quoted)
     print(f"  [quote] {len(quote_candidates)} candidates after heuristic filter")
     quote = compose_quote(quote_candidates)
     if quote:

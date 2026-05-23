@@ -95,6 +95,32 @@ def issue_period(composed_at: str | None) -> str:
         return ""
 
 
+def update_published_quotes(client: httpx.Client, issue_obj: dict) -> None:
+    """Append this issue's Quote of the Day post_no to published_quotes.json so the
+    next compose excludes it. Rolling window of the last 5 picks."""
+    q = (issue_obj.get("quote_of_day") or {})
+    post_no = q.get("post_no")
+    if post_no is None:
+        return
+    url = f"{SUPABASE_URL}/storage/v1/object/public/{BUCKET}/published_quotes.json"
+    existing = []
+    try:
+        r = httpx.get(url, timeout=15)
+        if r.status_code == 200:
+            existing = (r.json() or {}).get("recent_post_nos") or []
+    except Exception:
+        pass
+    combined = [post_no] + [n for n in existing if n != post_no]
+    combined = combined[:5]  # rolling window of last 5 quote picks
+    out = {
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "recent_post_nos": combined,
+    }
+    body = json.dumps(out, ensure_ascii=False, indent=2).encode("utf-8")
+    upload(client, "published_quotes.json", body, upsert=True)
+    print(f"  published_quotes.json: rolling window of {len(combined)} recent quote post_no(s)")
+
+
 def update_covered_threads(client: httpx.Client, issue_obj: dict) -> None:
     """Track which thread IDs this issue covered so the next compose can exclude them.
     Keeps a rolling window of the last 1 issue (1-issue cooldown). Bump the slice
@@ -215,6 +241,8 @@ def main() -> int:
         update_index(client, issue_path.name, issue_obj)
         # Track covered thread IDs so the next compose skips them (1-issue cooldown)
         update_covered_threads(client, issue_obj)
+        # Track Quote of the Day post_no so quotes rotate
+        update_published_quotes(client, issue_obj)
         # Mark any guest letters in this issue as published so they don't reprint
         update_published_guests(client, issue_obj)
 
