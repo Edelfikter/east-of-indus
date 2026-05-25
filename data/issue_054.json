@@ -1,0 +1,79 @@
+{
+  "issue_no": "No. 054",
+  "date": "25 May 2026",
+  "metrics": {
+    "threads_in_catalog": 139,
+    "threads_active_24h": 73,
+    "threads_active_7d": 139,
+    "bumps_last_hour": 8,
+    "hourly_buckets_24h": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      3,
+      4,
+      1,
+      2,
+      0,
+      1,
+      7,
+      11,
+      2,
+      3,
+      14,
+      5,
+      4,
+      1,
+      2,
+      4,
+      8
+    ],
+    "hourly_sparkline": "▁▁▁▁▁▁▁▂▃▁▂▁▁▄▆▂▂█▃▃▁▂▃▅",
+    "peak_hour_ist": "18:00 IST",
+    "peak_count": 14,
+    "quiet_hour_ist": "02:00 IST",
+    "rating": "Active",
+    "total_lifetime_posts": 2288,
+    "computed_at": "2026-05-25T18:36:02.500030+00:00"
+  },
+  "quote_of_day": {
+    "text": "China. Shows body discovery of 25 year old young woman who died as the result of erotic asphyxiation. Worked as a medical nurse and online model. Lubricated vibrator was found lying at her feet. Her va-ginal and an-al passages had the same lubricant in them.",
+    "post_no": 5562,
+    "name": "Ambedkar",
+    "topic": "China, erotic asphyxiation death",
+    "source_thread_id": 5558
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather for Indus today",
+      "body": "A high-pressure system of chan administration questions moved over the board, as one anon proposed merging Indiachan and Induschan. Suggestions were sought on UI and features. A scattered front of IIT graduate career discussions blew in, accompanied by squalls of beef and resentment.\n\nAnon clashed over the importance of IIT credentials. The atmosphere remained tense, with no clear resolution in sight for either thread. A cold snap of skepticism settled over the chan merge proposal, while a heat wave of indignation continued to fuel IIT debates.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Merging Indiachan and Induschan: A New Chapter",
+      "body": "Anon, the admin of indiachan.top, announced plans to merge indiachan and Induschan, with the induschan domain to be redirected to indiachan. The admin sought suggestions on UI and features for the merged platform.\n\nAnon suggested ripping 4chan's design and adding a WordPress forum plugin, jokingly recommending a sticky thread for complaining about Japanese New Year's festivals.\n\nAnother anon proposed combining the worst elements of both UIs or porting 8kun's UI as a solution. One respondent expressed opposition to the merger, describing Induschan as peaceful compared to the perceived chaos of Indiachan.\n\nThe user questioned what prompted the decision. A supporter of the merger suggested incorporating features from both platforms, citing the need for better moderation and the preservation of popular content.\n\nThe discussion touched on user interface preferences, with some anons favoring Indiachan's UI, citing its comfort and mobile compatibility. Others suggested preserving Induschan's UI or adopting a dark theme.\n\nThere were also mentions of technical aspects, such as server configuration and domain management. The potential impact of the merger on the user base was debated, with estimates suggesting a 60:40 or 70:30 split in user preferences.\n\nSome users expressed concerns about the merger creating a monopoly, while others advocated for coexistence. The admin's decision to merge the platforms was met with mixed reactions, ranging from enthusiasm to skepticism.\n\nThe outcome of the merger and its effects on the user community remain to be seen.",
+      "flow": true,
+      "source_thread_id": 20553
+    },
+    {
+      "section": "Discourse",
+      "title": "IIT Grads' Career Paths and Beef Discussions",
+      "body": "Anon kicked off the discussion with a rant about IIT not mattering and engineering not happening in India. The original post was brief and contained several typos.\n\nAnon responded with a more measured take, stating that many IIT graduates either move abroad or start unsuccessful startups. This anon acknowledged a few IIT grads doing good work, citing a duo from IIT Madras working on a space tech startup.\n\nThe issue, according to this poster, is the lack of integrated industry training, leading to many chasing computer science roles. Another anon chimed in with a seemingly unrelated comment about a beef thread and their agreement with Savarkar's viewpoint on treating animals utilitarianly.\n\nThis poster saw no issue with consuming beef and referenced a past thread suggesting the BJP might secretly funnel cows from gaushalas to meat processing units.\n\nA respondent took a more personal and humorous tone, boasting about their own physical attributes and satvic diet, jokingly referring to beef as \"buff.\" This anon seemed to be engaging in a lighthearted exchange.\n\nA different thread participant shared their personal story of realizing engineering wasn't for them and successfully pursuing Eco Hons from Delhi University instead. This anon advised the original poster to recognize their strengths and weaknesses.\n\nAnon also discussed societal structures and stereotypes, stating that East Asians and South Asians have historically been studious, which contrasts with the stereotype of \"Timmy\" being non-academic.\n\nOther posters weighed in on various topics, including the quality of tech products developed by companies hiring Indian graduates and personal updates on their lives and career aspirations.",
+      "flow": false,
+      "source_thread_id": 20580
+    }
+  ],
+  "composed_at": "2026-05-25T18:37:16.668715+00:00",
+  "source_raw": "raw_20260525T183620Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
