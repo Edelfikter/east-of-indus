@@ -62,6 +62,10 @@ export default {
       return new Response("bad workflow", { status: 400 });
     }
     const resp = await trigger(w, env.GITHUB_TOKEN);
-    return new Response(`dispatched ${w}: ${resp.status}`, { status: resp.status });
+    // GitHub returns 204 No Content on success. Constructing a Response with a
+    // body AND a null-body status (204/205/304) throws in Workers, so collapse
+    // success to 200 and only forward non-success codes verbatim.
+    const status = resp.ok ? 200 : resp.status;
+    return new Response(`dispatched ${w}: ${resp.status}`, { status });
   },
 };

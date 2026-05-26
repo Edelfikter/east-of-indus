@@ -17,7 +17,7 @@ import random
 import re
 import sys
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -34,10 +34,6 @@ MAX_REPLIES_PER_THREAD = int(os.getenv("MAX_REPLIES_PER_THREAD", "20"))  # bigge
 MAX_BODY_CHARS = int(os.getenv("MAX_BODY_CHARS", "400"))
 MIN_OP_CHARS = int(os.getenv("MIN_OP_CHARS", "15"))
 SLEEP_BETWEEN_CALLS_S = float(os.getenv("SLEEP_BETWEEN_CALLS_S", "16"))
-# Only OPs created within this many hours of compose time are eligible for
-# Leading/Discourse/Notices. Roughly matches the gap between issues so the paper
-# only covers what was *new* in the window. See EOI_NOTES "Freshness rule".
-FRESH_WINDOW_HOURS = float(os.getenv("FRESH_WINDOW_HOURS", "13"))
 
 
 SHARED_VOICE = """You are the sole writer of EAST OF INDUS, a small printed newspaper covering an anonymous Indian imageboard called Induschan /b/.
@@ -179,28 +175,17 @@ def assign_threads(raw: dict, covered_ids: set | None = None) -> list:
     """Trim threads, rank by reply count, demote bot-spam threads, assign sections.
     Returns list of thread dicts with: id, reply_count, op, replies, assignment, target_words.
     Excludes !eastofindus marker threads completely — those go to Letters via their own path.
-    Also excludes any thread IDs in `covered_ids` (threads covered in the most recent issue),
-    so consecutive issues don't repeat the same coverage.
-    Freshness wall: only threads whose OP was created within FRESH_WINDOW_HOURS are
-    eligible. This is what makes EoI cover *what is new* in the window between issues
-    instead of the same mega-thread for days running."""
-    from scrape import parse_iso as _parse_iso
+    Also excludes any thread IDs in `covered_ids` (every thread the paper has ever
+    covered, across the whole archive). A thread is covered once, ever. Old threads
+    that get newly bumped are fine as long as they haven't been written about before."""
     covered_ids = covered_ids or set()
-    now = datetime.now(timezone.utc)
-    fresh_cutoff = now - timedelta(hours=FRESH_WINDOW_HOURS)
     threads = []
-    stale_skipped = 0
     for t in raw.get("threads", []):
         # Wall: marker threads never enter the news article pipeline
         if MARKER_RE.match((t["op"].get("subject") or "").strip()):
             continue
-        # Cooldown: skip threads already covered in the most recent issue
+        # Permanent cooldown: skip any thread that's ever been covered
         if t.get("id") in covered_ids:
-            continue
-        # Freshness wall: OP must have been created within the window
-        op_created = _parse_iso(t["op"].get("created"))
-        if op_created is None or op_created < fresh_cutoff:
-            stale_skipped += 1
             continue
         op_body = (t["op"].get("body") or "").strip()
         if len(op_body) < MIN_OP_CHARS:
@@ -218,8 +203,6 @@ def assign_threads(raw: dict, covered_ids: set | None = None) -> list:
             "op": fmt_post(t["op"]),
             "replies": [fmt_post(r) for r in replies_sorted[:MAX_REPLIES_PER_THREAD]],
         })
-    if stale_skipped:
-        print(f"  Freshness wall: {stale_skipped} thread(s) skipped (OP older than {FRESH_WINDOW_HOURS:g}h)")
 
     threads.sort(key=lambda x: x.get("reply_count") or 0, reverse=True)
 
@@ -894,7 +877,7 @@ def main() -> int:
 
     covered_ids = fetch_covered_threads()
     if covered_ids:
-        print(f"  Cooldown: excluding {len(covered_ids)} thread(s) covered in last issue")
+        print(f"  Permanent cooldown: excluding {len(covered_ids)} previously-covered thread(s)")
     threads = assign_threads(raw, covered_ids=covered_ids)
     active = [t for t in threads if t["assignment"] != "skip"]
     print(f"Composing {issue_no_str} via {PROVIDER} ({model_label}).")

@@ -122,9 +122,10 @@ def update_published_quotes(client: httpx.Client, issue_obj: dict) -> None:
 
 
 def update_covered_threads(client: httpx.Client, issue_obj: dict) -> None:
-    """Track which thread IDs this issue covered so the next compose can exclude them.
-    Keeps a rolling window of the last 1 issue (1-issue cooldown). Bump the slice
-    to recent_issues[:2] if you want a stricter "no repeats in 2 consecutive issues"."""
+    """Append this issue's thread IDs to the permanent covered-threads archive so
+    the next compose excludes them. A thread is covered once, ever. The file
+    stores every issue's IDs in `recent_issues` newest-first; compose flattens
+    the whole list. ~5 IDs/issue keeps the file small for years."""
     ids = []
     for art in (issue_obj.get("articles") or []):
         tid = art.get("source_thread_id")
@@ -146,8 +147,9 @@ def update_covered_threads(client: httpx.Client, issue_obj: dict) -> None:
         "thread_ids": ids,
     }
     recent = existing.get("recent_issues") or []
+    # Replace if this issue was already recorded (idempotent re-runs), then prepend.
+    recent = [e for e in recent if e.get("issue_no") != new_entry["issue_no"]]
     recent.insert(0, new_entry)
-    recent = recent[:1]  # 1-issue cooldown; change to [:2] for stricter
     out = {
         "updated_at": datetime.now(timezone.utc).isoformat(),
         "recent_issues": recent,
@@ -155,7 +157,7 @@ def update_covered_threads(client: httpx.Client, issue_obj: dict) -> None:
     body = json.dumps(out, ensure_ascii=False, indent=2).encode("utf-8")
     upload(client, "covered_threads.json", body, upsert=True)
     total = sum(len(e.get("thread_ids") or []) for e in recent)
-    print(f"  covered_threads.json: {total} thread IDs across {len(recent)} recent issue(s)")
+    print(f"  covered_threads.json: {total} thread IDs across {len(recent)} issue(s)")
 
 
 def update_published_guests(client: httpx.Client, issue_obj: dict) -> None:
