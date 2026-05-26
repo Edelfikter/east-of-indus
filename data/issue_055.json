@@ -1,0 +1,65 @@
+{
+  "issue_no": "No. 055",
+  "date": "26 May 2026",
+  "metrics": {
+    "threads_in_catalog": 139,
+    "threads_active_24h": 72,
+    "threads_active_7d": 139,
+    "bumps_last_hour": 1,
+    "hourly_buckets_24h": [
+      2,
+      5,
+      1,
+      2,
+      0,
+      1,
+      7,
+      9,
+      2,
+      3,
+      13,
+      5,
+      4,
+      1,
+      1,
+      4,
+      4,
+      0,
+      0,
+      0,
+      0,
+      1,
+      6,
+      1
+    ],
+    "hourly_sparkline": "▂▃▁▂▁▁▄▅▂▂█▃▃▁▁▃▃▁▁▁▁▁▄▁",
+    "peak_hour_ist": "18:00 IST",
+    "peak_count": 13,
+    "quiet_hour_ist": "12:00 IST",
+    "rating": "Rotting",
+    "total_lifetime_posts": 2326,
+    "computed_at": "2026-05-26T01:30:57.110080+00:00"
+  },
+  "quote_of_day": {
+    "text": ">>20536 Overconfident chutiye, do your homework. Go read the actual definitions of those terms instead of parroting NPC definitions. All theists are agnostics and many agnostics are also atheists. Learn to be humble. First understand what those terms mean.",
+    "post_no": 20975,
+    "name": "Anon",
+    "topic": "atheism, criticism of blind beliefs",
+    "source_thread_id": 19860
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather for Indus today",
+      "body": "A dense fog of inactivity blanketed the board, with no significant threads developing throughout the day. The usual suspects were absent, and a sense of calm prevailed.\n\nA weak low-pressure system of confusion swirled over a single unremarkable post, but it dissipated without spawning any notable discussion.\n\nThe board remained clear, with not a single topic gaining traction.\n\nIn the evening, a light drizzle of stale memes fell across the board, but they failed to spark any meaningful conversation.\n\nThe overall conditions remained stagnant, with a drought of engaging topics persisting.",
+      "flow": false,
+      "source_thread_id": null
+    }
+  ],
+  "composed_at": "2026-05-26T01:31:45.569678+00:00",
+  "source_raw": "raw_20260526T013109Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
