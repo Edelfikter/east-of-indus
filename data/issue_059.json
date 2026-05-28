@@ -1,0 +1,86 @@
+{
+  "issue_no": "No. 059",
+  "date": "28 May 2026",
+  "metrics": {
+    "threads_in_catalog": 149,
+    "threads_active_24h": 42,
+    "threads_active_7d": 149,
+    "bumps_last_hour": 10,
+    "hourly_buckets_24h": [
+      1,
+      0,
+      0,
+      2,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      3,
+      3,
+      3,
+      10,
+      0,
+      1,
+      6,
+      10
+    ],
+    "hourly_sparkline": "▁▁▁▂▁▁▁▁▁▁▁▁▁▁▁▂▃▃▃█▁▁▅█",
+    "peak_hour_ist": "14:00 IST",
+    "peak_count": 10,
+    "quiet_hour_ist": "20:00 IST",
+    "rating": "Active",
+    "total_lifetime_posts": 2280,
+    "computed_at": "2026-05-28T12:30:57.755333+00:00"
+  },
+  "quote_of_day": {
+    "text": ">>21115 (OP) \"Wow, who knew decomposing gobars was such a hot topic? Next you'll tell me you're studying the existential dread of sentient trash heaps. #DeepThoughts #WasteOfTime\"",
+    "post_no": 22010,
+    "name": "Anon",
+    "topic": "satirical commentary on online discourse",
+    "source_thread_id": 21115
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather for Indus today",
+      "body": "A low-pressure system of insecurity hovered over South India, prompting one anon to question the region's perceived anxieties. The discussion drew a modest response. weighing in.\n\nA scattered front of social awkwardness moved across the board, as an anon recounted an uncomfortable encounter with a female acquaintance. The post sparked a brief but intense squall of replies, with 13 responders offering their thoughts.\n\nA high-pressure ridge of dating dynamics also dominated the conversation, with a discussion on the importance of height in Indian dating relationships.\n\nAnon claimed that height was not a significant factor, citing social status and facial attraction as more important considerations. The thread., with some posters agreeing and others disagreeing.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Anon Questions South India's 'Insecurity'",
+      "body": "Anon opened a thread asking, 'Why is south so insecure.' One respondent claimed Rajasthanis are 'the most aryan people in india' and that their dark skin is due to the hot weather, not a desire to tan.\n\nAnother poster referenced a post saying it's about who wants to be white and who does not, referencing people in the subcontinent not trying to look like 'cumskins' or 'smellu lc christians.' A different anon specifically mentioned Kerala, stating, 'Kerala Yaar smellu subhumanoid shit skin, it is always the smellu subhumanoid roach.' This poster also mentioned that even 'Dumeels and other soythies don't care as much,' calling 'Smellu' 'truly subbo.' Another respondent brought up skin tone, saying, 'Cuz Northians arent black i guess?\n\nMostly black skin is from the south and due to society, which nilla want to be niggafied?' One poster also questioned the data, asking if it included Dalits and stating they don't consider them human.\n\nThe conversation included several claims about various ethnic and regional groups' preferences for skin tone.\n\nOne poster stated Bihari's are 'the whitest bunch in Bharatville,' while another mentioned a 'whitest dude' they knew who was a 'brown-haired Jaat from Rajasthan.' The discussion also touched on literacy rates, with one poster calling '100% literacy' a joke.\n\nThe tone of the conversation was marked by several derogatory terms and claims about various groups. The thread remained on the topic of skin tone preferences and ethnic groups, with several posters using derogatory language.",
+      "flow": true,
+      "source_thread_id": 19783
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Recounts Awkward Encounter with Female Acquaintance",
+      "body": "Anon shared an anecdote about a brief, seemingly awkward encounter with a female acquaintance. The OP claimed this woman, who lived in the same building, asked to meet up for a drink before they both left Englandistan.\n\nAnon described the meeting as 'alright,' noting they did most of the talking and made her laugh. However, upon walking her to her hotel, she displayed awkward body language in the lobby.\n\nAnon recalled she was consulting with someone on WeChat, possibly a female friend. One respondent suggested Anon should have asked if she was comfortable instead of giving up.\n\nAnother anon criticized Anon for not pursuing the situation further, saying they 'should've taken her to your room.' Several others mocked Anon's situation, with one stating Anon got 'friendzoned by a chink.' Anon defended the logistics of their meeting location, citing it was near her hotel.\n\nThey also mentioned never seeing or speaking with her again. Some respondents questioned Anon's actions and made jokes about the situation, while one asked if Anon was a 'kalejfag.'",
+      "flow": false,
+      "source_thread_id": 22104
+    },
+    {
+      "section": "Discourse",
+      "title": "Height in Indian dating: does it really not matter?",
+      "body": "Anon shared their observation that, in the Indian context, height doesn't matter as much as social status and facial attractiveness when it comes to dating.\n\nThey claimed to know a 5'4 guy with an attractive girlfriend and mentioned incels who are 6'4.\n\nAnother anon countered that a woman will choose the best she can get, suggesting that even if a man is 165 cm, he needs to be slightly taller than that to be chosen.\n\nThis view was disputed by a third anon, who argued that facial attractiveness and confidence are more important than height, citing their own experience as a 180cm tall 'oldcel' who hasn't had success with girls.\n\nOne respondent stated that money is the only thing that truly matters, while another anon claimed that the new generation cares more about physical attributes like 'lambus'. A different anon made a comment about Manipal Muslims.\n\nLater in the discussion, an anon expressed frustration with the current dating scene, mentioning that girls around them are influenced by Korean Manhwa and other media. This anon seemed to dismiss the idea of pursuing relationships, saying 'Fuck em'.\n\nSome anons engaged in brief exchanges, with one explaining that 'oldcel' refers to being an oldfag, and another asking if someone was 'bgtow'.",
+      "flow": false,
+      "source_thread_id": 20951
+    }
+  ],
+  "composed_at": "2026-05-28T12:32:19.867529+00:00",
+  "source_raw": "raw_20260528T123108Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
