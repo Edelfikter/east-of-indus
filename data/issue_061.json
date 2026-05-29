@@ -1,0 +1,79 @@
+{
+  "issue_no": "No. 061",
+  "date": "29 May 2026",
+  "metrics": {
+    "threads_in_catalog": 149,
+    "threads_active_24h": 49,
+    "threads_active_7d": 149,
+    "bumps_last_hour": 9,
+    "hourly_buckets_24h": [
+      0,
+      2,
+      3,
+      4,
+      3,
+      1,
+      0,
+      0,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      3,
+      0,
+      0,
+      3,
+      1,
+      1,
+      3,
+      5,
+      9,
+      9
+    ],
+    "hourly_sparkline": "▁▂▃▄▃▁▁▁▁▁▁▁▁▁▃▁▁▃▁▁▃▄██",
+    "peak_hour_ist": "17:00 IST",
+    "peak_count": 9,
+    "quiet_hour_ist": "19:00 IST",
+    "rating": "Active",
+    "total_lifetime_posts": 2310,
+    "computed_at": "2026-05-29T12:31:13.614583+00:00"
+  },
+  "quote_of_day": {
+    "text": ">>22348 have you heard about maslow's hierarchy, pajeet? What's the point of being a lakhpati when the air you breathe is literal poison and you can't even walk outside without risking being slimed out by a pajeet predator?",
+    "post_no": 22353,
+    "name": "Anon",
+    "topic": "maslow's hierarchy, pollution problems",
+    "source_thread_id": 22104
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather for Indus today",
+      "body": "A low-pressure system of culinary disgust moved over the board this morning, bringing a downpour of complaints about a restaurant.\n\nAnon reported eating non-veg for the first time and experiencing revulsion, citing the presence of a bone in their sabji and the unpleasant atmosphere of the mullah-run establishment.\n\nA high-pressure ridge of meta discussion developed later, with a respondent questioning the purpose of East of Indus.\n\nThe poster wondered why effort was being invested in what they perceived as a dead chan, suggesting alternative uses for the talent and resources being applied. The discussion remained scattered and light.\n\nThe overall forecast remains overcast, with scattered showers of discontent and frustration continuing to affect various parts of the board. No clear skies are in sight.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Non-veg nightmare: Mullah-run restaurant sparks disgust",
+      "body": "Anon claimed to have eaten non-veg for the first time and was about to vomit after finding a bone in their sabji at a restaurant they described as full of 'stinky mullahs.' The OP's experience led another anon to suggest getting chicken from UCs, stating that Dalits and Pasmanda Muslims are 'subhuman' and don't know how to cook.\n\nThis anon recommended buying from farms owned by UCs and cooking at home to avoid food handled by certain groups. One respondent expressed relief that KFC was an option, but only if one is willing to compromise on quality.\n\nAnother anon praised 'jhatka places' or restaurants with a Hindu presence, saying they were safer for eating non-veg.\n\nThe OP's claim of finding a bone in their food led some to joke about 'spit jihad,' with one anon regretting their decision to eat at the restaurant despite its high ratings.\n\nThe place was described as 'stinky and dirty.' Some anons recommended alternatives like KFC or shawarma, with one saying to 'gag a goddamn shawarma through your throat' if you want to enjoy non-veg without stereotypes.\n\nThe thread included various reactions, from disgust and anger to sarcasm and recommendations for future non-veg dining experiences. Anon expressed frustration and distrust of mullah-run restaurants, with some using strong language to express their sentiments.\n\nOne anon asked if anyone had tried KFC, and another suggested a beef burger. The conversation remained focused on food preferences and experiences, with no clear resolution to the OP's initial problem.",
+      "flow": true,
+      "source_thread_id": 19877
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Questions Purpose of East of Indus",
+      "body": "Anon criticised the effort put into maintaining East of Indus, a printed newspaper covering an anonymous Indian imageboard called Induschan /b/.\n\nThe OP asked why the person behind EOI doesn't use their talents elsewhere, given that there have been 58 new editions and the site has improved with better design and features.\n\nAnother anon responded that the person behind EOI also maintains a secondary board where users can post content.\n\nThis anon suggested that the person may have opened up the newspaper for daily use as a side effect, now providing a day-to-day archive of important posts on Indus.\n\nOne respondent dismissed the OP's criticism, saying it's easy to promote the site but average users may struggle to adapt to chan cultures and flood the board with low-quality content.\n\nAnother anon jokingly accused the OP of being overly invested in a random imageboard. A link to the East of Indus page was provided: https://iac-press.blogspot.com/. Anon also suggested adding it to the quick links section on the homepage.\n\nA separate link to a different site was also shared: https://landchad.net/. The conversation included various brief exchanges, with one anon asking if someone had created anything recently and another making a vague comment 'Cfbr' a day later.",
+      "flow": false,
+      "source_thread_id": 22150
+    }
+  ],
+  "composed_at": "2026-05-29T12:32:25.646352+00:00",
+  "source_raw": "raw_20260529T123128Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
