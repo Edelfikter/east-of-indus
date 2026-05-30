@@ -1,4 +1,4 @@
-name: East of Indus Pulse
+name: East of Inch Pulse
 
 on:
   # Scheduling handled by the eoi-cron Cloudflare Worker (more reliable than GH cron).
@@ -27,4 +27,7 @@ jobs:
           SUPABASE_URL: https://nfpdtjqncwibgyrzvffr.supabase.co
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           EOI_BUCKET: eoi
+          # Route through the CF Worker proxy — GH Actions runner IPs hit
+          # Indiachan with 403 if they connect directly.
+          IMAGEBOARD_BASE: https://induschan-proxy.asphocal.workers.dev
         run: python pulse.py

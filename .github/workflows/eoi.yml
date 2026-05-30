@@ -1,4 +1,4 @@
-name: East of Indus
+name: East of Inch
 
 on:
   # Scheduling is done exclusively by the eoi-cron Cloudflare Worker calling
@@ -24,7 +24,11 @@ jobs:
       - name: Install deps
         run: pip install -r requirements.txt
 
-      - name: Scrape Induschan
+      - name: Scrape Indiachan
+        env:
+          # Route through the CF Worker proxy — GH Actions runner IPs hit
+          # Indiachan with 403 if they connect directly.
+          IMAGEBOARD_BASE: https://induschan-proxy.asphocal.workers.dev
         run: python scrape.py
 
       - name: Compose issue
