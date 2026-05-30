@@ -1,5 +1,6 @@
 httpx>=0.27
 curl_cffi>=0.7
+beautifulsoup4>=4.12
 groq>=0.11
 anthropic>=0.39
 openai>=1.50

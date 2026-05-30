@@ -1,15 +1,19 @@
-// East of Indus — metrics-only worker
+// East of Inch — metrics-only worker
 //
-// Every 5 minutes, fetches the Induschan catalog (via our existing proxy),
-// computes the same activity metrics as scrape.py's compute_metrics(), and
-// uploads metrics.json to Supabase. No GH Actions, no Python, no AI tokens.
-// The Blogger theme + iOS widget merge this onto pulse.json so the chart and
-// numbers feel live while the AI ticker text stays on the hourly pulse cadence.
+// Every 5 minutes, fetches the Indiachan /b/ catalog HTML (via the
+// induschan-proxy service binding — still named that for historical
+// reasons), regex-extracts the data-bump epoch timestamps from each
+// thread card, and computes the same activity metrics that scrape.py's
+// compute_metrics() produces. Uploads metrics.json to Supabase.
+//
+// Indiachan exposes Unix-second bump timestamps as data-bump attributes
+// on each <div class="post-container">. A handful of int extractions is
+// all this worker needs — much cheaper than pulling a JS HTML parser
+// into the 1MB compressed worker budget.
 //
 // Secrets required:
 //   SUPABASE_SERVICE_ROLE_KEY   service-role key (write to Storage)
 
-// PROXY is now a service binding (env.PROXY). See wrangler.toml.
 const SUPABASE_URL = "https://nfpdtjqncwibgyrzvffr.supabase.co";
 const BUCKET = "eoi";
 const BOARD = "b";
@@ -34,13 +38,7 @@ function rateActivity(bumpsLastHour) {
   return "Dead";
 }
 
-function parseISO(s) {
-  if (!s) return null;
-  const t = Date.parse(s);
-  return isNaN(t) ? null : t;
-}
-
-// Format Date as "HH:00 IST" (UTC+5:30)
+// Format epoch ms as "HH:00 IST" (UTC+5:30)
 function istHourLabel(dateMs) {
   const istMs = dateMs + (5 * 60 + 30) * 60 * 1000;
   const d = new Date(istMs);
@@ -48,19 +46,29 @@ function istHourLabel(dateMs) {
   return `${h}:00 IST`;
 }
 
-function computeMetrics(catalog) {
+// Extract bump timestamps (ms) and thread-card count from raw catalog HTML.
+// Indiachan format: every thread card is a <div class="post-container" ...
+// data-bump="1780147219" ...>. Regex-extract data-bump; count occurrences of
+// post-container as the catalog size.
+function parseCatalog(html) {
+  const bumps = [];
+  const re = /data-bump="(\d+)"/g;
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    bumps.push(parseInt(m[1], 10) * 1000); // epoch seconds -> ms
+  }
+  const cards = (html.match(/class="post-container"/g) || []).length;
+  return { bumps, cards };
+}
+
+function computeMetrics(bumpsMs, cardCount) {
   const now = Date.now();
   const win24 = now - 24 * 3600 * 1000;
   const win7d = now - 7 * 24 * 3600 * 1000;
 
-  const bumps = catalog
-    .map(t => parseISO(t.bumped || t.date))
-    .filter(Boolean);
+  const bumps24 = bumpsMs.filter(b => b >= win24);
+  const bumps7d = bumpsMs.filter(b => b >= win7d);
 
-  const bumps24 = bumps.filter(b => b >= win24);
-  const bumps7d = bumps.filter(b => b >= win7d);
-
-  // 24 hourly buckets, oldest -> newest
   const hourly = new Array(24).fill(0);
   for (const b of bumps24) {
     const hoursAgo = (now - b) / 3600000;
@@ -68,7 +76,6 @@ function computeMetrics(catalog) {
     if (bucket >= 0 && bucket < 24) hourly[bucket] += 1;
   }
 
-  // Peak / quietest
   let peakBucket = 0, quietBucket = 0;
   if (hourly.some(v => v > 0)) {
     peakBucket = hourly.indexOf(Math.max(...hourly));
@@ -78,7 +85,7 @@ function computeMetrics(catalog) {
   const quietHourMs = now - (23 - quietBucket) * 3600000;
 
   return {
-    threads_in_catalog: catalog.length,
+    threads_in_catalog: cardCount,
     threads_active_24h: bumps24.length,
     threads_active_7d: bumps7d.length,
     bumps_last_hour: hourly[23],
@@ -121,12 +128,12 @@ async function run(env) {
   if (!env.PROXY) {
     throw new Error("PROXY service binding not configured");
   }
-  // The hostname here is ignored; the request is routed directly to the bound worker
-  const r = await env.PROXY.fetch(`https://proxy.internal/${BOARD}/catalog.json`);
+  const r = await env.PROXY.fetch(`https://proxy.internal/boards/${BOARD}/catalog`);
   if (!r.ok) throw new Error(`catalog fetch failed: ${r.status}`);
-  const catalog = await r.json();
-  if (!Array.isArray(catalog)) throw new Error("catalog is not an array");
-  const m = computeMetrics(catalog);
+  const html = await r.text();
+  const { bumps, cards } = parseCatalog(html);
+  if (cards === 0) throw new Error("no post-container cards found in catalog HTML");
+  const m = computeMetrics(bumps, cards);
   await uploadMetrics(m, env);
   return m;
 }

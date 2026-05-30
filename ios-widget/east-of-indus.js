@@ -1,10 +1,10 @@
-// East of Indus — Scriptable widget for iOS
+// East of Inch — Scriptable widget for iOS
 //
 // Setup (5 min, free):
 //   1. Install Scriptable from the App Store (free, by Simon Støvring)
-//   2. Open Scriptable → tap "+" → paste this entire file → name it "East of Indus"
+//   2. Open Scriptable → tap "+" → paste this entire file → name it "East of Inch"
 //   3. Long-press your home screen → "+" → Scriptable → pick widget size
-//   4. Tap the placeholder widget → "Edit Widget" → Script: "East of Indus"
+//   4. Tap the placeholder widget → "Edit Widget" → Script: "East of Inch"
 //   5. Done. Widget will fetch latest.json + pulse.json from Supabase.
 //
 // Tap the widget to open the full paper at iac-press.blogspot.com/?eoi.
@@ -97,7 +97,7 @@ function renderMedium(w, issue, pulse, syncedISO) {
   const head = w.addStack();
   head.layoutHorizontally();
   head.bottomAlignContent();
-  addText(head, "East of Indus", {
+  addText(head, "East of Inch", {
     font: new Font("Times New Roman", 18),
     color: INK,
   });
@@ -177,7 +177,7 @@ function renderLarge(w, issue, pulse, syncedISO) {
   const head = w.addStack();
   head.layoutHorizontally();
   head.bottomAlignContent();
-  addText(head, "East of Indus", {
+  addText(head, "East of Inch", {
     font: new Font("Times New Roman", 22),
     color: INK,
   });

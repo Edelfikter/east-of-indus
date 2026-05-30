@@ -1,19 +1,15 @@
-// Induschan proxy — Cloudflare Worker
+// Imageboard proxy — Cloudflare Worker
 //
-// Forwards any GET request to https://induschan.site at the same path.
-// CF Worker requests originate from CF's own network, which bypasses the
-// datacenter-IP block that hits GitHub Actions runners.
+// Forwards any GET request to the configured ORIGIN at the same path. Worker
+// requests originate from CF's network, which bypasses datacenter-IP blocks
+// that catch GH Actions runners. Indiachan.top doesn't currently gate behind
+// Cloudflare anti-bot, but the proxy is kept for consistency, freshness
+// control, and source-of-IP independence in case that ever changes.
 //
-// Setup (5 min, no CLI):
-//   1. https://dash.cloudflare.com → sign in / sign up free
-//   2. Workers & Pages → Create → Create Worker
-//   3. Name it (e.g. "induschan-proxy")
-//   4. Paste the contents of THIS file into the editor
-//   5. Save and Deploy
-//   6. Copy the workers.dev URL it gives you (e.g. https://induschan-proxy.yourname.workers.dev)
-//   7. Paste that URL back to me; I'll point scrape.py at it via INDUSCHAN_BASE env.
+// The worker is generic — point ORIGIN at any imageboard. Currently:
+//   ORIGIN = https://indiachan.top  (Simplechan engine, HTML responses)
 
-const ORIGIN = "https://induschan.site";
+const ORIGIN = "https://indiachan.top";
 
 export default {
   async fetch(request) {
@@ -26,12 +22,12 @@ export default {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
           "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.9",
-        "Referer": ORIGIN + "/b/",
+        "Referer": ORIGIN + "/",
       },
-      // No edge caching — always fetch fresh from Induschan so freshly posted
-      // !eastofindus threads land in the next pipeline run without a stale snapshot.
+      // No edge caching — Indiachan serves fresh HTML on every request and
+      // we never want a stale catalog snapshot to bleed into the next pipeline run.
       cf: { cacheTtl: 0, cacheEverything: false },
     });
 
@@ -39,7 +35,7 @@ export default {
     return new Response(body, {
       status: upstream.status,
       headers: {
-        "Content-Type": upstream.headers.get("Content-Type") || "application/json",
+        "Content-Type": upstream.headers.get("Content-Type") || "text/html; charset=utf-8",
         "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
         "Access-Control-Allow-Origin": "*",
       },

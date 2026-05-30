@@ -1,5 +1,5 @@
 """
-Read the latest data/raw_*.json and compose a multi-section East of Indus issue
+Read the latest data/raw_*.json and compose a multi-section East of Inch issue
 via per-thread AI calls plus one Observations call. Output: data/issue_<n>.json.
 
 Multi-pass design:
@@ -36,7 +36,7 @@ MIN_OP_CHARS = int(os.getenv("MIN_OP_CHARS", "15"))
 SLEEP_BETWEEN_CALLS_S = float(os.getenv("SLEEP_BETWEEN_CALLS_S", "16"))
 
 
-SHARED_VOICE = """You are the sole writer of EAST OF INDUS, a small printed newspaper covering an anonymous Indian imageboard called Induschan /b/.
+SHARED_VOICE = """You are the sole writer of EAST OF INCH, a small printed newspaper covering an anonymous Indian imageboard called Indiachan /b/.
 
 VOICE
 Dry, observational, reportorial. Concrete. Specific. You report what posters actually said, claimed, asked, denied, or joked. The narrator may judge briefly when warranted (one short aside per piece, no more), but does not lecture, does not advise the public, and does not summarise in the abstract.
@@ -90,7 +90,7 @@ Return ONE JSON object only, no surrounding prose:
 OBS_INSTR = """YOUR JOB FOR THIS CALL
 You are writing the WEATHER FOR INDUS column for today's issue. It is the day's mood report, written in meteorological terms.
 
-The title is ALWAYS exactly: "Weather for Indus today"
+The title is ALWAYS exactly: "Weather on the board today"
 
 The body is 120-180 words. It reports the day's discourse climate as if it were weather. Each thread the user briefs you on becomes a weather phenomenon. Examples of the right register (do not reproduce, only follow):
 - "A high pressure system of caste hatred sat over the board through the afternoon, drawing the usual squalls of reply."
@@ -109,7 +109,7 @@ Rules:
 
 Return ONE JSON object only, no surrounding prose:
 {
-  "title": "Weather for Indus today",
+  "title": "Weather on the board today",
   "body": "the column. 120-180 words. 2-3 paragraphs."
 }
 """
@@ -174,7 +174,7 @@ def is_bot_thread(thread: dict) -> bool:
 def assign_threads(raw: dict, covered_ids: set | None = None) -> list:
     """Trim threads, rank by reply count, demote bot-spam threads, assign sections.
     Returns list of thread dicts with: id, reply_count, op, replies, assignment, target_words.
-    Excludes !eastofindus marker threads completely — those go to Letters via their own path.
+    Excludes !eastofinch marker threads completely — those go to Letters via their own path.
     Also excludes any thread IDs in `covered_ids` (every thread the paper has ever
     covered, across the whole archive). A thread is covered once, ever. Old threads
     that get newly bumped are fine as long as they haven't been written about before."""
@@ -372,7 +372,7 @@ def fetch_published_quotes() -> set:
 
 def collect_quote_candidates(raw_threads: list, recently_quoted: set | None = None) -> list[dict]:
     """Walk every post in the raw scrape, keep ones that pass the heuristic filter.
-    Skips !eastofindus marker threads entirely — guest submissions are never fed
+    Skips !eastofinch marker threads entirely — guest submissions are never fed
     to AI, they go through their own moderation queue. Also skips post_nos that
     have been recently used as Quote of the Day so quotes rotate."""
     recently_quoted = recently_quoted or set()
@@ -410,7 +410,7 @@ def collect_quote_candidates(raw_threads: list, recently_quoted: set | None = No
     return out[:30]
 
 
-QUOTE_SYSTEM = """You are picking the QUOTE OF THE DAY for East of Indus, a newspaper covering the Induschan /b/ imageboard.
+QUOTE_SYSTEM = """You are picking the QUOTE OF THE DAY for East of Inch, a newspaper covering the Indiachan /b/ imageboard.
 
 From the candidates the user gives you, pick exactly ONE post that could be printed verbatim on the front page of a small paper and survive without context. Good quotes have at least one of: distinctive voice, a strange specific image, a memorable line, sincere admission, dry wit, or genuinely bleak honesty.
 
@@ -477,9 +477,9 @@ def compose_quote(candidates: list[dict]) -> dict | None:
     }
 
 
-# ---------- Letters from /b/ — !eastofindus marker submissions ----------
+# ---------- Letters from /b/ — !eastofinch marker submissions ----------
 
-MARKER_RE = re.compile(r"^\s*!\s*eastofindus\s*[:\-]?\s*(.*)$", re.IGNORECASE)
+MARKER_RE = re.compile(r"^\s*!\s*eastofinch\s*[:\-]?\s*(.*)$", re.IGNORECASE)
 MIN_LETTER_WORDS = 50
 MAX_LETTERS_PER_ISSUE = 3
 AUTHOR_RATE_LIMIT_DAYS = 7
@@ -521,7 +521,7 @@ def passes_cheap_heuristics(body: str) -> tuple[bool, str]:
     return True, ""
 
 
-QUALITY_GATE_SYSTEM = """You are screening guest submissions to East of Indus for outright spam only.
+QUALITY_GATE_SYSTEM = """You are screening guest submissions to East of Inch for outright spam only.
 
 DEFAULT to ACCEPTING. The bar for rejection is HIGH. When in doubt, accept.
 
@@ -572,7 +572,7 @@ def quality_gate(letters: list[dict]) -> list[dict]:
 
 
 def collect_guest_letters(raw_threads: list, published: dict) -> list[dict]:
-    """Find OPs whose subject starts with `!eastofindus`. Returns up to 3 letters,
+    """Find OPs whose subject starts with `!eastofinch`. Returns up to 3 letters,
     oldest first, after passing 4 defense layers:
       1. Hard filters (word count, URLs, bots, post-no dedup)
       2. Body-hash dedup (same text different post)
@@ -842,7 +842,7 @@ def compose_observations(briefs: list) -> dict | None:
     # Title is fixed for Observations
     return {
         "section": "Observations",
-        "title": "Weather for Indus today",
+        "title": "Weather on the board today",
         "body": body,
         "flow": False,
         "source_thread_id": None,
@@ -911,7 +911,7 @@ def main() -> int:
     if quote:
         print(f"  [quote] picked No. {quote['post_no']} ({quote['name']}): {quote['text'][:60]}...")
 
-    # Letters from /b/: OP submissions with !eastofindus marker
+    # Letters from /b/: OP submissions with !eastofinch marker
     published_post_nos = fetch_published_guests()
     guest_letters = collect_guest_letters(raw.get("threads") or [], published_post_nos)
     print(f"  [letters] {len(guest_letters)} new guest submission(s) this issue")

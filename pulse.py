@@ -1,8 +1,7 @@
 """
-Hourly Pulse generator for East of Indus.
+Hourly Pulse generator for East of Inch.
 
-Fetches the Induschan catalog (via the same INDUSCHAN_BASE used by scrape.py,
-which is normally a Cloudflare Worker proxy), computes live metrics, counts
+Fetches the Indiachan catalog via simplechan.py, computes live metrics, counts
 new threads since the last published issue, generates a single-sentence
 "ticker" via Groq, and uploads pulse.json to Supabase Storage.
 
@@ -15,17 +14,13 @@ import re
 import sys
 import time
 from datetime import datetime, timedelta, timezone
-from html import unescape
 
 import httpx
-from curl_cffi import requests as cffi_requests
 from dotenv import load_dotenv
 
-# Re-use everything we already wrote
+import simplechan
 from scrape import (
-    BASE,
     BOARD,
-    BROWSER_HEADERS,
     IST,
     compute_metrics,
     parse_iso,
@@ -44,7 +39,7 @@ PROVIDER = (os.getenv("AI_PROVIDER") or "groq").lower().strip()
 GROQ_MODEL = os.getenv("GROQ_MODEL") or "meta-llama/llama-4-scout-17b-16e-instruct"
 
 
-TICKER_SHARED = """You are writing the LIVE TICKER line for East of Indus, a small newspaper covering the Induschan /b/ imageboard.
+TICKER_SHARED = """You are writing the LIVE TICKER line for East of Inch, a small newspaper covering the Indiachan /b/ imageboard.
 
 You are given the MOST RECENT posts on /b/ right now, freshly from the wire. Use these specific posts as your raw material; the ticker should reflect what Anon JUST said, not what the day's debates were.
 
@@ -85,11 +80,7 @@ def build_ticker_system(mode: dict) -> str:
 
 
 def fetch_catalog():
-    url = f"{BASE}/{BOARD}/catalog.json"
-    r = cffi_requests.get(url, headers=BROWSER_HEADERS, timeout=30, impersonate="chrome131")
-    if r.status_code >= 400:
-        sys.exit(f"GET {url} -> {r.status_code}")
-    return r.json()
+    return simplechan.fetch_catalog(BOARD)
 
 
 def fetch_latest_issue_composed_at() -> datetime | None:
@@ -111,7 +102,7 @@ def count_threads_since(catalog: list, since: datetime | None) -> int:
         return 0
     n = 0
     for t in catalog:
-        d = parse_iso(t.get("date"))
+        d = parse_iso(t.get("created"))
         if d and d > since:
             n += 1
     return n
@@ -122,53 +113,51 @@ def freshest_replies(catalog: list, top_k_threads: int = 5, max_posts: int = 10)
     posts across them (by timestamp). This drives a ticker that actually moves hour to
     hour, since replies happen every few minutes even when threads barely change."""
     def bumped_at(t):
-        return parse_iso(t.get("bumped") or t.get("date")) or datetime.min.replace(tzinfo=timezone.utc)
+        return parse_iso(t.get("bumped")) or datetime.min.replace(tzinfo=timezone.utc)
 
-    # Exclude !eastofindus marker threads — guest submissions don't feed the AI ticker
-    pool = [t for t in catalog if not MARKER_RE.match((t.get("subject") or "").strip())]
+    # Exclude !eastofinch marker threads (guest submissions don't feed the AI ticker)
+    # and pinned threads (they bump artificially and would dominate "most recent").
+    pool = [
+        t for t in catalog
+        if not t.get("pinned")
+        and not MARKER_RE.match((t.get("subject") or "").strip())
+    ]
     recent_threads = sorted(pool, key=bumped_at, reverse=True)[:top_k_threads]
     print(f"  Fetching {len(recent_threads)} most-recently-bumped threads for fresh replies...")
 
     all_posts = []
     for t in recent_threads:
-        tid = t.get("postId") or t.get("no")
+        tid = t.get("no")
         if not tid:
             continue
         try:
-            url = f"{BASE}/{BOARD}/thread/{tid}.json"
-            r = cffi_requests.get(url, headers=BROWSER_HEADERS, timeout=20, impersonate="chrome131")
-            if r.status_code != 200:
-                continue
-            thread = r.json()
+            thread = simplechan.fetch_thread(BOARD, tid)
         except Exception as e:
             print(f"    skip thread {tid}: {e}")
             continue
         time.sleep(0.3)
 
         subject = (thread.get("subject") or "").strip()[:60]
-        # OP post itself
-        op_body = strip_html(thread.get("message") or thread.get("nomarkup") or "")
+        op_body = thread.get("body") or ""
         if op_body and len(op_body) > 20 and not is_bot_author(thread.get("name")):
             all_posts.append({
-                "no": thread.get("postId") or thread.get("no"),
+                "no": thread.get("no"),
                 "body": op_body[:220],
-                "created": thread.get("date"),
+                "created": thread.get("created"),
                 "thread_subject": subject,
             })
-        # Replies
         for r_post in (thread.get("replies") or []):
             if is_bot_author(r_post.get("name")):
                 continue
-            body = strip_html(r_post.get("message") or r_post.get("nomarkup") or "")
+            body = r_post.get("body") or ""
             if not body or len(body) < 20:
                 continue
-            # Skip obvious bot-tool content
             if re.search(r"@jaggu|indusLLM|IMPORTANT:\s*Respond|Available\s+tools|Write_file", body, re.IGNORECASE):
                 continue
             all_posts.append({
-                "no": r_post.get("postId") or r_post.get("no"),
+                "no": r_post.get("no"),
                 "body": body[:220],
-                "created": r_post.get("date"),
+                "created": r_post.get("created"),
                 "thread_subject": subject,
             })
 
@@ -240,8 +229,6 @@ def upload(path: str, body: bytes) -> None:
 def main() -> int:
     print("Fetching catalog...")
     catalog = fetch_catalog()
-    if not isinstance(catalog, list):
-        catalog = catalog.get("threads") or []
     print(f"  {len(catalog)} threads in catalog")
 
     now = datetime.now(timezone.utc)
