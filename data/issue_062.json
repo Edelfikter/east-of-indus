@@ -1,0 +1,100 @@
+{
+  "issue_no": "No. 062",
+  "date": "30 May 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 39,
+    "threads_active_7d": 93,
+    "bumps_last_hour": 6,
+    "hourly_buckets_24h": [
+      1,
+      0,
+      0,
+      3,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      2,
+      2,
+      3,
+      2,
+      3,
+      0,
+      4,
+      2,
+      2,
+      6,
+      1,
+      6
+    ],
+    "hourly_sparkline": "▂▁▁▄▁▁▁▁▁▁▃▁▃▃▄▃▄▁▅▃▃█▂█",
+    "peak_hour_ist": "19:00 IST",
+    "peak_count": 6,
+    "quiet_hour_ist": "23:00 IST",
+    "rating": "Brisk",
+    "total_lifetime_posts": 698,
+    "computed_at": "2026-05-30T15:59:12.656521+00:00"
+  },
+  "quote_of_day": {
+    "text": ">>832\nI could look like fight club brad pitt in 4 montbs if i hit it good. But i don't wanna go gym. I fear i will fall into too deep of despair if i got a good physique as well",
+    "post_no": 843,
+    "name": "Anon",
+    "topic": "Gym motivation, despair, physique",
+    "source_thread_id": 832
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A low-pressure system of job hunting frustration moved into the board, bringing scattered showers of complaints and struggles. Anon shared their daily grind, and others responded with commiserations and the occasional harsh remark.\n\nA fog of introspection rolled in later, as one anon began blogging about life experiences. The discussion remained overcast, with a few respondents sharing their own thoughts but no clear resolution in sight.\n\nMeanwhile, a brief but intense squall of self-disclosure blew through, with an anon requesting personal details from others.\n\nNearby, a gentle drizzle of personality test results was shared, sparking a few comments but little controversy.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Job hunting struggles on Indiachan",
+      "body": "Anon kicked off a discussion on job hunting, stating they would post about it daily. Anon shared their experience of speaking to a consultant who claimed to have connections with various companies and could secure a job quickly.\n\nHowever, the catch was that there would be no transport facility or other privileges typically offered by the company directly. The consultant reportedly reached out to people in various designations, such as 'vice president HR,' to get the anon's resume considered.\n\nAnother anon shared their own struggles with job searching, stating they had scrolled through 37 pages of job listings on Naukri.com in an hour, with only 6% of the postings being potentially relevant.\n\nThey found that 44% of the jobs they checked were not a good fit due to eligibility issues or low pay. One anon expressed frustration with the job search process, saying their head hurts from going through all the listings.\n\nThey reported shortlisting 25 jobs, but most were not eligible or too far away.\n\nAnother anon mentioned that they applied for only one job after two months of inactivity, an instructional designer position, but were worried about their lack of experience with Adobe Creative Cloud. Anxiety and depression were common themes in the discussion.\n\nOne anon reported feeling depressed about potentially never getting a job with a salary over 20k per month. Another anon expressed shame and frustration with wasting their day waiting for a consultant to follow up.\n\nThe conversation also touched on the challenges of job searching in India, with one anon noting that companies prefer local candidates. Others discussed their experiences with job search platforms like Naukri, Indeed, and LinkedIn.\n\nThe struggle to find a job was evident throughout the discussion, with many anons sharing their negative experiences and frustrations.",
+      "flow": true,
+      "source_thread_id": 1857
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon reflects on life experiences",
+      "body": "Anon started by stating they would blog on the site.\n\nOne anon shared an experience of attending a marriage event at a 5-star hotel, where they had two blue lagoons and interacted with people from a family who had previously lived in a similar neighborhood.\n\nThey described some attendees as 'pajeet' and had a seemingly enjoyable time. Another anon recounted a difficult experience with traffic, criticizing drivers for not following rules or showing courtesy.\n\nA different anon discussed a job opportunity as a purchase executive or service executive, expressing disinterest due to anticipated stress and demanding tasks.\n\nAnon also shared a personal experience of accidentally stepping on cow poop at a Hindu temple and attempting to clean their foot in a holy pond. One user expressed frustration with watching WWE, calling it 'hot trash' and criticizing recent events.\n\nA separate anon reported experiencing heat stroke and receiving invalidation from their parents, who claimed to have endured more despite being older. Anon also discussed being banned on 4chan, issues with another site, and observations about a wealthy family in their neighborhood.\n\nSome users shared fables, including one about a heron seeking large prey and another about a farmer who saved a snake that later bit him. Anon also discussed challenges with finding a job, including applying for positions and dealing with potential scams.\n\nOne user expressed feelings of sadness and frustration, having been told by their mom that they are addicted to the internet and have lost their life to it.\n\nAnon offered advice to another user, suggesting they consider moving to find better job opportunities despite potential downsides.",
+      "flow": false,
+      "source_thread_id": 14
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Questions Indiachan's Longevity",
+      "body": "Anon opened a thread on Indiachan questioning how long the site would stay up, predicting it would only last a month.\n\nOne respondent expressed skepticism about self-hosting, citing a past experience with Nextcloud where the laptop's constant operation drained them psychologically.\n\nAnother user brought up the topic of VPS and stability, contrasting a site with all features complete on a VPS as stable, but claimed Indiachan would be unstable and frequently down.\n\nThe discussion also touched on the topic of /v/ board usage, with one user stating most people don't play video games and therefore don't need the board. A different user dismissed the /v/ board as unnecessary.\n\nSome users discussed hosting costs, with one noting a year's worth of hosting had already been paid. Another user questioned which VPS provider was being used, specifically asking if it was Vultr.\n\nThe conversation also included some personal interactions, with one user mentioning they enjoyed interacting on the site regardless of its popularity.\n\nThe original post sparked a variety of responses, ranging from technical discussions about hosting to more casual comments about the site's potential longevity.",
+      "flow": false,
+      "source_thread_id": 1739
+    },
+    {
+      "section": "Notices",
+      "title": "Anon shares personal details",
+      "body": "Anon started a thread asking others to share their age, caste, height, job, and salary.\n\nOne respondent, who claimed to be 35, a Brahmin Sales Manager, shared their details: 5'8\" height, 82K base pay, and sometimes earning 1.25 lakhs a month.\n\nAnother anon shared: 19 years old, Rajput, 5'11\" height, site research technician, earning $350 a week before taxes. A 22-year-old Baman software engineer with 161 height and 25lpa salary also participated.\n\nOne respondent made a remark about Ramgarhia people, while another asked about someone's KKHV status. The thread included various brief and often incomplete self-reports.",
+      "flow": false,
+      "source_thread_id": 434
+    },
+    {
+      "section": "Notices",
+      "title": "Personality test results shared",
+      "body": "Anon shared a link to a personality test on openpsychometrics.org and their results.\n\nOne respondent noted that such tests are not a good indicator of who you are, calling them \"just a meme.\" Another anon provided a breakdown of someone's test results, stating they were highly introverted, highly neurotic, and highly agreeable.\n\nA third anon shared a different test and questioned the correlation of results. One user joked about the test's conclusion that a user was statistically more likely to be female based on their scores.",
+      "flow": false,
+      "source_thread_id": 2434
+    }
+  ],
+  "composed_at": "2026-05-30T16:01:07.189477+00:00",
+  "source_raw": "raw_20260530T155918Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
