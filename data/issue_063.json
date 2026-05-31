@@ -1,0 +1,100 @@
+{
+  "issue_no": "No. 063",
+  "date": "31 May 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 41,
+    "threads_active_7d": 97,
+    "bumps_last_hour": 1,
+    "hourly_buckets_24h": [
+      1,
+      1,
+      1,
+      1,
+      3,
+      3,
+      2,
+      1,
+      4,
+      2,
+      1,
+      3,
+      0,
+      0,
+      1,
+      3,
+      0,
+      6,
+      2,
+      3,
+      1,
+      0,
+      1,
+      1
+    ],
+    "hourly_sparkline": "▂▂▂▂▄▄▃▂▅▃▂▄▁▁▂▄▁█▃▄▂▁▂▂",
+    "peak_hour_ist": "01:00 IST",
+    "peak_count": 6,
+    "quiet_hour_ist": "20:00 IST",
+    "rating": "Rotting",
+    "total_lifetime_posts": 743,
+    "computed_at": "2026-05-31T01:30:47.622683+00:00"
+  },
+  "quote_of_day": {
+    "text": "If ur even remotely tall and have a good face but dont have a great neck posture ur basically taking away extra points.\n\nA gay friend of mine told me how hot he found my posture and back, it really works guys.",
+    "post_no": 2559,
+    "name": "Anon",
+    "topic": "posture, attractiveness, and self-improvement",
+    "source_thread_id": 2559
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A low-pressure system of familial obligation moved over the board, as Anon weighed the pros and cons of accepting a CNG taxi offer from parents. The system lingered, producing scattered showers of career advice and taxi-related queries.\n\nA heat wave of self-reliance swept across the Discourse section, with Anon calling for individuals to create their own culture rather than adopting external influences.\n\nThis development was accompanied by a high-pressure ridge of confidence, with one poster asserting that good posture was a key attractant.\n\nMeanwhile, a scattered drizzle of tech-related queries fell across the Notices section, with Anon seeking advice on Graphene OS options and another claiming to have destroyed the Indian imageboard system.\n\nThe latter announcement produced a brief fog of skepticism, but it quickly cleared.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Anon considers parental offer of CNG taxi",
+      "body": "Anon opened a thread saying their parents are planning to kick them out of the house, with the last offer being to buy a CNG car so they can become a taxi driver.\n\nOne respondent suggested that becoming a cab driver might not be a bad option, comparing it favourably to corporate jobs with long hours and high stress.\n\nAnother user chimed in with an unusual claim, stating that in China, people in their 30s who want to enter the workforce have limited options: food delivery, cab driving, or cargo transport.\n\nThe original poster also questioned the financial viability of being a taxi driver, with one user estimating an average profit of 25,000 rupees per month after deducting gas and maintenance costs.\n\nSome users joked about the difficulties of driving a manual transmission car in heavy traffic, with one recommending an automatic transmission vehicle instead.\n\nThe possibility of buying an electric vehicle (EV) was also raised, with one user mentioning the Tata Tiago as an option priced around 7 lakh rupees.\n\nOne anon directly advised the original poster to become an Uber driver instead, suggesting they get an automatic transmission car or an EV.\n\nThe thread also included personal anecdotes and humorous exchanges, with one user recalling a past conversation with the original poster about a woman friend with borderline personality disorder.\n\nThe tone of the thread was largely informal and conversational, with users sharing their opinions and experiences on the topic.",
+      "flow": true,
+      "source_thread_id": 2456
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Calls for Self-Sufficiency in Culture Creation",
+      "body": "Anon kicked off the discussion by stating that individuals should 'MAKE YOUR OWN CULTURE' rather than succumbing to what they termed 'goracrap.' They suggested creating personal projects, such as perfecting a bot for a favorite game or developing multiplayer experiences, as ways to foster culture.\n\nAnother anon countered that Indians already have a culture, citing unique contributors, various administrators with distinct personalities over the years, and mascots like jaggu and geeta as evidence.\n\nThis respondent believed that the presence of high IQ discussions and a better ratio of experienced users to newcomers could enhance the culture.\n\nOne anon offered a more primal perspective, stating that culture emerges from self-belief and purpose, likening it to basic human desires. They implied that once one 'locks onto' their purpose and achieves it, a cultural explosion can occur.\n\nThe discussion also touched on the idea that consuming foreign culture, specifically 'Germanic culture,' could lead to a loss of 30-40 years without accomplishments. A respondent sarcastically questioned whether 'swissfaggot' was trolling or going off the rails.\n\nLundians were also criticized for supposedly being incapable of developing culture. In response to the OP's call for self-sufficiency in culture creation, one anon simply asked, 'why tf do i want a culture.'",
+      "flow": false,
+      "source_thread_id": 2241
+    },
+    {
+      "section": "Discourse",
+      "title": "Posture perceived as sexy trait",
+      "body": "Anon opened the discussion by stating that having good posture can add to one's attractiveness, particularly for taller individuals with a good face. A gay friend had complimented this anon on their posture and back.\n\nAnother anon chimed in, questioning whether the original poster had ever seen a handsome man with good posture outside. This anon shared their personal experience of working on their posture and finding it beneficial.\n\nThey noted that people with good posture seem poised and sexy. One respondent joked about trying a YouTube video to feel gay. A 40-year-old anon humorously stated that they would start caring about their posture now that they had enough money.\n\nAnon also discussed the practical benefits of good posture, stating that it activates overall musculature and makes one look great. However, another anon advised against worrying about posture until financial issues are resolved, labeling it as 'fake' otherwise.\n\nThe conversation also involved some lighthearted and sarcastic comments. Anon engaged with a low-IQ remark, while another offered words of encouragement to someone who seemed to be coping with their height.\n\nThe thread also had a few inquiries; one anon asked if a height of 5'6\" qualified as 'remotely tall.' The conversation wrapped up with a comment about men coping with their height.",
+      "flow": false,
+      "source_thread_id": 2559
+    },
+    {
+      "section": "Notices",
+      "title": "Anon Weighs Graphene OS Options",
+      "body": "Anon expressed interest in Graphene OS but was deterred by the cost of Pixel phones, citing concerns over trackers in apps.\n\nOne respondent suggested Lineage OS as a more compatible alternative, while another noted Graphene's plans to support more devices, possibly in partnership with Motorola.\n\nAnon also received warnings that Google's upcoming policy changes may limit Android app installation, rendering ROM choices moot. Some suggested sticking to FOSS apps or abandoning mainstream options altogether. Anon also got insulted for suggesting Lineage OS.",
+      "flow": false,
+      "source_thread_id": 2520
+    },
+    {
+      "section": "Notices",
+      "title": "Anon Claims to Have Destroyed Indian Imageboard System",
+      "body": "Anon posted that someone single-handedly destroyed the entire Indian imageboard system. Other anons responded with confusion, asking who this person was. One anon mentioned 'Satish Patel aka Dyaush'. Anon then claimed to have nudes of this person. Another anon asked how big this person's dick was. The thread devolved into requests to post the nudes and general speculation about the person's identity and sex life.",
+      "flow": false,
+      "source_thread_id": 2529
+    }
+  ],
+  "composed_at": "2026-05-31T01:32:41.515119+00:00",
+  "source_raw": "raw_20260531T013053Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
