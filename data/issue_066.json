@@ -1,0 +1,100 @@
+{
+  "issue_no": "No. 066",
+  "date": "1 June 2026",
+  "metrics": {
+    "threads_in_catalog": 99,
+    "threads_active_24h": 52,
+    "threads_active_7d": 99,
+    "bumps_last_hour": 12,
+    "hourly_buckets_24h": [
+      2,
+      0,
+      2,
+      3,
+      6,
+      2,
+      0,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      4,
+      4,
+      1,
+      1,
+      1,
+      2,
+      4,
+      5,
+      12
+    ],
+    "hourly_sparkline": "▂▁▂▂▄▂▁▁▁▁▁▁▁▁▁▃▃▁▁▁▂▃▃█",
+    "peak_hour_ist": "18:00 IST",
+    "peak_count": 12,
+    "quiet_hour_ist": "20:00 IST",
+    "rating": "Active",
+    "total_lifetime_posts": 904,
+    "computed_at": "2026-06-01T12:31:18.788378+00:00"
+  },
+  "quote_of_day": {
+    "text": "I don't like eating meat as well.\nIt reminds me of porn. Appealing and exciting to eat but once you do you just feel bad about it.\n>How many years of conditioning\nNo, it will never get good.\n\nSea food is different.\nPrawns and crabs are great.",
+    "post_no": 3010,
+    "name": "Anon",
+    "topic": "meat eating, vivid simile",
+    "source_thread_id": 3005
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A low-pressure system of frustration developed over Indiachan's IRC link discussion, with multiple posters repeating the link and sparking a scattered storm of complaints. The system lingered, producing a steady drizzle of criticisms and jokes.\n\nA cold front of disgust swept across the board when an anon shared a bad experience with meat, triggering a brisk debate. Posters traded opinions on the taste and cultural significance of meat, generating a flurry of responses.\n\nMeanwhile, a fog of concern rolled in after a sewer collapse during UP's B.Ed entrance exam, prompting a wave of reactions from users.\n\nMath problems and claims of solving them brought a brief heat wave of intellectual posturing, while users claiming attendance sparked a scattered downpour of numbers and jokes.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Indiachan's IRC Link Posted Repeatedly",
+      "body": "Anon posted a link to Indiachan's IRC channel on /b/. The original poster simply provided the link to the IRC channel: https://indiachan.top/irc. Several other anons responded by posting the same link repeatedly over the course of several days.\n\nOne anon on May 25 wrote that they were \"going on a date\" and promised to \"fix the site later.\" The reason for the repeated posting of the IRC link was not explained in the thread.\n\nSome anons posted the letters \"bmp\" in response to the original post.\n\nOne anon on May 9 referenced a post numbered 1073 and wrote \"oye ek baat sun na!?\" The thread remained active for several weeks with anons continuing to post the IRC link.",
+      "flow": true,
+      "source_thread_id": 1073
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Recounts Bad Experience with Meat, Sparking Debate",
+      "body": "Anon shared a personal experience of eating meat and finding it disgusting. The poster claimed they would never eat meat again and wondered how others could make it a part of their daily routine.\n\nOne respondent expressed similar sentiments, stating they also dislike eating meat. This anon drew an analogy between meat consumption and watching porn, suggesting that the initial appeal wears off after consumption.\n\nThey made an exception for seafood, particularly prawns and crabs. Another anon offered a more cynical perspective, suggesting that meat consumption is driven by parasites within the meat that create an obsessive craving for more flesh.\n\nA different poster joked about the digestive consequences of eating meat, claiming it leads to constipation. The discussion also touched on the topic of dietary choices and cultural influences.\n\nOne anon mentioned that Kashmiris, specifically Kashmir Pandits, are often non-vegetarians. There were also comments about the perceived superiority of certain types of meat and the role of conditioning in shaping food preferences.\n\nAnon questioned the propaganda surrounding meat consumption, asking about the endgame of promoting meat as a superior food choice.\n\nA respondent argued that human stomach acidity is similar to that of carnivores, suggesting a biological basis for meat consumption.\n\nThe conversation was marked by a range of opinions and personal anecdotes, with some anons sharing their experiences with meat consumption and others offering critiques of the practice.",
+      "flow": false,
+      "source_thread_id": 3005
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Reacts to UP's B.Ed Entrance Exam Sewer Collapse",
+      "body": "Anon posted about a B.Ed entrance exam incident in UP's Kanpur where at least 15 to 20 applicants fell into a sewer after the concrete cover collapsed.\n\nAnon responded with a seemingly unrelated and grandiose statement, mentioning being 'born for greatness' and implying that problems in the system are necessary for personal achievement. This poster claimed they would be a great savior.\n\nAnother anon found humor in the situation, comparing it to other bizarre incidents involving 'pajeet' and train-related events.\n\nThis poster described the synchronicity of these events as 'a miracle to behold.' One poster brought up the topic of reservations, stating that there is 50% reservation for women in elections, but nothing similar for Dalits or others.\n\nAnon also joked about the incident, saying it was a 'pajeet headline' and even adding a comment about a cow that died in a train-related incident. The incident and its aftermath received various reactions, with some finding humor in the 'pajeetness' of it all.\n\nNo clear resolution or further information about the incident was provided in the thread.",
+      "flow": false,
+      "source_thread_id": 2819
+    },
+    {
+      "section": "Notices",
+      "title": "Anon posts math problems, others claim to solve or disparage",
+      "body": "Anon posted a math problem with the comment \"you should be able to solve this\".\n\nOne respondent claimed to have solved an equation related to the problem, stating the solution was \"x + 2y - 6 = 0\" and asked for confirmation from \"JEEfags\". Another poster described the problem as \"initial stage olympiad level\" and \"proof based\".\n\nSome anons disparaged those who couldn't solve the problem, with one calling them \"subhuman fecaloid\". Others made jokes, with one saying \"Nerdjeets thinks stoodycellmaxxing is the only goal of life\".",
+      "flow": false,
+      "source_thread_id": 3037
+    },
+    {
+      "section": "Notices",
+      "title": "Users Claim Attendance",
+      "body": "Anon started a thread claiming 13 active users and asked others to confirm their attendance. Anon replied, saying 'I am pajeet therefore, I am present.' Another Anon said 'MP anon Present saaar.' A third Anon simply stated 'Present saar.' Other responses included 'present saar,' 'Sup saar,' and 'present.' One Anon asked for 'Sauce?' while another claimed 'Nobody here.'",
+      "flow": false,
+      "source_thread_id": 1823
+    }
+  ],
+  "composed_at": "2026-06-01T12:33:10.072234+00:00",
+  "source_raw": "raw_20260601T123125Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
