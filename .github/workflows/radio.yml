@@ -14,6 +14,7 @@ jobs:
     env:
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
       GROQ_MODEL: meta-llama/llama-4-scout-17b-16e-instruct
       # Route through the CF Worker proxy — GH Actions runner IPs hit
       # Indiachan with 403 if they connect directly.
