@@ -443,33 +443,27 @@ def build_order(seg_items, ident_items, song_pool):
             s = song_pool.pop(0)
             order.append({"type": "song", "videoId": s["videoId"], "duration": s["duration"]})
         else:
-            order.append({"type": "music", "playlist": random.choice(PLAYLISTS), "songs": 2})
+            order.append({"type": "music", "playlist": random.choice(PLAYLISTS), "songs": 1})
 
-    front = []
+    # Uniform chattiness: do NOT front-load the big talk. Spread every big segment
+    # evenly across the whole block, woven into the ident stream, then put one song
+    # after each talk item. So the first hour and the last hour are equally chatty
+    # and equally colourful end to end.
+    bigs = news + hosts + talk + weather + govt          # all the long segments; sign-on opens separately
+    nb, ni = len(bigs), len(idents)
+    talk_stream, bi = [], 0
+    for k, idt in enumerate(idents):
+        target = round((k / ni) * nb) if ni else nb       # how many bigs should be placed by now to stay even
+        while bi < target and bi < nb:
+            talk_stream.append(bigs[bi]); bi += 1
+        talk_stream.append(idt)
+    while bi < nb:                                         # leftover bigs (few-idents case)
+        talk_stream.append(bigs[bi]); bi += 1
+
     if signon:
-        front.append(signon[0])
-    if news:
-        front.append(news[0])
-    if hosts:
-        front.append(hosts[0])
-    front += talk + weather + govt
-    for i, seg in enumerate(front):
-        order.append(seg)
-        if i < len(front) - 1:
-            music()
-            if idents:
-                order.append(idents.pop(0))
-    music()
-    back = news[1:] + hosts[1:]
-    n = 0
-    while idents or back:
-        music()                      # one song per beat (was two) so talk lands twice as often, far fewer dry stretches
-        if idents:
-            order.append(idents.pop(0))
-        n += 1
-        if back and n % 2 == 0:
-            order.append(back.pop(0))
-    music()
+        order.append(signon[0]); music()                  # open the hour, then a song
+    for t in talk_stream:
+        order.append(t); music()                          # talk, song, talk, song ... uniformly, all block long
     return {"station": "Inch Radio", "items": order}
 
 
