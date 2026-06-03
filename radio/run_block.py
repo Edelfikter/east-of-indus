@@ -372,8 +372,11 @@ def fetch_song_pool():
                     break
             for i in range(0, len(ids), 50):
                 r = httpx.get("https://www.googleapis.com/youtube/v3/videos",
-                              params={"part": "contentDetails", "id": ",".join(ids[i:i+50]), "key": key}, timeout=30)
+                              params={"part": "contentDetails,status", "id": ",".join(ids[i:i+50]), "key": key}, timeout=30)
                 for it in r.json().get("items", []):
+                    st = it.get("status", {})
+                    if not st.get("embeddable") or st.get("privacyStatus") != "public":
+                        continue   # only songs that can actually play in an embed
                     du = iso_dur(it.get("contentDetails", {}).get("duration"))
                     if 30 < du < 900:
                         pool.append({"videoId": it["id"], "duration": du})
