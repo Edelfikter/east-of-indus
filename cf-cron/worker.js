@@ -14,6 +14,7 @@ const SCHEDULES = {
   "7 * * * *":   "pulse.yml",  // hourly pulse: ticker + live metrics
   "30 1 * * *":  "eoi.yml",    // 01:30 UTC = 07:00 IST  morning issue
   "30 12 * * *": "eoi.yml",    // 12:30 UTC = 18:00 IST  evening issue
+  "45 */3 * * *": "radio.yml", // inch radio: fresh block every 3 hours
 };
 
 async function trigger(workflow, token) {
@@ -58,7 +59,7 @@ export default {
       return new Response("eoi-cron alive. Use /trigger?w=<workflow.yml>", { status: 200 });
     }
     const w = url.searchParams.get("w");
-    if (!w || !["pulse.yml", "eoi.yml"].includes(w)) {
+    if (!w || !["pulse.yml", "eoi.yml", "radio.yml"].includes(w)) {
       return new Response("bad workflow", { status: 400 });
     }
     const resp = await trigger(w, env.GITHUB_TOKEN);

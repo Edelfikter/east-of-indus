@@ -8,4 +8,5 @@ crons = [
   "7 * * * *",     # pulse, every hour at :07
   "30 1 * * *",    # morning issue, 07:00 IST
   "30 12 * * *",   # evening issue, 18:00 IST
+  "45 */3 * * *",  # inch radio, fresh block every 3 hours
 ]
