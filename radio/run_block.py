@@ -257,7 +257,7 @@ def generate():
                          "Vary the opener and the observation, no repeats. Never a blunt label, never 'keeping you warm' or 'your companion'. "
                          "Write each ident as ONE single line (no internal line breaks), idents separated by a newline. Plain text, nothing else.")
     try:
-        raw = call_groq(ident_sys, "Board activity right now:\n" + activity + "\n\nMake 18 distinct idents.", 1700, json_mode=False)
+        raw = call_groq(ident_sys, "Board activity right now:\n" + activity + "\n\nMake 26 distinct idents.", 2400, json_mode=False)
         idents = [re.sub(r"^[\s\-•\d.)]+", "", l).strip() for l in raw.splitlines() if l.strip()]
     except Exception as e:
         idents = []
@@ -459,20 +459,16 @@ def build_order(seg_items, ident_items, song_pool):
             music()
             if idents:
                 order.append(idents.pop(0))
-            music()
-    music()
     music()
     back = news[1:] + hosts[1:]
     n = 0
     while idents or back:
-        music()
-        music()
+        music()                      # one song per beat (was two) so talk lands twice as often, far fewer dry stretches
         if idents:
             order.append(idents.pop(0))
         n += 1
         if back and n % 2 == 0:
             order.append(back.pop(0))
-            music()
     music()
     return {"station": "Inch Radio", "items": order}
 
