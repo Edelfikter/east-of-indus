@@ -116,22 +116,25 @@ Return ONLY the spoken words the host says, as plain text. No JSON, no labels, n
 
 FORMAT = {
     "sign_on": "Format: SIGN-ON. The station coming on air at this hour. Identify the station. Three to four lines. Atmosphere and the hour only. Name no board topics. Casual and offhand, a host easing into the night, a little informal, natural pauses.",
-    "news": "Format: NEWS. You are the news anchor, live on air. Open with the part of day and the proper greeting, then a line like 'here's what's going on'. This is RADIO news, NOT a written summary and NOT a list of items. Talk ABOUT the day as a host would: flowing on-air commentary that sweeps across the stories with reactions, asides, and transitions between them ('over in another corner of the board', 'meanwhile', 'elsewhere'). You can have a take and a tone. Move between the threads as one connected stretch of talk, not separate bullet points. Keep each thread's real subject recognizable; quote a poster as 'a caller' or 'one of the voices tonight' where it lands. Composed and clean, an anchor who knows the board, warm not stiff, keep filler light. This is the longest segment. 16 to 22 sentences.",
-    "host_talk": "Format: HOST TALK. The host ALONE, talking at the listener, giving his OWN opinions and tangents sparked by the topic below. This is NOT news and NOT a summary. Do NOT narrate the thread. NEVER say 'there's a thread', 'someone said', 'a poster', 'replies are coming in', 'one anon', 'over on the board'. The listener does not need to know what was posted. Instead take the TOPIC and run with it in first person: what HE thinks, his gripes, his theories, a small rant or a musing, tangents off the side of it. He can be biased, wrong, contrarian, can ramble. The board is the spark, not the subject. Loose and conversational, the odd filler (well, look, honestly, I mean), natural pauses, but write it with PROPER punctuation and fully written contractions (it's, you're, don't, them), complete sentences with full stops and commas, NEVER a run-on with missing apostrophes. Open casually as the host, do NOT announce a bulletin or 'the news'. 12 to 18 sentences.",
-    "talk": "Format: TALK HOUR. A real two-person interview drawn from this ONE thread. Write it as a back-and-forth where EACH LINE begins with 'HOST:' or 'GUEST:' (these labels are markers only, NEVER spoken aloud). The host welcomes the person on and introduces them NATURALLY, by who they are or what they're into, and NEVER uses the word 'guest'. The other person's lines are invented but true to what the poster actually argued. Several exchanges deep, the host asks, follows up, reacts, pushes; loose and informal, the odd filler, small reactions, natural pauses. Return plain text, one labeled line per turn, nothing else. 16 to 24 turns.",
-    "government": "Format: GOVERNMENT BULLETIN. Identify this as a bulletin from the New Lhasa state desk, then reframe this ONE thread's anxiety as calm official address, decree, or reassurance. The state always sounds composed. 7 to 11 sentences.",
+    "news": "Format: NEWS. You are the news anchor, live on air. Open with the part of day and the proper greeting, then a line like 'here's what's going on'. This is RADIO news, NOT a written summary and NOT a list of items. Talk ABOUT the day as a host would: flowing on-air commentary that sweeps across the stories with reactions, asides, and transitions between them ('over in another corner of the board', 'meanwhile', 'elsewhere'). You can have a take and a tone. Move between the threads as one connected stretch of talk, not separate bullet points. Keep each thread's real subject recognizable; quote a poster as 'a caller' or 'one of the voices tonight' where it lands. Composed and clean, an anchor who knows the board, warm not stiff, keep filler light. This is the longest segment. 22 to 30 sentences.",
+    "host_talk": "Format: HOST TALK. The host ALONE, talking at the listener, giving his OWN opinions and tangents sparked by the topic below. This is NOT news and NOT a summary. Do NOT narrate the thread. NEVER say 'there's a thread', 'someone said', 'a poster', 'replies are coming in', 'one anon', 'over on the board'. The listener does not need to know what was posted. Instead take the TOPIC and run with it in first person: what HE thinks, his gripes, his theories, a small rant or a musing, tangents off the side of it. He can be biased, wrong, contrarian, can ramble. The board is the spark, not the subject. Loose and conversational, the odd filler (well, look, honestly, I mean), natural pauses, but write it with PROPER punctuation and fully written contractions (it's, you're, don't, them), complete sentences with full stops and commas, NEVER a run-on with missing apostrophes. Open casually as the host, do NOT announce a bulletin or 'the news'. 18 to 26 sentences.",
+    "talk": "Format: TALK HOUR. A real two-person interview drawn from this ONE thread. Write it as a back-and-forth where EACH LINE begins with 'HOST:' or 'GUEST:' (these labels are markers only, NEVER spoken aloud). The host welcomes the person on and introduces them NATURALLY, by who they are or what they're into, and NEVER uses the word 'guest'. The other person's lines are invented but true to what the poster actually argued. Several exchanges deep, the host asks, follows up, reacts, pushes; loose and informal, the odd filler, small reactions, natural pauses. Return plain text, one labeled line per turn, nothing else. 22 to 32 turns.",
+    "government": "Format: GOVERNMENT BULLETIN. Identify this as a bulletin from the New Lhasa state desk, then reframe this ONE thread's anxiety as calm official address, decree, or reassurance. The state always sounds composed. 9 to 13 sentences.",
     "weather": "Format: WEATHER. Identify the weather break, then report the REAL conditions below as New Lhasa's own weather: a cold frigid southern island. Genuine weather, vivid and short, not a metaphor for the board. Refer to time of day only, never a clock time. 5 to 8 sentences.",
 }
 
 
+CAPS = {"news": 1900, "talk": 1900, "host_talk": 1200, "government": 1100, "weather": 700, "sign_on": 400}
+
+
 def gen(fmt_key, payload):
-    cap = 1400 if fmt_key in ("news", "talk") else 900
+    cap = CAPS.get(fmt_key, 1000)
     raw = call_groq(WORLD + "\n\n" + FORMAT[fmt_key], payload, cap, json_mode=False).strip()
     return [p.strip() for p in re.split(r"(?<=[.!?])\s+", raw) if p.strip()]
 
 
 def gen_turns(payload):
-    raw = call_groq(WORLD + "\n\n" + FORMAT["talk"], payload, 1500, json_mode=False).strip()
+    raw = call_groq(WORLD + "\n\n" + FORMAT["talk"], payload, 2400, json_mode=False).strip()
     turns = []
     for line in raw.splitlines():
         line = line.strip()
@@ -157,7 +160,7 @@ def generate():
     cat = simplechan.fetch_catalog(BOARD)
     pool = [t for t in cat if not t.get("pinned")]
     pool.sort(key=lambda t: t.get("reply_count", 0), reverse=True)
-    top = pool[:10]
+    top = pool[:12]
     threads = []
     for t in top:
         try:
@@ -202,6 +205,7 @@ def generate():
     news1, host1 = take(3, "news"), take(1)
     talk_sel, gov_sel = take(1, "talk"), take(1, "government")
     news2, host2 = take(2, "news"), take(1)
+    host3, host4 = take(1), take(1)   # extra riffs that fall through the music-forward half
 
     def ids(ts):
         return ", ".join("#" + str(t.get("no")) for t in ts)
@@ -237,18 +241,23 @@ def generate():
         add(f"HOST TALK 2 ({ids(host2)})", "host_talk", hpl(host2))
     if gov_sel:
         add(f"GOVERNMENT ({ids(gov_sel)})", "government", pl(gov_sel))
+    if host3:
+        add(f"HOST TALK 3 ({ids(host3)})", "host_talk", hpl(host3))
+    if host4:
+        add(f"HOST TALK 4 ({ids(host4)})", "host_talk", hpl(host4))
 
     print("gen IDENTS (batch)")
     activity = json.dumps([{"subject": t.get("subject", "") or (t.get("body", "") or "")[:60],
                             "bits": [(r.get("body", "") or "")[:90] for r in (t.get("replies", []) or [])[:3]]}
                            for t in threads[:8]], ensure_ascii=False)
-    ident_sys = WORLD + ('\n\nFormat: IDENTS. SHORT station idents for between songs. Each is ONE radio line that reminds '
+    ident_sys = WORLD + ('\n\nFormat: IDENTS. Station idents for between songs. Each ident is TWO to THREE sentences: it reminds '
                          'the listener where they are, always with connective phrasing like "you\'re listening to Inch Radio", '
-                         '"you\'re tuned into the New Lhasa station", "welcome back to Inch Radio". Most then fold in a dry glance '
-                         "at what Anon's up to right now. Vary the opener and the observation, no repeats. Never a blunt label, "
-                         "never 'keeping you warm' or 'your companion'. Return each ident on its OWN LINE as plain text, nothing else.")
+                         '"you\'re tuned into the New Lhasa station", "welcome back to Inch Radio", then folds in a dry, unhurried glance '
+                         "at what Anon's on about right now, maybe a small aside or a second beat before handing back to the music. "
+                         "Vary the opener and the observation, no repeats. Never a blunt label, never 'keeping you warm' or 'your companion'. "
+                         "Write each ident as ONE single line (no internal line breaks), idents separated by a newline. Plain text, nothing else.")
     try:
-        raw = call_groq(ident_sys, "Board activity right now:\n" + activity + "\n\nMake 12 distinct idents.", 900, json_mode=False)
+        raw = call_groq(ident_sys, "Board activity right now:\n" + activity + "\n\nMake 18 distinct idents.", 1700, json_mode=False)
         idents = [re.sub(r"^[\s\-•\d.)]+", "", l).strip() for l in raw.splitlines() if l.strip()]
     except Exception as e:
         idents = []

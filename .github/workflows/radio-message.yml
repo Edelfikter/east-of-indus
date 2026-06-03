@@ -1,0 +1,42 @@
+name: inch-radio-message
+
+# Triggered by the Supabase edge function (radio_msg action) when the admin
+# sends a "From the Publisher" note. Renders it in William's voice via the
+# existing edge-tts pipeline and splices it into the live manifest.json.
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: 'Publisher title'
+        required: true
+        type: string
+      text:
+        description: 'What William reads'
+        required: true
+        type: string
+      at_index:
+        description: 'Insert index in the running order (-1 = append)'
+        required: false
+        default: '-1'
+        type: string
+
+jobs:
+  message:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      PUB_TITLE: ${{ inputs.title }}
+      PUB_TEXT: ${{ inputs.text }}
+      PUB_AT_INDEX: ${{ inputs.at_index }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Install deps
+        run: pip install -r radio/requirements.txt
+      - name: Render publisher message and splice into manifest
+        run: python -m radio.publisher_msg
