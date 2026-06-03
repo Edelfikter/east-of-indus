@@ -344,7 +344,46 @@ def render_all(segments, idents):
 
 
 # ----------------------------------------------------------------- running order
-def build_order(seg_items, ident_items):
+def iso_dur(s):
+    mt = re.match(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", s or "")
+    if not mt:
+        return 0
+    return int(mt.group(1) or 0) * 3600 + int(mt.group(2) or 0) * 60 + int(mt.group(3) or 0)
+
+
+def fetch_song_pool():
+    import httpx
+    key = os.getenv("YOUTUBE_API_KEY")
+    if not key:
+        print("no YOUTUBE_API_KEY; music not globally scheduled (client shuffle fallback)")
+        return []
+    pool = []
+    for pid in PLAYLISTS:
+        ids, token = [], ""
+        try:
+            for _ in range(2):
+                r = httpx.get("https://www.googleapis.com/youtube/v3/playlistItems",
+                              params={"part": "contentDetails", "playlistId": pid, "maxResults": 50, "key": key, "pageToken": token}, timeout=30)
+                d = r.json()
+                for it in d.get("items", []):
+                    ids.append(it["contentDetails"]["videoId"])
+                token = d.get("nextPageToken", "")
+                if not token:
+                    break
+            for i in range(0, len(ids), 50):
+                r = httpx.get("https://www.googleapis.com/youtube/v3/videos",
+                              params={"part": "contentDetails", "id": ",".join(ids[i:i+50]), "key": key}, timeout=30)
+                for it in r.json().get("items", []):
+                    du = iso_dur(it.get("contentDetails", {}).get("duration"))
+                    if 30 < du < 900:
+                        pool.append({"videoId": it["id"], "duration": du})
+        except Exception as e:
+            print("yt pool fetch failed for", pid, e)
+    random.shuffle(pool)
+    return pool
+
+
+def build_order(seg_items, ident_items, song_pool):
     def has(s, kw):
         return kw in s["label"].upper()
     signon = [s for s in seg_items if has(s, "SIGN-ON")]
@@ -356,7 +395,11 @@ def build_order(seg_items, ident_items):
     order, idents = [], list(ident_items)
 
     def music():
-        order.append({"type": "music", "playlist": random.choice(PLAYLISTS), "songs": 2})
+        if song_pool:
+            s = song_pool.pop(0)
+            order.append({"type": "song", "videoId": s["videoId"], "duration": s["duration"]})
+        else:
+            order.append({"type": "music", "playlist": random.choice(PLAYLISTS), "songs": 2})
 
     front = []
     if signon:
@@ -433,7 +476,9 @@ def main():
     print(f"=== INCH RADIO block · {tod} · {season} ===")
     segs, idents, wx = generate()
     seg_items, ident_items = render_all(segs, idents)
-    manifest = build_order(seg_items, ident_items)
+    song_pool = fetch_song_pool()
+    print(f"song pool: {len(song_pool)} tracks with durations")
+    manifest = build_order(seg_items, ident_items, song_pool)
     print(f"manifest: {len(manifest['items'])} items, {len(seg_items)} segments, {len(ident_items)} idents")
     publish(manifest)
     print("DONE")
