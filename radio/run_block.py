@@ -289,10 +289,24 @@ def render(text, stem, voice, rate, pitch):
     audio = text
     for a, b in PRONOUNCE:
         audio = audio.replace(a, b)
+    if not audio.strip():
+        raise ValueError("empty text")
     body, mp3, vtt = WORK / f"{stem}.body.txt", WORK / f"{stem}.mp3", WORK / f"{stem}.vtt"
     body.write_text(audio, encoding="utf-8")
-    subprocess.run([sys.executable, "-m", "edge_tts", "--voice", voice, "--rate=" + rate, "--pitch=" + pitch,
-                    "--file", str(body), "--write-media", str(mp3), "--write-subtitles", str(vtt)], check=True)
+    # edge-tts intermittently returns "no audio received" (exit 1). Retry a few
+    # times and verify a non-empty mp3 landed, so one flaky call can't kill a block.
+    for attempt in range(3):
+        try:
+            subprocess.run([sys.executable, "-m", "edge_tts", "--voice", voice, "--rate=" + rate, "--pitch=" + pitch,
+                            "--file", str(body), "--write-media", str(mp3), "--write-subtitles", str(vtt)],
+                           check=True, capture_output=True)
+            if mp3.exists() and mp3.stat().st_size > 0:
+                break
+        except subprocess.CalledProcessError:
+            pass
+        time.sleep(2 + attempt * 2)
+    else:
+        raise RuntimeError(f"edge_tts failed for {stem} after retries")
     cues = parse_vtt(vtt)
     for c in cues:
         for a, b in PRONOUNCE:
@@ -322,22 +336,36 @@ def render_all(segments, idents):
         if seg.get("turns"):
             cum, comb, parts = 0.0, [], []
             for k, turn in enumerate(seg["turns"]):
+                ttext = (turn.get("text") or "").strip()
+                if not ttext:
+                    continue
                 v = GUEST_VOICE if turn.get("speaker") == "guest" else HOST_VOICE
-                cues = render(turn["text"], f"seg_{i}_t{k}", *v)
+                try:
+                    cues = render(ttext, f"seg_{i}_t{k}", *v)
+                except Exception as e:
+                    print(f"  skip turn {i}.{k}: {e}")
+                    continue
                 mp3 = WORK / f"seg_{i}_t{k}.mp3"
                 for c in cues:
                     comb.append([round(c[0] + cum, 3), round(c[1] + cum, 3), c[2]])
                 cum += dur_of(mp3)
                 parts.append(mp3)
+            if not parts:
+                print(f"  skip talk seg_{i}: no usable turns")
+                continue
             concat(parts, WORK / f"seg_{i}.mp3")
-            print(f"  talk seg_{i}.mp3 ({len(seg['turns'])} turns, {cum:.0f}s)")
+            print(f"  talk seg_{i}.mp3 ({len(parts)} turns, {cum:.0f}s)")
             seg_items.append({"type": "segment", "kind": "talk", "label": seg.get("label", ""),
                               "audio": f"seg_{i}.mp3", "cues": comb, "duration": round(cum, 3)})
             continue
         sents = [s.strip() for s in seg.get("sentences", []) if s.strip()]
         if not sents:
             continue
-        cues = render(" ".join(sents), f"seg_{i}", *HOST_VOICE)
+        try:
+            cues = render(" ".join(sents), f"seg_{i}", *HOST_VOICE)
+        except Exception as e:
+            print(f"  skip seg {i} ({seg.get('label','')}): {e}")
+            continue
         print(f"  seg_{i}.mp3 ({seg.get('label','')})")
         seg_items.append({"type": "segment", "kind": "segment", "label": seg.get("label", ""),
                           "audio": f"seg_{i}.mp3", "cues": cues, "duration": cues[-1][1] if cues else 0})
@@ -346,7 +374,11 @@ def render_all(segments, idents):
         txt = (idt or "").strip()
         if not txt:
             continue
-        cues = render(txt, f"id_{j}", *HOST_VOICE)
+        try:
+            cues = render(txt, f"id_{j}", *HOST_VOICE)
+        except Exception as e:
+            print(f"  skip ident {j}: {e}")
+            continue
         ident_items.append({"type": "segment", "kind": "ident", "label": "IDENT",
                             "audio": f"id_{j}.mp3", "cues": cues, "duration": cues[-1][1] if cues else 0})
     return seg_items, ident_items
