@@ -160,7 +160,7 @@ def generate():
     cat = simplechan.fetch_catalog(BOARD)
     pool = [t for t in cat if not t.get("pinned")]
     pool.sort(key=lambda t: t.get("reply_count", 0), reverse=True)
-    top = pool[:12]
+    top = pool[:14]
     threads = []
     for t in top:
         try:
@@ -206,6 +206,7 @@ def generate():
     talk_sel, gov_sel = take(1, "talk"), take(1, "government")
     news2, host2 = take(2, "news"), take(1)
     host3, host4 = take(1), take(1)   # extra riffs that fall through the music-forward half
+    host5, host6 = take(1), take(1)   # still more host talk, spread through the whole block
 
     def ids(ts):
         return ", ".join("#" + str(t.get("no")) for t in ts)
@@ -245,6 +246,12 @@ def generate():
         add(f"HOST TALK 3 ({ids(host3)})", "host_talk", hpl(host3))
     if host4:
         add(f"HOST TALK 4 ({ids(host4)})", "host_talk", hpl(host4))
+    if host5:
+        add(f"HOST TALK 5 ({ids(host5)})", "host_talk", hpl(host5))
+    if host6:
+        add(f"HOST TALK 6 ({ids(host6)})", "host_talk", hpl(host6))
+    add("WEATHER 2", "weather", json.dumps(wx, ensure_ascii=False))   # more weather talk, scattered through the block
+    add("WEATHER 3", "weather", json.dumps(wx, ensure_ascii=False))
 
     print("gen IDENTS (batch)")
     activity = json.dumps([{"subject": t.get("subject", "") or (t.get("body", "") or "")[:60],

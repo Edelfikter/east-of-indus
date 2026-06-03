@@ -55,12 +55,33 @@ export default {
   // HTTP handler for manual testing: hit https://eoi-cron.../trigger?w=pulse.yml
   async fetch(request, env) {
     const url = new URL(request.url);
+    const CORS = { "Access-Control-Allow-Origin": "*" };
+
+    // Latest run status of a workflow, so the radio admin can show "next block" progress.
+    if (url.pathname === "/status") {
+      const w = url.searchParams.get("w") || "radio.yml";
+      const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/actions/workflows/${w}/runs?per_page=1`, {
+        headers: {
+          "Authorization": `Bearer ${env.GITHUB_TOKEN}`,
+          "Accept": "application/vnd.github+json",
+          "User-Agent": "eoi-cron-status",
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+      });
+      const d = await r.json();
+      const run = (d.workflow_runs && d.workflow_runs[0]) || null;
+      const out = run
+        ? { status: run.status, conclusion: run.conclusion, created_at: run.created_at, run_started_at: run.run_started_at, updated_at: run.updated_at }
+        : { status: "none" };
+      return new Response(JSON.stringify(out), { status: 200, headers: { ...CORS, "Content-Type": "application/json" } });
+    }
+
     if (url.pathname !== "/trigger") {
-      return new Response("eoi-cron alive. Use /trigger?w=<workflow.yml>", { status: 200 });
+      return new Response("eoi-cron alive. Use /trigger?w=<workflow.yml> or /status?w=<workflow.yml>", { status: 200, headers: CORS });
     }
     const w = url.searchParams.get("w");
     if (!w || !["pulse.yml", "eoi.yml", "radio.yml"].includes(w)) {
-      return new Response("bad workflow", { status: 400 });
+      return new Response("bad workflow", { status: 400, headers: CORS });
     }
     const resp = await trigger(w, env.GITHUB_TOKEN);
     // GitHub returns 204 No Content on success. Constructing a Response with a
@@ -68,6 +89,6 @@ export default {
     // success to 200 and only forward non-success codes verbatim.
     const status = resp.ok ? 200 : resp.status;
     // CORS so the radio admin panel (on the Blogger origin) can call /trigger.
-    return new Response(`dispatched ${w}: ${resp.status}`, { status, headers: { "Access-Control-Allow-Origin": "*" } });
+    return new Response(`dispatched ${w}: ${resp.status}`, { status, headers: CORS });
   },
 };
