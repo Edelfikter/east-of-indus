@@ -1,0 +1,86 @@
+{
+  "issue_no": "No. 070",
+  "date": "3 June 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 82,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 15,
+    "hourly_buckets_24h": [
+      5,
+      4,
+      4,
+      8,
+      5,
+      2,
+      0,
+      0,
+      1,
+      1,
+      1,
+      0,
+      0,
+      0,
+      1,
+      5,
+      4,
+      2,
+      2,
+      4,
+      10,
+      5,
+      3,
+      15
+    ],
+    "hourly_sparkline": "▃▂▂▄▃▁▁▁▁▁▁▁▁▁▁▃▂▁▁▂▅▃▂█",
+    "peak_hour_ist": "18:00 IST",
+    "peak_count": 15,
+    "quiet_hour_ist": "01:00 IST",
+    "rating": "Hyper",
+    "total_lifetime_posts": 808,
+    "computed_at": "2026-06-03T12:30:45.899474+00:00"
+  },
+  "quote_of_day": {
+    "text": "They fired Kairi Sane and The Wyatt Sicks among 20 to 40 other no name wrestlers from WWE. One day you are giving your life breaking your bones and jumping off from ropes and the next day you get told to GTFO. Feels bad.",
+    "post_no": 398,
+    "name": "Anon",
+    "topic": "wrestling job insecurity",
+    "source_thread_id": 14
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A low-pressure system of sibling dynamics moved into the board's atmosphere, with a cluster of posts about 'choti behen' gathering 48 responses. The discussion remained focused on the topic, with Anon sharing thoughts and images.\n\nA cold front of dark scenarios swept through the Discourse section, as one anon described a hypothetical situation involving a 'thot' daughter's demise, sparking 13 replies.\n\nThe conversation was marked by a downpour of grim and provocative comments. A scattered high-pressure system of self-deprecation and criticism formed over Indiachan's user base. reacting to the perceived small size of the community.\n\nAnon expressed disappointment and frustration with the board's user count.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Anon posts about choti behen, others share thoughts",
+      "body": "Anon started the thread by posting 'Post picrels showing what your choti behen looks like.' One anon responded with a personal anecdote, mentioning they don't have a choti behen but have a cousin who often wears gym shorts, revealing her thighs.\n\nThis anon confessed to having impure thoughts about their cousin but claimed to be too cowardly to act on them.\n\nAnother anon suggested that such impure thoughts typically subside after the age of 19, as the prefrontal cortex develops and one outgrows the 'testosterone-crazed teen phase.' However, this anon also made a discriminatory remark, stating that individuals of certain castes would remain prone to low impulse control throughout their lives.\n\nA different anon expressed ambivalence about their own sister, who they described as ugly.\n\nThey noted that while they don't have impure thoughts about their sister, they are still burdened with looking at her face every day.\n\nIn contrast, another anon simply stated that their sister is 'unfortunately dead for me.' The thread also included brief, seemingly unrelated responses, such as a call to ban a user and an onomatopoeic interjection 'SAAAAAAAAR.'",
+      "flow": true,
+      "source_thread_id": 3188
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon describes hypothetical scenario of 'thot' daughter's demise",
+      "body": "Anon posted a hypothetical scenario involving a 'pajeet baap' whose daughter, described as a 'thot,' is sent to Canada and leads a life of substance abuse and involvement in a drug deal, ultimately getting raped and killed.\n\nThe original poster expressed callous indifference to the daughter's fate, suggesting the father should be 'at least happy' about her death.\n\nAnother anon responded with a seemingly real news story about a student who was reportedly a victim of a crime in Canada.\n\nThis anon expressed frustration with media outlets like NDTV for allegedly omitting details about the victim's involvement with drugs and instead framing the story as a case of racism.\n\nA respondent expressed a desire to see more incidents like the one described in the OP happen to people referred to as 'gobarjeetas' in Phorein. Another anon simply stated that the hypothetical scenario's outcome was 'deserved.'",
+      "flow": false,
+      "source_thread_id": 3741
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Criticizes Indiachan's User Base",
+      "body": "Anon opened the discussion by highlighting what they perceived as the poor state of Indiachan, an imageboard ostensibly for Indians.\n\nThey claimed India has 1.5 billion people, with 1 billion having internet access, yet the imageboard has fewer than 15 users.\n\nAnother anon responded by suggesting that only a small portion of the population has the self-awareness to choose to post on an imageboard.\n\nThis implies that the low user numbers may not be a reflection of the country's internet penetration or population size.\n\nOne respondent questioned the likelihood of successful individuals using imageboards, characterizing them as a 'souless shithole.' In contrast, another anon posited that users with an IQ of at least 90 might spread the word about Indiachan.\n\nThe conversation took a derogatory turn when an anon claimed that only 'neetlodus and failures' post on imageboards. Others made brief comments, including one who mentioned specific Indian names and another who used derogatory language.\n\nThe discussion reflects a critical view of Indiachan's user base and its potential for growth or relevance. The posters engaged in a brief exchange, touching on the demographics and motivations of imageboard users.",
+      "flow": false,
+      "source_thread_id": 3956
+    }
+  ],
+  "composed_at": "2026-06-03T12:32:03.325428+00:00",
+  "source_raw": "raw_20260603T123051Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
