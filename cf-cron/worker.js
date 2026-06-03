@@ -67,6 +67,7 @@ export default {
     // body AND a null-body status (204/205/304) throws in Workers, so collapse
     // success to 200 and only forward non-success codes verbatim.
     const status = resp.ok ? 200 : resp.status;
-    return new Response(`dispatched ${w}: ${resp.status}`, { status });
+    // CORS so the radio admin panel (on the Blogger origin) can call /trigger.
+    return new Response(`dispatched ${w}: ${resp.status}`, { status, headers: { "Access-Control-Allow-Origin": "*" } });
   },
 };

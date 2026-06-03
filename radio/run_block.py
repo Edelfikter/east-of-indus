@@ -392,14 +392,33 @@ def iso_dur(s):
     return int(mt.group(1) or 0) * 3600 + int(mt.group(2) or 0) * 60 + int(mt.group(3) or 0)
 
 
-def fetch_song_pool():
+def load_playlists():
+    """Playlists of the active music bucket from config.json, else the default set."""
+    try:
+        url = f"{SUPABASE_URL}/storage/v1/object/public/{BUCKET}/config.json"
+        with urllib.request.urlopen(url, timeout=20) as r:
+            cfg = json.loads(r.read().decode("utf-8"))
+        active = cfg.get("activeBucket")
+        for b in (cfg.get("musicBuckets") or []):
+            if b.get("id") == active:
+                pls = [p for p in (b.get("playlists") or []) if p]
+                if pls:
+                    print(f"music bucket: {b.get('name', '?')} ({len(pls)} playlists)")
+                    return pls
+    except Exception as e:
+        print("playlist config fallback:", e)
+    return PLAYLISTS
+
+
+def fetch_song_pool(playlists=None):
     import httpx
+    playlists = playlists or PLAYLISTS
     key = os.getenv("YOUTUBE_API_KEY")
     if not key:
         print("no YOUTUBE_API_KEY; music not globally scheduled (client shuffle fallback)")
         return []
     pool = []
-    for pid in PLAYLISTS:
+    for pid in playlists:
         ids, token = [], ""
         try:
             for _ in range(2):
@@ -510,7 +529,7 @@ def main():
     print(f"=== INCH RADIO block · {tod} · {season} ===")
     segs, idents, wx = generate()
     seg_items, ident_items = render_all(segs, idents)
-    song_pool = fetch_song_pool()
+    song_pool = fetch_song_pool(load_playlists())
     print(f"song pool: {len(song_pool)} tracks with durations")
     manifest = build_order(seg_items, ident_items, song_pool)
     print(f"manifest: {len(manifest['items'])} items, {len(seg_items)} segments, {len(ident_items)} idents")
