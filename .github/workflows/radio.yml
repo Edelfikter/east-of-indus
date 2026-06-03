@@ -15,7 +15,9 @@ jobs:
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
       GROQ_MODEL: meta-llama/llama-4-scout-17b-16e-instruct
-      IMAGEBOARD_BASE: https://indiachan.top
+      # Route through the CF Worker proxy — GH Actions runner IPs hit
+      # Indiachan with 403 if they connect directly.
+      IMAGEBOARD_BASE: https://induschan-proxy.asphocal.workers.dev
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
