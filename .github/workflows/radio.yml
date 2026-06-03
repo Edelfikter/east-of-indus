@@ -1,0 +1,29 @@
+name: inch-radio
+
+# Triggered by the eoi-cron Cloudflare worker (workflow_dispatch) ~30-45 min
+# before each block window, so the broadcast stays fresh. Generates a block,
+# renders it (William + guest voice, stitched with ffmpeg), and publishes to
+# the Supabase `radio` bucket.
+on:
+  workflow_dispatch:
+
+jobs:
+  broadcast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      GROQ_MODEL: meta-llama/llama-4-scout-17b-16e-instruct
+      IMAGEBOARD_BASE: https://indiachan.top
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Install deps
+        run: pip install -r radio/requirements.txt
+      - name: Generate, render, and publish a block
+        run: python -m radio.run_block
