@@ -205,8 +205,7 @@ def generate():
     news1, host1 = take(3, "news"), take(1)
     talk_sel, gov_sel = take(1, "talk"), take(1, "government")
     news2, host2 = take(2, "news"), take(1)
-    host3, host4 = take(1), take(1)   # extra riffs that fall through the music-forward half
-    host5, host6 = take(1), take(1)   # still more host talk, spread through the whole block
+    host3, host4 = take(1), take(1)   # a couple more host riffs; types get interleaved in build_order
 
     def ids(ts):
         return ", ".join("#" + str(t.get("no")) for t in ts)
@@ -246,12 +245,7 @@ def generate():
         add(f"HOST TALK 3 ({ids(host3)})", "host_talk", hpl(host3))
     if host4:
         add(f"HOST TALK 4 ({ids(host4)})", "host_talk", hpl(host4))
-    if host5:
-        add(f"HOST TALK 5 ({ids(host5)})", "host_talk", hpl(host5))
-    if host6:
-        add(f"HOST TALK 6 ({ids(host6)})", "host_talk", hpl(host6))
-    add("WEATHER 2", "weather", json.dumps(wx, ensure_ascii=False))   # more weather talk, scattered through the block
-    add("WEATHER 3", "weather", json.dumps(wx, ensure_ascii=False))
+    add("WEATHER 2", "weather", json.dumps(wx, ensure_ascii=False))   # a second weather break, placed elsewhere in the block
 
     print("gen IDENTS (batch)")
     activity = json.dumps([{"subject": t.get("subject", "") or (t.get("body", "") or "")[:60],
@@ -475,7 +469,15 @@ def build_order(seg_items, ident_items, song_pool):
     # evenly across the whole block, woven into the ident stream, then put one song
     # after each talk item. So the first hour and the last hour are equally chatty
     # and equally colourful end to end.
-    bigs = news + hosts + talk + weather + govt          # all the long segments; sign-on opens separately
+    def spread(groups):   # interleave the segment TYPES so the same kind never clusters (host, news, weather, talk, ...)
+        tagged = []
+        for g in groups:
+            n = len(g) or 1
+            for i, it in enumerate(g):
+                tagged.append(((i + 0.5) / n, it))   # even fractional position within each type
+        tagged.sort(key=lambda t: t[0])
+        return [it for _, it in tagged]
+    bigs = spread([news, hosts, talk, weather, govt])    # varied lineup; sign-on opens separately
     nb, ni = len(bigs), len(idents)
     talk_stream, bi = [], 0
     for k, idt in enumerate(idents):
