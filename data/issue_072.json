@@ -1,0 +1,93 @@
+{
+  "issue_no": "No. 072",
+  "date": "4 June 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 75,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 9,
+    "hourly_buckets_24h": [
+      3,
+      1,
+      2,
+      10,
+      0,
+      4,
+      1,
+      1,
+      1,
+      1,
+      0,
+      0,
+      0,
+      2,
+      1,
+      2,
+      3,
+      5,
+      4,
+      7,
+      6,
+      5,
+      7,
+      9
+    ],
+    "hourly_sparkline": "▃▁▂█▁▃▁▁▁▁▁▁▁▂▁▂▃▄▃▅▅▄▅▇",
+    "peak_hour_ist": "22:00 IST",
+    "peak_count": 10,
+    "quiet_hour_ist": "23:00 IST",
+    "rating": "Active",
+    "total_lifetime_posts": 881,
+    "computed_at": "2026-06-04T12:30:32.147746+00:00"
+  },
+  "quote_of_day": {
+    "text": "The purpose of life of an Indian is to escape India, it can either be done by leaving India physically or figuratively by shifting to a gated community. Once the Indian escapes India, India becomes the best country in the world & requires no improvement.",
+    "post_no": 4363,
+    "name": "Anon",
+    "topic": "the purpose of Indian life",
+    "source_thread_id": 4339
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A low-pressure system of technological enthusiasm moved in early, as Anon launched a live radio station with a makeshift playlist and broadcast links. This development drew scattered showers of interest.\n\nA cold front of cybersecurity concerns swept through the board, triggered by reports of a hack at IIT Hyderabad's research website. Anon expressed alarm about the vulnerability of government websites, forecasting a storm of similar breaches.\n\nA light drizzle of introspection fell later, as some users reflected on their time spent on the board and their current life situations.\n\nMeanwhile, a brief high-pressure ridge of World Cup enthusiasm built in, with Anon declaring their favourite teams and lamenting the absence of certain nations in the tournament.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Anon Launches Live Radio Station with Indiachan Twist",
+      "body": "Anon introduced a fully functioning, multi-song radio station with talk shows, news, weather, and more. The radio station pulls content directly from Indiachan /b/ and features a station based in New Lhasa.\n\nThe radio station's creator claimed that the talk shows and news are inspired by and taken from /b/, similar to East of Inch but in a radio format.\n\nThey expressed a desire for users to engage with the radio, suggesting that it could be a more comfortable way to experience Indiachan content.\n\nOne anon asked about plans for a similar project on another platform, and the creator replied that they had no current plans, citing increasing busyness with real-life work.\n\nAnother anon inquired about adding their own music to the radio station, and the creator suggested creating a custom YouTube playlist.\n\nThe creator explained that the radio station uses YouTube directly and does not stream YouTube content, which they claimed would avoid copyright issues.\n\nThey also mentioned that the radio station is live and adjusted to a global clock, making it accessible to listeners worldwide. Anons praised the creator's work, calling it 'peak kino' and expressing gratitude for the new content.\n\nSome users also provided feedback on the radio station's functionality, particularly on mobile devices. The creator acknowledged that the radio station may not work well on mobile due to YouTube configuration issues but was working to improve compatibility.\n\nThey also mentioned plans to add features to make the radio station more iPhone-friendly. The live radio station appears to be an innovative way for Indiachan users to engage with content in a new format.\n\nIts development and launch have been well-received by the community, with many users expressing enthusiasm and appreciation for the creator's work.",
+      "flow": true,
+      "source_thread_id": 4175
+    },
+    {
+      "section": "Discourse",
+      "title": "IIT Hyderabad research website hacked",
+      "body": "Anon posted that IIT Hyderabad's research website got hacked, suggesting this reflects the state of other government websites.\n\nAnother anon responded, blaming the hack on the quality of students at IITs, saying they are \"crammer normie low iq cels\" who can't innovate.\n\nOne respondent joked that the purpose of an Indian's life is to escape India, either physically or by moving to a gated community, after which India becomes the best country.\n\nAnon wondered when Indian hackers would hack a website and place the Indiachan logo on it. Another anon mentioned a user named TL who claimed to be a hackerman.\n\nThe hack was attributed to a Pakistani by one user, who described it as \"kino\" and \"the absolute state of my country.\" Some users exchanged brief comments on the status of the hack, with one saying it was \"under control\" and another expressing a desire for India to have a global impact.",
+      "flow": false,
+      "source_thread_id": 4339
+    },
+    {
+      "section": "Discourse",
+      "title": "Inch users reflect on their tenure",
+      "body": "Anon started a thread asking how long-time users, or \"oldfags,\" are doing in their lives.\n\nOne respondent claimed that even those who began using the site during the COVID-19 pandemic are now considered \"newbies\" or \"nu fags.\" They speculated that oldfags likely got married and stopped using imageboards, suggesting that staying active on the site for over 10 years is unappealing.\n\nAnother user chimed in, sharing their personal experience of joining the site in 2020 and using it on and off after 2024. They mentioned planning to start their PhD the following year.\n\nA newer user asked if they qualified as an oldfag, having started using the site in February 2024.\n\nThey were quickly dismissed by another user, who called them a \"nufag,\" and another who simply posted \">t.\" The brief exchange offered a glimpse into how users perceive their own tenure and categorize one another.",
+      "flow": false,
+      "source_thread_id": 4319
+    },
+    {
+      "section": "Notices",
+      "title": "Anon picks World Cup favourites",
+      "body": "Anon opened a thread saying it's a shame India didn't qualify for the World Cup and that they'll be rooting for Portugal.\n\nAnother anon noted that cricket has grown in popularity over the years, mentioning the increase in participating countries from 12 in 2008.\n\nAnon joked about India's non-qualification, with one saying 'Pajeet kitne baar apna comment delete karega'. Anon also made some claims about sports and their supposed ethnic ties.",
+      "flow": false,
+      "source_thread_id": 3820
+    }
+  ],
+  "composed_at": "2026-06-04T12:32:09.033859+00:00",
+  "source_raw": "raw_20260604T123037Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
