@@ -154,13 +154,43 @@ def thread_payload(t):
 
 
 # ----------------------------------------------------------------- generation
+RECENT_FILE = "recent_threads.json"
+
+
+def load_recent():
+    """Thread ids aired in the last few blocks (newest first), from the bucket."""
+    try:
+        url = f"{SUPABASE_URL}/storage/v1/object/public/{BUCKET}/{RECENT_FILE}"
+        with urllib.request.urlopen(url, timeout=15) as r:
+            v = json.loads(r.read().decode("utf-8"))
+            return v if isinstance(v, list) else []
+    except Exception:
+        return []
+
+
+def save_recent(used_ids, prev):
+    """Remember the threads this block used so the next blocks can skip them."""
+    try:
+        merged = list(used_ids) + [x for x in prev if x not in used_ids]
+        sb("POST", f"{SUPABASE_URL}/storage/v1/object/{BUCKET}/{RECENT_FILE}",
+           data=json.dumps(merged[:28]).encode("utf-8"), ctype="application/json", upsert=True)
+    except Exception as e:
+        print("save_recent:", e)
+
+
 def generate():
     wx = falkland_weather()
     print("weather:", json.dumps(wx))
     cat = simplechan.fetch_catalog(BOARD)
     pool = [t for t in cat if not t.get("pinned")]
     pool.sort(key=lambda t: t.get("reply_count", 0), reverse=True)
-    top = pool[:14]
+    recent_list = load_recent()
+    recent = set(recent_list)                            # threads aired in the last couple of blocks
+    cands = pool[:40]                                    # wider candidate pool than the strict top 14
+    fresh = [t for t in cands if t.get("no") not in recent]
+    chosen = fresh + [t for t in cands if t.get("no") in recent]   # prefer threads we haven't aired lately; fall back to recent only if the board's thin
+    top = chosen[:14]
+    random.shuffle(top)                                  # vary which thread becomes which segment, block to block
     threads = []
     for t in top:
         try:
@@ -263,6 +293,7 @@ def generate():
     except Exception as e:
         idents = []
         print("  idents failed", e)
+    save_recent(list(used), recent_list)                # so the next blocks rotate to different threads
     return segs, idents, wx
 
 
