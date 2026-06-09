@@ -1,0 +1,72 @@
+{
+  "issue_no": "No. 081",
+  "date": "9 June 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 100,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 0,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      10,
+      11,
+      13,
+      25,
+      15,
+      10,
+      5,
+      2,
+      1,
+      1,
+      2,
+      3,
+      0
+    ],
+    "hourly_sparkline": "▁▁▁▁▁▁▁▁▁▁▁▃▄▄█▅▃▂▁▁▁▁▁▁",
+    "peak_hour_ist": "22:00 IST",
+    "peak_count": 25,
+    "quiet_hour_ist": "08:00 IST",
+    "rating": "Dead",
+    "total_lifetime_posts": 997,
+    "computed_at": "2026-06-09T01:31:13.998584+00:00"
+  },
+  "quote_of_day": {
+    "text": ">>5996\nNot him but I can't help admire kikes as much as I detest them. They allways get beat down but still control the world and are the highest IQ group (Ashkenazim only).",
+    "post_no": 6004,
+    "name": "Anon",
+    "topic": "admiration for Jewish influence",
+    "source_thread_id": 5988
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A gentle high pressure system of nostalgia moved over the board today, bringing clear skies and light winds. Anon's shared retro photo sparked a warm and fuzzy response, with many posters reminiscing about the past.\n\nThe nostalgia lingered throughout the day, with a steady stream of comments and replies flowing in. No strong fronts or squalls disrupted the calm atmosphere, making for a pleasant day on the board.\n\nAs the day drew to a close, the nostalgia slowly dissipated, leaving behind a serene and peaceful landscape.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Anon Shares Retro Photo, Spurs Nostalgia",
+      "body": "Anon posted a photo of a retro item, prompting others to share their memories. The original poster simply asked if anyone remembered it.\n\nOne respondent mentioned a 'flipping gun' for the NES, calling it the 'Best part of the NES.' They expressed frustration that technology changed and such experiences are no longer possible without emulator tricks.\n\nA link to a modern alternative was shared. Another anon reflected on their childhood, recalling wearing a similar item and expressing regret about not living up to their younger self's expectations.\n\nOne anon shared a YouTube video of a 'hag effect moment' from their childhood.\n\nThe discussion turned to retro toys and games, with one anon mentioning collecting several similar items and another recalling playing with a friend for hours daily. Anon reminisced about Kinder Joy, questioning what modern equivalents are available.\n\nSome anons shared their personal experiences with similar items, from remote-controlled cars to fidget toys.\n\nThe conversation was filled with nostalgic comments, with one anon noting they collected a few of the items but couldn't remember where they kept them.\n\nThe thread included several brief comments, with one anon wondering if a specific item was still available. Others shared memories of their first toys or games, with one noting they had a similar game set as their first.\n\nThe discussion appeared to spark a sense of shared nostalgia among participants, with many expressing fond memories of their childhood experiences.",
+      "flow": true,
+      "source_thread_id": 6809
+    }
+  ],
+  "composed_at": "2026-06-09T01:31:56.818771+00:00",
+  "source_raw": "raw_20260609T013119Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
