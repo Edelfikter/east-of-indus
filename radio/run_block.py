@@ -278,17 +278,22 @@ def generate():
     add("WEATHER 2", "weather", json.dumps(wx, ensure_ascii=False))   # a second weather break, placed elsewhere in the block
 
     print("gen IDENTS (batch)")
-    activity = json.dumps([{"subject": t.get("subject", "") or (t.get("body", "") or "")[:60],
-                            "bits": [(r.get("body", "") or "")[:90] for r in (t.get("replies", []) or [])[:3]]}
-                           for t in threads[:8]], ensure_ascii=False)
-    ident_sys = WORLD + ('\n\nFormat: IDENTS. Station idents for between songs. Each ident is TWO to THREE sentences: it reminds '
-                         'the listener where they are, always with connective phrasing like "you\'re listening to Inch Radio", '
-                         '"you\'re tuned into the New Lhasa station", "welcome back to Inch Radio", then folds in a dry, unhurried glance '
-                         "at what Anon's on about right now, maybe a small aside or a second beat before handing back to the music. "
-                         "Vary the opener and the observation, no repeats. Never a blunt label, never 'keeping you warm' or 'your companion'. "
-                         "Write each ident as ONE single line (no internal line breaks), idents separated by a newline. Plain text, nothing else.")
+    activity = json.dumps([{"subject": (t.get("subject") or "").strip(),
+                            "op": (t.get("body", "") or "")[:260],
+                            "replies": [(r.get("body", "") or "")[:160] for r in (t.get("replies", []) or [])[:5]]}
+                           for t in threads], ensure_ascii=False)
+    ident_sys = WORLD + ('\n\nFormat: IDENTS. Short station idents for between songs. Each ident is TWO to THREE sentences: it places '
+                         'the listener with connective phrasing ("you\'re listening to Inch Radio", "you\'re tuned into the New Lhasa '
+                         'station", "welcome back to Inch Radio"), then folds in a dry, unhurried glance at ONE specific thing on the '
+                         "board right now. BE CONCRETE: name the actual subject and quote or closely paraphrase a real line from the "
+                         'thread. NEVER vague-out. BANNED phrasings: "a particular topic", "a particular individual", "certain '
+                         'activities", "a recent event", "a situation that didn\'t quite work out", "strong opinions", "social issues", '
+                         '"their preferences", "their thoughts on something", "mixed reactions". If a poster is on about gay sex, a caste '
+                         "fight, a slur, a breakup, a specific game or show, SAY exactly that, plainly. The host is unshockable and never "
+                         "euphemises or softens, he relays the real subject flatly. Each ident is about a DIFFERENT thread than the one "
+                         "before it. Vary the opener every time. Write each ident as ONE single line, idents separated by a newline. Plain text, nothing else.")
     try:
-        raw = call_groq(ident_sys, "Board activity right now:\n" + activity + "\n\nMake 26 distinct idents.", 2400, json_mode=False)
+        raw = call_groq(ident_sys, "The live threads right now (cover as many different ones as you can, naming each real subject):\n" + activity + "\n\nWrite about 24 idents, each grounded in a specific thread above. Do not invent topics that aren't there.", 2800, json_mode=False)
         idents = [re.sub(r"^[\s\-•\d.)]+", "", l).strip() for l in raw.splitlines() if l.strip()]
     except Exception as e:
         idents = []
