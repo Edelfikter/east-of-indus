@@ -1,0 +1,100 @@
+{
+  "issue_no": "No. 088",
+  "date": "12 June 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 100,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 23,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      2,
+      1,
+      9,
+      4,
+      5,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      3,
+      2,
+      3,
+      7,
+      10,
+      13,
+      5,
+      10,
+      23
+    ],
+    "hourly_sparkline": "▁▁▁▁▃▂▂▁▁▁▁▁▁▁▁▁▁▁▃▄▄▂▄█",
+    "peak_hour_ist": "18:00 IST",
+    "peak_count": 23,
+    "quiet_hour_ist": "19:00 IST",
+    "rating": "Crazy",
+    "total_lifetime_posts": 949,
+    "computed_at": "2026-06-12T12:30:36.355979+00:00"
+  },
+  "quote_of_day": {
+    "text": "This is what separates America from rest of the global hell hole.\nA Janitor working at SpaceX can become a millionaire.\nA random plumber who invested in TSLA can become a millionaire.\nThis can never ever happen anywhere else.",
+    "post_no": 9854,
+    "name": "Anon",
+    "topic": "American Dream, Social Mobility",
+    "source_thread_id": 9844
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A high-pressure system of capitalist ideology moved into the board's Leading section, bringing with it a burst of anti-socialist sentiment. Anon praised the free market and mocked socialist ideals, sparking a flurry of comments.\n\nIn the Discourse section, a scattered low-pressure system of objectification developed, with one anon seeking ratings for a woman in a 'rate her' thread.\n\nNearby, a cold front of criticism blew into a thread discussing Bhim Instagram, with an anon labeling it 'kino'.\n\nA weak front of personal relationships warnings also developed, with an anon warning others not to speak ill of their crush.\n\nA light drizzle of criticism fell on Tamil movie-making, with an anon disparaging recent films about Korean relationships.\n\nOverall, the board's discourse was marked by these scattered but intense weather systems, which brought forth typical patterns of discussion and debate.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Anon Praises Capitalism, Mocks Socialism",
+      "body": "Anon kicked off the discussion with a post disparaging socialism and praising capitalism.\n\nAnother anon chimed in, claiming that America offers unique opportunities for individuals to become millionaires through hard work, citing examples of a janitor at SpaceX and a plumber who invested in TSLA.\n\nA respondent shot back, accusing 'pajeets' of being unable to create value and only knowing how to complain.\n\nOne anon made a prediction, stating that capitalists will never establish a utopia and that their ideology will fail.\n\nAnon continued to exchange barbs, with one stating that 'subhuman lundian cockroaches' cannot imagine such opportunities, while another described the 'pajeet life' as being stuck in a 'gutter'.\n\nThe discussion remained centered around the perceived merits of capitalism versus socialism, with Anon expressing disdain for the latter.\n\nThe tone of the conversation was marked by hostility and mockery towards those who might support socialist ideologies.",
+      "flow": true,
+      "source_thread_id": 9844
+    },
+    {
+      "section": "Discourse",
+      "title": "Rate Her",
+      "body": "Anon posted an image with the prompt 'rate her out of 10'. One respondent, also Anon, replied with a rating of 2/10, referencing an unspecified a post. No further discussion or explanations were provided in the thread.",
+      "flow": false,
+      "source_thread_id": 9713
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Calls Bhim Instagram 'Kino'",
+      "body": "Anon started a thread saying 'Zamn, bhim instagram is really kino.' One anon responded with 'Indian version of NIGGERS', implying a comparison between Bhim Instagram and American African Americans.\n\nAnother anon disagreed, saying American African Americans are 'far better than these' and that 'our ancestors simply kept aloof from these spawns of evil.' Anon also joked about the perceived inferiority of Bhim Instagram, with one saying 'you can't do much when 65% of your population is like this.' Another anon fantasized about an alternate history where Germany could have invaded India from Persia.\n\nSome anons made derogatory comments about Bhim Instagram, with one saying 'Imagine unironically thinking these cretins are \"humans\", they are lower than the worst animals.' Others made sexualized comments, with one saying 'Bhim girls are hot asf' and another calling Bhim Instagram 'thot.' The thread also included some self-deprecating humor, with one anon saying 'someone pls send me a coupon for eye bleach' and another joking about having 'hundreds of such gems' and worrying about what would happen if 'wignats find out about this.'",
+      "flow": false,
+      "source_thread_id": 9961
+    },
+    {
+      "section": "Notices",
+      "title": "Anon warns others about speaking ill of crush",
+      "body": "Anon posted a warning to others not to say anything about their crush. The original poster stated, 'Dont you dare say anything about my crush.\n\nI am fucking warning you.' Other anons discussed the crush, describing her as 'cute, funny and with a wicked sense of humor.' Some anons made derogatory comments about her appearance and background.\n\nOne anon claimed she had made a fake certificate and joked about her being a dalit.",
+      "flow": false,
+      "source_thread_id": 9318
+    },
+    {
+      "section": "Notices",
+      "title": "Tamil Movie Criticism",
+      "body": "Anon posted that Tamils are now making movies about their girls loving Korean men.\n\nOne respondent described watching a Tamil movie that portrayed Korea as a paradise and India as a bad place. They criticised the movie's themes and characters.\n\nAnother poster claimed the Indian movie industry is controlled by communists aiming to emasculate Indian men.\n\nSome discussed similar themes in other South Indian movies and compared them to North Indian media consumption.\n\nA respondent disagreed with generalising all Tamil people based on one movie, calling the director a left-wing individual.",
+      "flow": false,
+      "source_thread_id": 9671
+    }
+  ],
+  "composed_at": "2026-06-12T12:32:26.403465+00:00",
+  "source_raw": "raw_20260612T123042Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
