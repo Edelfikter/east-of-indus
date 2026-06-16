@@ -1,0 +1,100 @@
+{
+  "issue_no": "No. 096",
+  "date": "16 June 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 100,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 15,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      0,
+      7,
+      11,
+      10,
+      3,
+      0,
+      2,
+      0,
+      0,
+      1,
+      1,
+      1,
+      5,
+      0,
+      2,
+      5,
+      10,
+      1,
+      3,
+      4,
+      19,
+      15
+    ],
+    "hourly_sparkline": "▁▁▁▃▅▄▂▁▁▁▁▁▁▁▂▁▁▂▄▁▂▂█▆",
+    "peak_hour_ist": "17:00 IST",
+    "peak_count": 19,
+    "quiet_hour_ist": "19:00 IST",
+    "rating": "Hyper",
+    "total_lifetime_posts": 816,
+    "computed_at": "2026-06-16T12:31:23.156340+00:00"
+  },
+  "quote_of_day": {
+    "text": ">>13492\n>miserable\ni just come here to laugh at how delusional most posters are on 4chan and this site while commuting. Currently sitting in metro",
+    "post_no": 13513,
+    "name": "Anon",
+    "topic": "self-aware chan visit, commuting",
+    "source_thread_id": 13353
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A low-pressure system of technical frustration moved over the board this morning, as anons struggled with Captcha failures and shadow banning on Indiachan. The issue persisted, causing scattered showers of complaint and confusion.\n\nA speculative front of uncertainty developed around the possibility of a Telegram ban, with anons trading theories and worries. This uncertain air mass lingered, producing a mix of anxious and dismissive responses.\n\nMeanwhile, a cold snap of disillusionment swept through the forum, as one anon wondered aloud how the community had shifted so suddenly from pro-Modi, pro-Israel sentiments to conspiracy theories and misogyny.\n\nThe aftershocks of this shift were still being felt, with some anons expressing dismay and others seeming to welcome the change.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Captcha Failures and Shadow Banning on Indiachan",
+      "body": "Anon posted a link to https:",
+      "flow": true,
+      "source_thread_id": 11856
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Speculates on Telegram Ban",
+      "body": "Anon opened the discussion with a one-word post: \"What\". One anon replied that the government is trying to prevent NEET paper leaks, which is why they banned Telegram.\n\nThis anon argued that the government can easily track people through Twitter, WhatsApp, or Facebook Messenger, but Telegram, being a Russian platform, seems to be a particular concern. This move shows government incompetence, the anon claimed.\n\nAnother anon brought up the idea that India is ruled by \"dasi putras\" and expressed a desire to join the \"cockroach janata party\" to counter these groups.\n\nOne respondent defended Telegram, stating that it remains one of the few platforms where anti-prostitution groups aren't persecuted. Anon also joked about various political figures. Some anons resorted to personal attacks and insults.\n\nThe conversation also touched on how some groups, like mullahs and bhimtas, allegedly use Telegram to control social media algorithms.\n\nThe thread included several obscene remarks about Indian political figures, with one anon saying \"Teri bhi gand me sariya karunga lodu\" and another stating \"Modi ki gand me suar ke aand\".",
+      "flow": false,
+      "source_thread_id": 13813
+    },
+    {
+      "section": "Discourse",
+      "title": "Shift in Forum Sentiment",
+      "body": "Anon questioned how the forum shifted from supporting Modi and Israel to anti-Semitic and misogynistic views. One respondent attributed the change to the shutdown of another platform, BhaCh, and the influx of users from Reddit.\n\nThey claimed that the forum's stance on Jews became more negative when they were seen as harming Muslims. Another anon pointed out that the forum was never truly pro-Modi, citing that opposing views were often deleted.\n\nA different poster disagreed, stating that BhaCh was more neutral, sometimes praising Jews and other times criticizing them. Some users shared their past experiences on BhaCh, with one claiming they were called offensive names for criticizing Jews.\n\nOthers discussed the etymology of words related to God and woman, with one exiting the conversation, calling it \"crazy as shit\".\n\nThe conversation also touched on the power of language, with one user advising against using certain terms to avoid giving power to perceived enemies. The discussion remained divisive, with no clear consensus on the forum's shift in sentiment.",
+      "flow": false,
+      "source_thread_id": 13013
+    },
+    {
+      "section": "Notices",
+      "title": "Modesty sparks debate",
+      "body": "Anon questioned why people are upset about modesty, asking if being modest is now a bad thing. Another anon responded by referencing an external post and described a supposed gynocentric shithole.",
+      "flow": false,
+      "source_thread_id": 13686
+    },
+    {
+      "section": "Notices",
+      "title": "Anon questions point of middle-class life",
+      "body": "Anon expressed frustration with the middle-class life, saying that getting a job makes one a 'slave of the system.' They claimed that this path leads to an unwanted marriage and childcare responsibilities.\n\nAnother anon responded by suggesting they could instead 'whore their girlfriend like a suitcase pimp and live off of her OnlyFans.' The conversation included some indecipherable references, with one anon mentioning 'Nate Jacobs' and another asking who that is.",
+      "flow": false,
+      "source_thread_id": 13218
+    }
+  ],
+  "composed_at": "2026-06-16T12:33:21.192192+00:00",
+  "source_raw": "raw_20260616T123128Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
