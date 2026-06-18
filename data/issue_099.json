@@ -1,0 +1,93 @@
+{
+  "issue_no": "No. 099",
+  "date": "18 June 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 100,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 0,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3,
+      7,
+      2,
+      5,
+      2,
+      14,
+      3,
+      2,
+      4,
+      8,
+      18,
+      7,
+      14,
+      4,
+      3,
+      1,
+      1,
+      2,
+      0
+    ],
+    "hourly_sparkline": "▁▁▁▁▁▂▃▁▂▁▆▂▁▂▄█▃▆▂▂▁▁▁▁",
+    "peak_hour_ist": "23:00 IST",
+    "peak_count": 18,
+    "quiet_hour_ist": "08:00 IST",
+    "rating": "Dead",
+    "total_lifetime_posts": 817,
+    "computed_at": "2026-06-18T01:31:12.030900+00:00"
+  },
+  "quote_of_day": {
+    "text": "that's it\ni want to make a list of neet / jee related suicides\n\nbook of the dead\n\nname\nage\ncity\ndate\nlink\n\nit may take a lot of hours to do so but itll probably be worth it in the end\njust have to go through 10 years of suicides",
+    "post_no": 15093,
+    "name": "Anon",
+    "topic": "suicide list project",
+    "source_thread_id": 15090
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A low-pressure system of caste tensions moved into the board's Discourse section, bringing with it a squall of slurs and insults in the thread 'Naming Sons, Caste Slurs'.\n\nThe conversation centered around a question about naming sons, but quickly degenerated into a heated exchange.\n\nA high-pressure ridge of scattered comments built up in another Discourse thread, 'Anon Comments on Argentinians and Other Topics', with Anon weighing in on various topics, including Argentinians. The discussion remained relatively calm, with a few sharp exchanges.\n\nMeanwhile, a cold front of geopolitical debates swept through the Notices section, with Anon debating Afghan versus Indian rights records in one thread, and another anon suggesting a list of NEET-related suicides in another.\n\nThese discussions brought a chill to the board, with posters on both sides trading barbs.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Discourse",
+      "title": "Naming Sons, Caste Slurs",
+      "body": "Dasa asked what people would name their sons. Anon responded with a racist remark about their cousin, a defense officer, marrying a \"pahari gook\" and joked about the \"subhuman trash\" they might have.\n\nAnother anon said they wouldn't have a son, and if they did have a child with a woman from another group, they'd let her name him.\n\nAnon also mentioned India being run by \"dalit chads\" in the future. One respondent suggested a Sanskrit name, while another simply stated they weren't having children.\n\nAnon mentioned names like Br ambedkar, LChamar, and Chamar. DK Nidhileshwar and B.D.L were also suggested as potential names.",
+      "flow": false,
+      "source_thread_id": 14889
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Comments on Argentinians and Other Topics",
+      "body": "Anon kicked off the discussion with a brief comment that 'Argentinians are something else.' One anon responded with what appeared to be a personal message or acknowledgement of another user's plans, stating that the other user's plans were 'fascinating and will assist' them, and that they too had long-term plans that would be set in motion with the help of the first user's actions.\n\nAnother anon brought up a claim about someone they referred to as a 'sandnigger' who allegedly had to resort to 'taqqiya,' a term often associated with dissimulation in Islam.\n\nThis anon also used derogatory language, calling the person a 'faggot.' Anon also made a claim about the most attended stadium event in India, stating it was a football match, specifically the Kolkata Derby.\n\nThey also jokingly mentioned a 'maa's lingamed ceremony in Narendra modi stadium' by Swiss bhangi. Other comments included speculation about someone's online behavior, with one anon suggesting that the person switches VPNs to make it seem like multiple people are echoing their viewpoints.\n\nAnother anon accused someone of trying to incite civil war along various lines, including Hindu-Muslim and north-south.\n\nSome anons engaged in seemingly unrelated discussions, including one who enthusiastically listed soccer-related terms, while another dismissed the importance of soccer in India, using derogatory language towards Muslims.",
+      "flow": false,
+      "source_thread_id": 15290
+    },
+    {
+      "section": "Notices",
+      "title": "Anon debates Afghan vs Indian rights records",
+      "body": "Anon questioned when India will become \"based\" like Afghanistan. Anon argued Afghans are more \"based\" than Indians when it comes to women's rights, citing Afghanistan's actions as more in line with their religion. Another Anon countered that Indian culture is worse, especially in rural areas, and that Afghans do not let \"western degeneracy\" influence them. Anon also discussed Afghan laws allowing light beating of women unless it causes serious injury.",
+      "flow": false,
+      "source_thread_id": 14399
+    },
+    {
+      "section": "Notices",
+      "title": "Anon suggests NEET-related suicides list",
+      "body": "Anon proposed creating a list of NEET and JEE related suicides, dubbed a 'book of the dead', with details such as name, age, city, date, and link to the report.\n\nOne anon provided links to two recent cases of NEET aspirants who died by suicide, Umesh Mali from Jhunjhunu, RJ, and Riya Kumari from Dehradun, UK.\n\nAnother anon suggested that NEET exams are not 'apex predators' despite being brutal, and that it's the individual's own doing if they can't cope.",
+      "flow": false,
+      "source_thread_id": 15090
+    }
+  ],
+  "composed_at": "2026-06-18T01:33:08.388484+00:00",
+  "source_raw": "raw_20260618T013118Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
