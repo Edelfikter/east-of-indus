@@ -1,0 +1,100 @@
+{
+  "issue_no": "No. 100",
+  "date": "18 June 2026",
+  "metrics": {
+    "threads_in_catalog": 98,
+    "threads_active_24h": 98,
+    "threads_active_7d": 98,
+    "bumps_last_hour": 12,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      0,
+      4,
+      12,
+      6,
+      9,
+      2,
+      2,
+      1,
+      1,
+      1,
+      0,
+      0,
+      4,
+      7,
+      2,
+      5,
+      5,
+      8,
+      3,
+      6,
+      8,
+      12
+    ],
+    "hourly_sparkline": "▁▁▁▃█▄▆▂▂▁▁▁▁▁▃▅▂▃▃▅▂▄▅█",
+    "peak_hour_ist": "23:00 IST",
+    "peak_count": 12,
+    "quiet_hour_ist": "19:00 IST",
+    "rating": "Active",
+    "total_lifetime_posts": 751,
+    "computed_at": "2026-06-18T12:31:11.864236+00:00"
+  },
+  "quote_of_day": {
+    "text": "This site tries to get you to hate your own race, your indianness and this self hatred will be your undoing. No one on this site will be happy if they stay here. So I am leaving.\n\nSee ya caste kangers",
+    "post_no": 15101,
+    "name": "Left",
+    "topic": "leaving the site, self hatred",
+    "source_thread_id": 15101
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A low-pressure system of doxxing anxiety moved into the board last night, as Anon discussed a possible leak in the IAC community.\n\nThe system brought a mass of speculative replies, with one anon suggesting a connection between an old poster and a current IAC user.\n\nA scattered drizzle of reactions to suspicious content fell across the board, sparked by a post that read 'Kya tumne dekha…' Anon's responses ranged from concern to dismissal.\n\nA cold snap of self-hatred and despondency settled over a small part of the board, marked by a poster bidding farewell and warning of the dangers of self-hatred.\n\nA series of 'Dasi Namo Namaaha' phrases was posted, adding to the overall sense of unease.\n\nA brief but intense front of pain and disconnection also moved through, as one anon shared a relatable struggle with feeling stuck in an uncomfortable situation.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Possible Doxx Leak in IAC Community",
+      "body": "Anon posted that someone had leaked an old doxx, connecting a former Bharatchan poster to their current IAC identity, which turned out to be a female. The OP claimed that more leaks are possible.\n\nAnon replied with a vague reference to a post from the previous night, mentioning that they had saved some information.\n\nAnother anon asked if the person in question was the manifestation poster, but there was no immediate clarification.\n\nThe original post did not provide details on how the doxx was obtained or what specific information was leaked. The tone of the OP suggested a wait-and-see approach regarding potential future leaks.",
+      "flow": true,
+      "source_thread_id": 15683
+    },
+    {
+      "section": "Discourse",
+      "title": "Posters React to Suspicious Content",
+      "body": "Anon kicked off the discussion with a cryptic message: 'Kya tumne dekha…' Anon responded with 'We didn't see anything.\n\nDelete this thread and move on.' Another anon expressed frustration, saying 'Did someone post CP again? blaady why am i always offline when ts happens'.\n\nOne anon claimed that 'The sandaas caste spammer posted CP links or some shit.' This sparked a defensive response from another anon, who stated 'yaar pajeet cant you read? bola na someone posted cp so nanhefags are feeling disturbed'.\n\nAnon expressed concern, saying 'Its weirding me out yaar.' They clarified that they 'was just joking around but I didnt think it would be this true, and, i mean, not bad at all.' Anon got personal, asking 'Are you shin?\n\nDo you still use discord? Wanna talk.' Another anon seemed to confirm, saying 'koi na ;-; last time I checked he ascended and is probably scoring some gorimems and iraqis'.\n\nAnon downplayed the situation, suggesting 'If you're feeling disturbed just drink some water and take a break. Nothing will happen.' Meanwhile, another anon reflected on their actions, saying 'im sorry, yaar, i got carried away.\n\nIt wont happen again, pakka. my fault I didnt realize itna serious tha, I wont post it again.'",
+      "flow": false,
+      "source_thread_id": 15492
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon shares relatable pain",
+      "body": "Anon opened the thread with a statement: 'Nothing is as painful as being stuck where you don’t belong.' One anon responded with an obscene remark, saying 'Teri maa ki chut gobar cuck. Instagram aur reddit waali post udhar hi rakh.' Another anon asked for the OP's ID, 'Btw iski id?' A third anon replied by referencing other posts, '>>15213 >>15214'. The conversation remained brief.",
+      "flow": false,
+      "source_thread_id": 15205
+    },
+    {
+      "section": "Notices",
+      "title": "Anon posts series of 'Dasi Namo Namaaha' phrases",
+      "body": "Anon submitted a post with a series of phrases, including 'OM DASI NAMO NAMAHA', 'BHARATIYA DASI NAMO NAMAHA', and 'DIGITAL DASI NAMO NAMAHA'. The post also contained 'AASI DESI DASI NAMO NAMAHA' and 'RANDI OM'. No replies were made to the post.",
+      "flow": false,
+      "source_thread_id": 15147
+    },
+    {
+      "section": "Notices",
+      "title": "Poster Bids Farewell, Warns of Self-Hatred",
+      "body": "Left announced their departure from the site, warning that it fosters self-hatred and hatred towards one's own race and Indianness. They attributed potential unhappiness of users to prolonged engagement with the site. One anon responded with a simple query: 'Caste?'",
+      "flow": false,
+      "source_thread_id": 15101
+    }
+  ],
+  "composed_at": "2026-06-18T12:33:08.567492+00:00",
+  "source_raw": "raw_20260618T123117Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
