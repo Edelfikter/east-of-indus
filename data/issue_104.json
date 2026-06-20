@@ -1,0 +1,100 @@
+{
+  "issue_no": "No. 104",
+  "date": "20 June 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 100,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 8,
+    "hourly_buckets_24h": [
+      0,
+      1,
+      6,
+      6,
+      7,
+      9,
+      2,
+      2,
+      4,
+      0,
+      0,
+      1,
+      0,
+      3,
+      4,
+      5,
+      2,
+      6,
+      5,
+      5,
+      3,
+      10,
+      11,
+      8
+    ],
+    "hourly_sparkline": "▁▁▄▄▅▆▂▂▃▁▁▁▁▂▃▄▂▄▄▄▂▇█▆",
+    "peak_hour_ist": "17:00 IST",
+    "peak_count": 11,
+    "quiet_hour_ist": "19:00 IST",
+    "rating": "Active",
+    "total_lifetime_posts": 888,
+    "computed_at": "2026-06-20T12:31:11.780512+00:00"
+  },
+  "quote_of_day": {
+    "text": ">>17582\nA weird, path and a weird life lends itself to obvious quirks, I don't think I have any immediate quirks, but I think life itself, the way I am introduced leads me to be a stranger. I quite literally, just cannot seem to find friends, at all.",
+    "post_no": 17584,
+    "name": "Anon",
+    "topic": "struggling with social isolation",
+    "source_thread_id": 17575
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A low-pressure system of melancholy settled over the board, as anons shared feelings of self-acceptance and loneliness. This somber mood brought scattered showers of personal thoughts.\n\nA high-pressure front of caste hatred built in the afternoon, with two distinct squalls of anti-reservation sentiment. One anon called for a ban on low-caste reservations, blaming them for stifling India's development.\n\nAnother front of caste-based blame developed, with assertions that low castes are responsible for many of India's problems, including high rates of rape and domestic violence.\n\nA light drizzle of off-topic conversations occurred, with a cluster of skribbl.io links posted and a brief discussion of movies, including recent watches and recommendations. The atmosphere remained overcast, with no clear resolution to the prevailing mood.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Anons share feelings of self-acceptance and loneliness",
+      "body": "Anon started a thread saying 'Will write about it.' The original post did not elaborate.\n\nOne anon expressed feeling 'wonderful to be myself' and noted that while they did not want to brag, they also did not want to diminish themselves.\n\nThey mentioned that life's detours have been 'parental' in nature, suggesting a sense of guidance or protection. This anon also acknowledged moments of shallowness and impatience.\n\nAnother anon shared that they were feeling miserable but managed to turn their day around by taking action.\n\nThey identified loneliness as a significant issue, describing their life as 'very strange.' Despite this, they acknowledged having things they cherished and feeling wonderful about themselves.\n\nA third anon reflected on the quirks that come with an unconventional life path. They noted that their life has led them to be a stranger and expressed difficulty in finding friends.\n\nThis anon did not mention any immediate quirks but suggested that their unusual life introduction contributes to their social struggles. The anons' posts conveyed a sense of introspection and self-awareness, with each expressing complex emotions and experiences.\n\nTheir comments did not seek solutions or advice but rather seemed to explore and articulate their feelings.",
+      "flow": true,
+      "source_thread_id": 17575
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Calls for Ban on Low Caste Reservations",
+      "body": "Anon posted that low caste reservations have hindered India's development into a first-world country. They claimed that reserved seats for low castes have ruined the futures of upper caste children.\n\nAnon described individuals from low castes as 'subhumans' and suggested that they should be restricted from attending government colleges, joining the army, or obtaining government jobs.\n\nInstead, Anon proposed that low caste individuals should only be eligible for ITI or diploma programs. No one replied to this post in the given thread.",
+      "flow": false,
+      "source_thread_id": 17694
+    },
+    {
+      "section": "Discourse",
+      "title": "Caste Blame for India's Problems",
+      "body": "Anon launched a tirade claiming that low castes are responsible for many of India's problems, including rape, domestic violence, and student suicide.\n\nThe original poster wrote that low castes commit the most rape against women and children, lead in domestic violence against their wives, and steal seats from deserving upper castes.\n\nAnother anon countered that the original poster's claims are misguided and that patriarchy, not low castes, is the real issue. This respondent argued that brahminical patriarchy is often misunderstood and that it has been a mechanism for group survival and cultural continuity.\n\nA respondent brought up a conspiracy theory that the Brahman caste was created by Jews to control the Indian population. This poster also claimed that the census was bankrolled by a Jewish banker.\n\nThe discussion quickly devolved into name-calling and insults, with one anon calling another a \"retard bhangi\" and another using a derogatory term for someone of a lower caste.\n\nOne respondent shifted the blame to Muslims, saying that they are also responsible for India's problems. Another anon suggested that Allah should be cursed first.\n\nThe thread was marked by a lack of constructive discussion, with many posts consisting of insults and personal attacks. The original poster's claims about low castes were not substantively addressed by other posters, who instead chose to attack each other.",
+      "flow": false,
+      "source_thread_id": 16488
+    },
+    {
+      "section": "Notices",
+      "title": "skribbl.io links posted",
+      "body": "bgtow posted multiple links to skribbl.io, a drawing game, saying \"long time it has been, aajao saare!!!!\". bgtow replied with more links, stating the previous link had expired. Another poster asked if the game was boring after playing for months. bgtow responded that it had been a long time since playing, specifically mentioning February as the last time. Anon called bgtow \"Chutiya sala\".",
+      "flow": false,
+      "source_thread_id": 17833
+    },
+    {
+      "section": "Notices",
+      "title": "Anon discusses movies, shares recent watch",
+      "body": "Anon opened a thread about movies, sharing a recent watch and inviting others to discuss films. They mentioned watching a movie with a 'random concept' that was 'very entertaining'.\n\nOne respondent asked Anon to talk about movies or a specific movie. Another Anon interjected with an insult. A third Anon also responded with a slur. Anon then asked if anyone on the board watched movies.\n\nLater, another Anon expressed confusion over a post, asking 'What are you trying to say pajeet?'",
+      "flow": false,
+      "source_thread_id": 17631
+    }
+  ],
+  "composed_at": "2026-06-20T12:33:05.130948+00:00",
+  "source_raw": "raw_20260620T123117Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
