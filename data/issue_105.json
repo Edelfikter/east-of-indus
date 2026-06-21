@@ -1,0 +1,100 @@
+{
+  "issue_no": "No. 105",
+  "date": "21 June 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 100,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 1,
+    "hourly_buckets_24h": [
+      0,
+      3,
+      4,
+      2,
+      5,
+      5,
+      4,
+      2,
+      6,
+      9,
+      4,
+      3,
+      2,
+      12,
+      5,
+      15,
+      9,
+      3,
+      2,
+      1,
+      0,
+      1,
+      2,
+      1
+    ],
+    "hourly_sparkline": "▁▂▂▁▃▃▂▁▃▅▂▂▁▆▃█▅▂▁▁▁▁▁▁",
+    "peak_hour_ist": "23:00 IST",
+    "peak_count": 15,
+    "quiet_hour_ist": "08:00 IST",
+    "rating": "Rotting",
+    "total_lifetime_posts": 1019,
+    "computed_at": "2026-06-21T01:31:14.816317+00:00"
+  },
+  "quote_of_day": {
+    "text": ">>17569\nSo? When there was construction shit annoying our home, me and the neighbors got them to agree to only do it outside of night.\n\nJust tell them , it's a nuisance.",
+    "post_no": 17577,
+    "name": "Anon",
+    "topic": "construction noise complaint",
+    "source_thread_id": 17562
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A low-pressure system of curiosity moved into the board this morning, centered around a request for a radio tracklist from 'Stacyjeeta'. The query drew a gentle sprinkle of replies.\n\nA front of skepticism developed in another part of the board, where an inquiry about 'hando' met with dubious responses.\n\nNearby, a claim that Muslims and Chinese were creating anti-India threads sparked a brief but intense squall of debate.\n\nMeanwhile, a nostalgic fog rolled in, as anons reminisced about India's FIFA World Cup threads of the past.\n\nA separate cold snap of disappointment affected a brief deal that 'lasted 2 days', prompting some to lament the lack of commitment.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Listener Requests Radio Tracklist from Stacyjeeta",
+      "body": "Anon posted a polite request for Stacyjeeta, a high IQ woman operating a radio station, to publish a list of tracks being played on the radio.\n\nThe anon suggested that the list could be in the format of 'Artist - Song_Title' or a collection of YouTube links.\n\nThe anon expressed appreciation for the quality of the tracks being played and sought a convenient way to access all of them, as there were too many to manually save or add to YouTube.\n\nAnother anon responded quickly, claiming that Stacyjeeta had been 'spooked' and was not coming back. No further information was provided about Stacyjeeta's status or the radio station's operations.\n\nThe request for the tracklist remained unaddressed in the thread, with no additional comments or responses from other users regarding the feasibility of such a list or alternative solutions for accessing the music.\n\nThe conversation remained brief, with only two posts, and did not provide any updates on Stacyjeeta's radio station or her interaction with listeners.",
+      "flow": true,
+      "source_thread_id": 18226
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Queries 'Hando', Gets Skeptical Replies",
+      "body": "Anon started a thread asking, 'What's this hando.' One respondent quickly replied, referencing another post, saying it would 'always be bad optics' and jokingly suggested using it to make a pill rather than drinking it. Another anon chimed in, claiming they had previously suggested that 'gau mutra have medicinal properties' and now felt vindicated.",
+      "flow": false,
+      "source_thread_id": 18106
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Claims Muslims, Chinese Create Anti-India Threads",
+      "body": "Anon posted that Muslims and Chinese are allegedly creating anti-India threads on 4chan to divert attention from grooming gang news and create a 'soft target' for racism.\n\nThey claimed one Muslim in Canada is behind these threads. Another anon responded, suggesting that Muslims care about media optics and spend time smearing India's image to appear better, while Hindus achieve top positions.\n\nThis anon believed that if other races focused on self-improvement like Indians, there would be less reason for them to be hated.\n\nOne anon expressed that India hate is not going away soon and suggested enjoying the perceived suffering of others.\n\nA different anon joked about a Canadian Pakistani allegedly creating threads, calling him a 'chad' and laughing at his actions. Anon also claimed that anti-India content is largely created by Westerners, not sane people.\n\nAnother anon expressed hope that Indian perception worsens and that NRI Indians are harmed. One anon stated that this situation has been ongoing for a decade and nothing will change until a new target is found.\n\nA respondent expressed shock at another anon seemingly celebrating Muslims criticizing Indians.",
+      "flow": false,
+      "source_thread_id": 18096
+    },
+    {
+      "section": "Notices",
+      "title": "Nostalgia for Indiachan's FIFA World Cup threads",
+      "body": "Anon posted 'Bhach ki yaad aa gayi' on the board. Another anon mentioned that Indiachan had threads during the FIFA World Cup, recalling that 'it was kinoo'. A respondent joked that Dyaush should have kept running threads until the World Cup final. One anon criticized 'lundchan' and speculated Bhach would have had more threads if Portugal had performed better. Anon also brought up Dayus getting married and leaving the board.",
+      "flow": false,
+      "source_thread_id": 18087
+    },
+    {
+      "section": "Notices",
+      "title": "Anon laments short-lived deal",
+      "body": "Anon kicked off the thread, saying a deal lasted only two days and jokingly asking if people wanted to properly fight or just pretend to. Another anon responded with unrelated comments about Ukraine and Russia's use of drones.\n\nA different anon brought up the US and power projection, stating that only the US could break any deal after the fall of the Soviet Union.\n\nOther anons discussed Telegram, with one asking when it would be unbanned and another sharing that they used it for conflict news.",
+      "flow": false,
+      "source_thread_id": 18205
+    }
+  ],
+  "composed_at": "2026-06-21T01:33:03.668476+00:00",
+  "source_raw": "raw_20260621T013120Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
