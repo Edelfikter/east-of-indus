@@ -1,0 +1,100 @@
+{
+  "issue_no": "No. 109",
+  "date": "23 June 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 100,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 0,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      7,
+      4,
+      5,
+      10,
+      2,
+      13,
+      14,
+      9,
+      19,
+      7,
+      1,
+      3,
+      1,
+      1,
+      4,
+      0
+    ],
+    "hourly_sparkline": "▁▁▁▁▁▁▁▁▃▂▂▄▁▅▆▄█▃▁▂▁▁▂▁",
+    "peak_hour_ist": "00:00 IST",
+    "peak_count": 19,
+    "quiet_hour_ist": "08:00 IST",
+    "rating": "Dead",
+    "total_lifetime_posts": 771,
+    "computed_at": "2026-06-23T01:30:28.778090+00:00"
+  },
+  "quote_of_day": {
+    "text": ">>19598\nI renounce bitterness, I renounce all forms of pity and guilt and shame, I renounce it all as I had a year ago and I do it again. I refuse to house a loser inside my own brain. Everything is malleable to change and I change myself, I decide again and again every single day.",
+    "post_no": 19600,
+    "name": "Anon",
+    "topic": "personal growth, self-improvement",
+    "source_thread_id": 19598
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A high-pressure system of assembly language programming moved over the board this morning, with Anon posting a basic HTTP server in assembly. The thread drew a flurry of responses.\n\nA low-pressure front of safe space proposals moved in, with Anon suggesting a dedicated space for Muslims and Dalits. The proposal met with scattered showers of dissent and scattered support.\n\nA brief but intense heat wave of curiosity swept through the board when Anon asked about the taste of pajeeta flesh. The question drew a downpour of replies, many of which were skeptical or joking.\n\nMeanwhile, a scattered drizzle of Indo-Aryan migration discussion continued in the background, with Anon posting about the Aryan Invasion Theory.\n\nA cold snap of self-improvement advice also blew in, with Anon counselling others to focus on personal growth, but the thread quickly became overcast with disparate views.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Anon writes basic HTTP server in assembly",
+      "body": "Anon started a thread saying they are writing a basic HTTP server in assembly using FASM.\n\nAnother anon replied with an experience of learning MASM, mentioning its integration with the Visual Studio debugger, but noted limitations on Windows for kernel mode system calls. A respondent asked about the OP's project details.\n\nThe OP was briefly absent from the conversation but later returned stating they are almost done with the server. The conversation also involved discussions on low-level programming. One anon expressed that assembly seemed like too much work for little gain.\n\nThere were also exchanges on Large Language Models. Some anons argued LLMs cannot think, only generate text. One claimed they can ask anything they don't understand and get an answer, calling another's reply \"pure cope\".\n\nThe thread included mentions of other programming projects. One anon was learning advanced C++ and working on software rendering projects. Some anons also discussed Linux and boot options. One suggested using WSL, while another recommended booting with a real Ubuntu setup.\n\nThe conversation had a separate tangent where an anon mentioned a \"swisscuck\" being programmed to have certain thoughts, prompting another to ask for a translation into English. The thread remained largely on-topic, with most discussion revolving around programming and low-level development.",
+      "flow": true,
+      "source_thread_id": 19165
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Proposes Safe Space for Muslims and Dalits",
+      "body": "Anon opened the discussion by suggesting a safespace for Muslims and Dalits on the imageboard.\n\nOne anon responded by referencing a past incident involving a Catholic individual and made a comment about the OP's community, calling them 'ball washers for their descendants.' Another anon chimed in, stating that the OP's ancestors 'were dancing in jungles wearing those grass skirts in Andaman Nicobar Island when the Aryans arrived.' Anon proposed creating a separate board for Muslims and Dalits, but another anon disagreed, suggesting they should not be clubbed together.\n\nA separate country was even proposed as a solution. One respondent expressed their intent to create a Muslim and Dalit-friendly imageboard within a couple of months.\n\nThe conversation involved various personal attacks and insults, with one anon stating that 'a white man will always treat you worse than a Dalit.' The discussion also involved some sarcastic remarks, with an anon saying 'Poona Pact 2026 kek.' Anon also joked about being a 'Christian pajeet' and mentioned a famous individual, Messi, as a 'Roman Catholic pajeet.'",
+      "flow": false,
+      "source_thread_id": 20087
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Asks About Pajeeta Flesh Taste",
+      "body": "Anon opened a thread asking how pajeeta flesh tastes. The original post included numerous smiling face emojis. One respondent described the taste as depending on the individual and the specific body part.\n\nCheeks were likened to juicy fat, while arms were described as chewy but tender.\n\nAnother poster compared the taste of pajeeta flesh to gobar, a type of cow dung, and mentioned that the genital area smells like fish.\n\nA different anon asked the original poster to guess the taste of gobar. One participant described the exchange as brutal. Another anon mentioned the presence of cannibals in Lundia.",
+      "flow": false,
+      "source_thread_id": 19780
+    },
+    {
+      "section": "Notices",
+      "title": "Anon discusses Indo-Aryan migration and Aryan Invasion Theory",
+      "body": "Anon started a thread about the Indo-Aryan migration to the Indian subcontinent in 1550 BCE, mentioning the spoke-wheeled war chariot. Another anon replied with information about the Aryan Invasion Theory, popularized by Sir Mortimer Wheeler in the 1940s.\n\nAnon countered that there is no recorded war, archeological evidence, or religious evidence supporting the theory. A respondent claimed the Indus Valley Civilization were the Aryans.\n\nThe conversation turned hostile, with insults and derogatory remarks exchanged between multiple anons.",
+      "flow": false,
+      "source_thread_id": 20538
+    },
+    {
+      "section": "Notices",
+      "title": "Anon counsels self-improvement, others offer disparate views",
+      "body": "Anon opened the thread with a message urging people to let go of negative thoughts and devote themselves to something positive.\n\nOne respondent expressed a desire for an Indian athlete to improve the country's global image, suggesting a medal in a high-profile event like football or the Olympics.\n\nAnother anon shared a personal reflection on renouncing bitterness, pity, and guilt. A different poster made a racist comment about Indian DNA, while others made brief, disparate remarks.",
+      "flow": false,
+      "source_thread_id": 19598
+    }
+  ],
+  "composed_at": "2026-06-23T01:32:21.224481+00:00",
+  "source_raw": "raw_20260623T013034Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
