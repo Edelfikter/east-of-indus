@@ -1,0 +1,100 @@
+{
+  "issue_no": "No. 114",
+  "date": "25 June 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 100,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 13,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      3,
+      3,
+      5,
+      2,
+      0,
+      0,
+      0,
+      2,
+      2,
+      10,
+      5,
+      7,
+      7,
+      5,
+      18,
+      6,
+      10,
+      13
+    ],
+    "hourly_sparkline": "▁▁▁▁▁▁▂▂▂▁▁▁▁▁▁▄▂▃▃▂█▃▄▆",
+    "peak_hour_ist": "15:00 IST",
+    "peak_count": 18,
+    "quiet_hour_ist": "19:00 IST",
+    "rating": "Active",
+    "total_lifetime_posts": 993,
+    "computed_at": "2026-06-25T12:31:14.656761+00:00"
+  },
+  "quote_of_day": {
+    "text": ">>23902\ni live alone in 1RK in T1 city in lundia nobody is going to marry me i goon and invite sissy bottoms from grindr to fuck im 28 years old. i gave up a long time ago",
+    "post_no": 23909,
+    "name": "Anon",
+    "topic": "lonely despair, unfulfilled longing",
+    "source_thread_id": 23828
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A low-pressure system of job insecurity moved over the board, as Anon sought advice after being fired from an AI annotation job. The post drew a flurry of responses.\n\nA scattered high-pressure front of prurient interest developed, with one anon seeking a trans/sissy compilation. This thread remained overcast, with no clear resolution.\n\nMeanwhile, a brief but intense squall of nationalism blew through, as another anon claimed a decisive Indian victory. The claim was met with skepticism, and the thread dissipated quickly.\n\nA series of unrelated posts, including a reaction to a 'Stacy' mention and a suggested quote for the homepage, added to the overall sense of scattered showers on the board.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Fired from AI annotation job, seeks advice",
+      "body": "Anon got fired from a 3.5 lakh per annum IT job, specifically an AI annotation position with stringent KPIs. The job required high quality and productivity, with active time monitored down to 10 seconds.\n\nOne anon was let go from the role and took to the board to vent and seek advice. They claimed the job's demands made it impossible to meet both quality and productivity targets.\n\nNo one had replied yet when the article was taken out. The OP's post included a brief lament about their situation and an apparent warning to potential critics, signing off with 'gareebcel with buddhe maa baap'.\n\nThe OP had described the job as involving 'a lot of target KPIs' for quality, productivity, and active time. A harsh system appears to have driven the OP to seek guidance from the board.\n\nAt the time of writing, there were no responses to guide the OP. The OP's circumstances may elicit sympathy or provoke debate among readers.",
+      "flow": true,
+      "source_thread_id": 24156
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon seeks hottest trans/sissy compilation",
+      "body": "Anon opened the thread asking for a link to the 'hottest trans/sissy compilation/pmv'. They expressed a desire to masturbate. Anon provided a link to an explicit video on Eporner, titled 'hot skinny trans ava pounded hard'.\n\nAnother user asked how many bottoms Anon had fucked, to which they replied 300-400, stating they couldn't remember exactly. They claimed to have had these encounters during a trekking trip and while traveling to a beach house in western Maharashtra.\n\nSome users discussed their experiences with Grindr, a dating app. One Anon mentioned having a huge blocklist of 'weird uncles' who didn't meet their expectations.\n\nAnother user from Indore claimed that many people from their city get 'whored out' in Pune for college. The conversation also touched on topics of sexual behavior and identity.\n\nOne Anon described 'gooning' as a homosexual behavior and mentioned the 'incel to gooner to sissy pipeline'.\n\nOthers joked about their experiences and preferences, including one user who claimed to be a 'Shorty pattotie' and stated that women don't like them. Some users also exchanged personal details, such as height, skin color, caste, job, education, and location.\n\nAnon from Indore provided their details: 5'5\", light brown, Sunar, Masters, and based in Indore.",
+      "flow": false,
+      "source_thread_id": 23828
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Claims Decisive Indian Victory",
+      "body": "Anon posted 'Decisive indian victory' as the opening salvo. One anon questioned why a woman in an image was barefoot. Multiple anons responded with affirmations and exclamations of 'based', with one adding that it represented an 'average timmy' experience after watching 'muh weakest male grip cope porn'. Another poster suggested sharing the content on 4chan.",
+      "flow": false,
+      "source_thread_id": 23770
+    },
+    {
+      "section": "Notices",
+      "title": "Anon reacts to 'Stacy' mention",
+      "body": "Anon posted 'Stacy is speaking listen and learn'. Other anons responded sceptically. One anon asked 'what for tho' she was trying hard. Some anons made light of the situation. One anon simply said 'Lmao' in response to the mention of 'Stacy'. Anon criticised people for taking things at face value.",
+      "flow": false,
+      "source_thread_id": 23709
+    },
+    {
+      "section": "Notices",
+      "title": "Anon suggests quote for homepage",
+      "body": "Anon posted a quote they thought should be on the homepage of indiachan. One anon replied with a confused take on a quote, wondering if it meant everything is deterministic. Another anon called out a poster's contribution as low-quality content, saying they were 'larpers trying to fit in.' Anon also exchanged insults, with one calling another 'faggot' and 'useless.'",
+      "flow": false,
+      "source_thread_id": 24109
+    }
+  ],
+  "composed_at": "2026-06-25T12:33:21.795919+00:00",
+  "source_raw": "raw_20260625T123121Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
