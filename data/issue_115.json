@@ -1,0 +1,100 @@
+{
+  "issue_no": "No. 115",
+  "date": "26 June 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 100,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 10,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      10,
+      4,
+      8,
+      8,
+      7,
+      6,
+      8,
+      6,
+      12,
+      9,
+      4,
+      5,
+      0,
+      1,
+      1,
+      1,
+      10
+    ],
+    "hourly_sparkline": "▁▁▁▁▁▁▁▆▃▅▅▅▄▅▄█▆▃▃▁▁▁▁▆",
+    "peak_hour_ist": "23:00 IST",
+    "peak_count": 12,
+    "quiet_hour_ist": "08:00 IST",
+    "rating": "Active",
+    "total_lifetime_posts": 887,
+    "computed_at": "2026-06-26T01:31:08.004804+00:00"
+  },
+  "quote_of_day": {
+    "text": ">>23071\nonce in a while like every 3-4 months it dawns on me suddenly how over it really is\n\nI cope by consooming UFC and Fifa WC these days\n\nt. 30 yo KHHV NEET",
+    "post_no": 23076,
+    "name": "Anon",
+    "topic": "coping with lost youth, NEET life",
+    "source_thread_id": 23071
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A low-pressure system of career anxiety moved over the board this morning, as one anon struggled to find a job due to a past academic blunder. The frustration was palpable.\n\nA scattered high-pressure ridge of technical discussion developed later, with coding and AI prospects getting a workout. Assembly language was praised for its aesthetic appeal, and server projects were getting a reboot.\n\nMeanwhile, a cold front of skepticism blew in regarding online political posturing, with claims that leftist rhetoric on Plebbit was often astroturfed. A declaration of war against Reddit also surfaced, though its chances of success were left un forecast.\n\nA light drizzle of alcohol-related chatter also touched down, with many posters weighing in on the topic.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Struggling to find a job due to a past blunder",
+      "body": "Anon posted about their struggles in finding a job, citing a blunder in 12th grade where they scored less than 60%. They are currently in their final semester of BTech but are facing rejection from companies due to their past academic performance.\n\nOne respondent suggested that the issue lies with the meritocracy system, stating that it overlooks various disadvantages such as geographical location, nepotism, and possibly even the individual's religion. This anon argued that their worth is not defined by their job prospects.\n\nAnother anon responded with a more direct approach, stating that if the OP were truly worthy, they would have no issue securing a high-paying job, citing an example of an 80LPA salary.\n\nA third anon made a joke about the OP's situation, asking them to rate a liquor, seemingly unrelated to the conversation. The OP's question about pursuing a master's degree remains unaddressed in the provided replies.\n\nThe conversation seems to be focused on the perceived injustices of the job market and the OP's self-proclaimed abilities, rather than offering concrete advice or solutions to their situation.",
+      "flow": true,
+      "source_thread_id": 24368
+    },
+    {
+      "section": "Discourse",
+      "title": "Alcohol comments trend on Indiachan",
+      "body": "Anon made a brief comment about the prevalence of alcohol-related discussions on Indiachan, stating \"so many peeps on alcohol here rn kek\". No further discussion was recorded in the provided replies.",
+      "flow": false,
+      "source_thread_id": 24669
+    },
+    {
+      "section": "Discourse",
+      "title": "Coding and AI prospects discussed",
+      "body": "Techjeet anon expressed enthusiasm for their server project, calling the assembly 'aesthetic'. They mentioned resuming work on implementing more responses. One anon questioned the future of coding, citing a desire to learn but seeing no prospects.\n\nThey sought help. Another anon asked how much of the coding work can be done by Large Language Models (LLMs) at present.\n\nA respondent advised that if one can code AI, they have a bright future ahead.",
+      "flow": false,
+      "source_thread_id": 24608
+    },
+    {
+      "section": "Notices",
+      "title": "Plebbit leftist claims",
+      "body": "Anon claimed that the Plebbit platform is not genuinely populated by leftists, but rather by individuals pretending to be so. According to Anon, behind 80% of leftist posts, there are allegedly influencers such as mullahs or 'bhimtas' pushing their agendas. Another anon responded with what appeared to be a cryptic reference to another topic, mentioning 'war on redditors'.",
+      "flow": false,
+      "source_thread_id": 24543
+    },
+    {
+      "section": "Notices",
+      "title": "Anon declares war on Reddit",
+      "body": "Anon declared war on Reddit, asking if they can defeat the platform. Other anons responded with skepticism and jokes. One anon advised against acting now, suggesting they should plan and prepare instead. Anon replies included criticism of Reddit and its users, with one poster dismissing the idea of an 'internet war'. Some anons made vague statements about targeting Reddit users.",
+      "flow": false,
+      "source_thread_id": 24447
+    }
+  ],
+  "composed_at": "2026-06-26T01:33:01.905336+00:00",
+  "source_raw": "raw_20260626T013113Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
