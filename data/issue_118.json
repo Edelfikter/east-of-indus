@@ -1,0 +1,100 @@
+{
+  "issue_no": "No. 118",
+  "date": "27 June 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 100,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 10,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      7,
+      3,
+      5,
+      2,
+      2,
+      2,
+      0,
+      3,
+      2,
+      1,
+      8,
+      3,
+      7,
+      7,
+      7,
+      10,
+      10,
+      9,
+      10
+    ],
+    "hourly_sparkline": "▁▁▁▁▂▅▃▄▂▂▂▁▃▂▁▆▃▅▅▅██▇█",
+    "peak_hour_ist": "15:00 IST",
+    "peak_count": 10,
+    "quiet_hour_ist": "19:00 IST",
+    "rating": "Active",
+    "total_lifetime_posts": 639,
+    "computed_at": "2026-06-27T12:30:27.889253+00:00"
+  },
+  "quote_of_day": {
+    "text": "yaar just watch the video\nthe tree branch fell down on his head like a javelin\nit fell right on top of his head\n\nif it were horizontal it would've snapped in half and he wouldve just shrugged it off and kept driving\n\nthis is just concussion hit like a hammer on his head",
+    "post_no": 25838,
+    "name": "Anon",
+    "topic": "absurdity of a tree branch accident",
+    "source_thread_id": 25810
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A high-pressure system of antisemitism dominated the morning, with a moderator vowing to shield the board from 'Kike psy-ops'. This stance drew a clear sky of approving comments.\n\nA scattered downpour of calls for violence against Handoo men moved in during the late morning, with one anon suggesting they 'need to be killed first'. This storm front was brief but intense.\n\nThe afternoon brought a fog of melancholy, as an anon claimed caste conversions in Pakistan and asked others to 'cheer me up'. The discussion remained overcast, with no clear resolution in sight.\n\nA low-pressure system of frustration also developed, with an anon requesting CAPTCHA and moderation changes to improve board security. Meanwhile, a brief but graphic drizzle of violent imagery occurred, as an anon described a 'pajeet killer' as a tree branch.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Moderator Vows to Protect Board from 'Kike Psy-Ops'",
+      "body": "Anon posted a declaration of intent to keep the board 'safe from Kike psy-ops' as long as they remain a moderator. The original post sparked a brief discussion.\n\nAnon responded with what appeared to be a Hindi or Urdu phrase, seemingly unrelated to the original statement. Another anon remarked on an image, warning others not to click and adding a spoiler tag.\n\nOne respondent accused an unnamed individual of using Tor, labeling them a 'kike.' A question was posed to another user, suggesting they might not be familiar with the abbreviation 'GTB.' A simple 'Based af' was posted in response to the original declaration.\n\nNo further details or context were provided about these exchanges, and no clear consensus or resolution emerged from the discussion.",
+      "flow": true,
+      "source_thread_id": 25986
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Calls for Violence Against Handoo Men",
+      "body": "Anon expressed frustration and anger towards 'handoo men', stating they are being 'cucked' and suggesting they 'need to be killed first'. Another anon did not directly respond to the OP's call for violence but the thread did not see any counter speech either.",
+      "flow": false,
+      "source_thread_id": 26130
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Claims Caste Conversions in Pakistan",
+      "body": "Anon posted a link to a video, stating they were sad and seeking help from other anons to cheer them up.\n\nOne anon responded by making a broad claim about the caste demographics of Pakistan, stating that the country is predominantly comprised of 'chamar', 'rapebaby', and 'inbred' individuals.\n\nAnother anon countered this claim, stating that many Chamars in Pakistan are Christians, while most Muslim UCs are from other castes.\n\nThey also claimed that soythie and eastern Muslims are mostly LCs, while northern and western Muslims are mostly UC converts.\n\nA different anon made a remark about Muslim men being preferable to low-T Hindu men, suggesting that Muslim men would be better partners for women.\n\nOne anon sarcastically wondered what Muslim 'chads' were doing in their communities, jokingly suggesting they might be engaging in bestiality or other deviant behaviors.\n\nAnon also claimed that many Muslims in Pakistan were formerly Chamars and LCs who converted to Islam or Christianity for a 'fresh start'.\n\nAnon then accused others of 'hating UC Muslims' and labeled it as 'chamar bheemta and modi coded', implying a coded form of caste-based or political prejudice. One self-identified UC convert claimed their own status as a convert.",
+      "flow": false,
+      "source_thread_id": 26041
+    },
+    {
+      "section": "Notices",
+      "title": "Anon Suggests CAPTCHA and Moderation Changes",
+      "body": "Anon asked Admin to make the CAPTCHA harder and block VPNs, proxies, and Tor. They also suggested hiring better moderators. Another anon replied with a reference to an unspecified post. No further discussion was reported.",
+      "flow": false,
+      "source_thread_id": 26163
+    },
+    {
+      "section": "Notices",
+      "title": "Anon describes 'pajeet killer' as a tree branch",
+      "body": "Anon opened the thread with a post saying 'New pajeet killer - A tree branch.' Anon then described a video where a tree branch fell on a person's head like a javelin, causing a concussion.\n\nAnother Anon compared the scenario to Looney Tunes and joked about calculating the time taken for the branch to hit the moving person's head.\n\nAnon also discussed the odds of a branch falling in the middle of the road and the randomness of fate.",
+      "flow": false,
+      "source_thread_id": 25810
+    }
+  ],
+  "composed_at": "2026-06-27T12:32:19.354229+00:00",
+  "source_raw": "raw_20260627T123033Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
