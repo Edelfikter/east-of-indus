@@ -1,0 +1,100 @@
+{
+  "issue_no": "No. 117",
+  "date": "27 June 2026",
+  "metrics": {
+    "threads_in_catalog": 92,
+    "threads_active_24h": 92,
+    "threads_active_7d": 92,
+    "bumps_last_hour": 6,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      5,
+      5,
+      9,
+      8,
+      4,
+      7,
+      6,
+      9,
+      9,
+      6,
+      8,
+      3,
+      2,
+      4,
+      1,
+      6
+    ],
+    "hourly_sparkline": "▁▁▁▁▁▁▁▁▄▄█▇▄▆▅██▅▇▃▂▄▁▅",
+    "peak_hour_ist": "18:00 IST",
+    "peak_count": 9,
+    "quiet_hour_ist": "08:00 IST",
+    "rating": "Brisk",
+    "total_lifetime_posts": 720,
+    "computed_at": "2026-06-27T01:31:09.324343+00:00"
+  },
+  "quote_of_day": {
+    "text": ">>24832\nfucking bhangi ass company will reject me for taking a drop. great.\n\nbut when i think from their perspective, i understand. there's too many people. that's why they make up ridiculous reasons to reject people. the goal is to lessen the applicant pool.",
+    "post_no": 24834,
+    "name": "Anon",
+    "topic": "job rejection, bitter truth",
+    "source_thread_id": 24368
+  },
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A low-pressure system of online persona details moved over the board this morning, as Anon shared information about Indian Reddit moderators. The system brought scattered showers of usernames and subreddit names.\n\nA heat wave of mockery developed in the afternoon, centered on an anon who claimed to have an unhappy relationship.\n\nThe heat wave brought extreme ridicule, with harsh words aimed directly at the anon. A fog of frustration rolled in later, with various anon expressing dissatisfaction.\n\nA scattered drizzle of salary sharing also occurred, as inchads discussed their monthly earnings and whether it was enough to cover subscriptions.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Anon shares details of Indian Reddit moderators",
+      "body": "Anon posted a thread on Indiachan /b/ sharing information about Indian Reddit moderators. The original post included details about Ankita Pandey, a Reddit moderator who manages over 20 subreddits, mostly focused on teen, twenties, and fashion topics.\n\nAnon claimed that Ankita Pandey's Reddit account is u/ConstructionAny8440. Another anon responded with information about Rahul Jain, a Reddit moderator from Switzerland who originally hails from Uttarakhand.\n\nAccording to the anon, Jain moderates popular subreddits like r/India and r/Cricket, and has a history of banning anti-secular accounts.\n\nThe conversation took a turn when an anon asked about Nirmal Tyagi, a moderator on IndiaSocial known as infamousnirmal on Reddit, who is currently using a different account.\n\nThe anon claimed that Tyagi has a history of misconduct, including making advances towards minors. Other anons shared information about Aryan Raj, a moderator from Sasaram, Bihar, who allegedly bans users from all subreddits and servers.\n\nSome anons also discussed the physical appearance of certain moderators, with some comments devolving into name-calling and insults.\n\nThe thread also touched on the topic of doxing and shaming moderators, with some anons calling for more information about certain individuals to be exposed. One anon even requested that Redditor usernames be exposed.\n\nThe discussion was marked by a tone of schadenfreude and mockery, with some anons joking about the appearance and behavior of certain moderators.\n\nThe thread did not appear to have a clear purpose or outcome, but rather seemed to be a collection of random accusations and insults.",
+      "flow": true,
+      "source_thread_id": 24836
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon claims to have unhappy relationship, gets mocked",
+      "body": "Anon posted a message saying someone will never have a relationship like theirs, specifically mentioning a woman who works to make them happy. The post was homophobic.\n\nAnother anon replied, calling the original poster a derogatory term and making a claim about experiencing racism.\n\nA respondent claimed their mother died of COVID and they are an only child, using an expletive to describe the previous poster's situation.\n\nOne anon jokingly assigned a higher caste to the COVID-19 loss respondent. A separate anon asked for a way to filter out posts similar to the initial one.",
+      "flow": false,
+      "source_thread_id": 25508
+    },
+    {
+      "section": "Discourse",
+      "title": "Anon Alleges Telegram Group 'Sanataniyo Ki Nilaami' Hosts Obscene Interfaith Content",
+      "body": "Anon claimed that a Telegram group called 'Sanataniyo Ki Nilaami' hosts 40,000 obscene interfaith videos. The original poster also mentioned that someone named Manish, alias Moin Khan, was involved and allegedly converted to another religion after circumcision.\n\nAnother anon provided a link to an article from IBTimes about a Bajrang Dal allegation against Manish alias Moin Khan.\n\nAnon also brought up the topic of the Indian government's potential ban on Telegram, with one poster stating that the government will only take action if forced to, and others joking about using proxies and online SMS receiving websites.\n\nOne respondent mentioned watching porn on Telegram, while another simply stated that the group 'Sanataniyo Ki Nilaami' is the name of the Telegram group in question.\n\nA different anon expressed that banning apps has not worked in the past unless done in a strict, China-like manner.\n\nThe topic of 'interfaith porn' was also brought up, with an anon stating there might be some decrease in such content if Telegram is banned, but overall expressing skepticism about the effectiveness of such a ban.",
+      "flow": false,
+      "source_thread_id": 24977
+    },
+    {
+      "section": "Notices",
+      "title": "Anon Expresses Frustration",
+      "body": "Anon started a thread saying 'What the fuck? Does anyone know something?' Another anon responded with '>>24878 BLAAADY SHUT IT DOWN', seemingly referencing an external thread or post.",
+      "flow": false,
+      "source_thread_id": 24878
+    },
+    {
+      "section": "Notices",
+      "title": "Inchads share monthly salaries",
+      "body": "Anon asked how much employed inchads make in a month. Anon shared they used to earn Rs 28,750 monthly but got fired. Another anon earns 4-6 lakhs a month, depending on performance. One anon earns Rs 50,000 a month. Another shared they earn $2,800 plus overtime. Some anons expressed sympathy and support for those who responded.",
+      "flow": false,
+      "source_thread_id": 25652
+    }
+  ],
+  "composed_at": "2026-06-27T01:33:03.021256+00:00",
+  "source_raw": "raw_20260627T013114Z.json",
+  "provider": "groq",
+  "model": "meta-llama/llama-4-scout-17b-16e-instruct",
+  "mode": "multi-pass"
+}
