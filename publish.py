@@ -234,6 +234,17 @@ def main() -> int:
     body = issue_path.read_bytes()
     issue_obj = json.loads(body.decode("utf-8"))
 
+    # Refuse to ship a blank issue. If compose produced nothing (a dead model, a
+    # scrape that came back empty, every thread filtered out), publishing anyway
+    # burns an issue number, overwrites latest.json with an empty paper, and
+    # still exits 0 so CI reports success. That is exactly how six blank issues
+    # shipped unnoticed in July 2026 after Groq removed llama-4-scout.
+    if not (issue_obj.get("articles") or []):
+        print(f"ABORT: {issue_path.name} has no articles. Nothing uploaded.")
+        print("       latest.json and the issue number are left untouched.")
+        print("       Check the compose step above for the underlying failure.")
+        return 1
+
     with httpx.Client() as client:
         # Archive (don't overwrite if it already exists — issues shouldn't be rewritten)
         upload(client, issue_path.name, body, upsert=False)

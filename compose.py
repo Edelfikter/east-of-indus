@@ -26,7 +26,7 @@ load_dotenv()
 
 DATA_DIR = Path(__file__).parent / "data"
 PROVIDER = (os.getenv("AI_PROVIDER") or "groq").lower().strip()
-GROQ_MODEL = os.getenv("GROQ_MODEL") or "meta-llama/llama-4-scout-17b-16e-instruct"
+GROQ_MODEL = os.getenv("GROQ_MODEL") or "llama-3.3-70b-versatile"
 ANTHROPIC_MODEL = os.getenv("ANTHROPIC_MODEL") or "claude-opus-4-7"
 OPENAI_MODEL = os.getenv("OPENAI_MODEL") or "gpt-5"
 
@@ -233,11 +233,13 @@ def assign_threads(raw: dict, covered_ids: set | None = None) -> list:
 
 def call_groq(system: str, user: str, max_tokens: int = 1200) -> str:
     from groq import Groq
+    import groq_limits
     key = os.getenv("GROQ_API_KEY")
     if not key:
         sys.exit("GROQ_API_KEY not set.")
     client = Groq(api_key=key)
-    resp = client.chat.completions.create(
+    resp = groq_limits.chat(
+        client,
         model=GROQ_MODEL,
         messages=[
             {"role": "system", "content": system},

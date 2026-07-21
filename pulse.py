@@ -36,7 +36,7 @@ SERVICE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or ""
 BUCKET = os.getenv("EOI_BUCKET") or "eoi"
 
 PROVIDER = (os.getenv("AI_PROVIDER") or "groq").lower().strip()
-GROQ_MODEL = os.getenv("GROQ_MODEL") or "meta-llama/llama-4-scout-17b-16e-instruct"
+GROQ_MODEL = os.getenv("GROQ_MODEL") or "llama-3.3-70b-versatile"
 
 
 TICKER_SHARED = """You are writing the LIVE TICKER line for East of Inch, a small newspaper covering the Indiachan /b/ imageboard.
@@ -170,6 +170,7 @@ def freshest_replies(catalog: list, top_k_threads: int = 5, max_posts: int = 10)
 
 def call_groq_ticker(posts: list[dict], mode: dict) -> str:
     from groq import Groq
+    import groq_limits
     key = os.getenv("GROQ_API_KEY")
     if not key:
         sys.exit("GROQ_API_KEY not set.")
@@ -179,7 +180,8 @@ def call_groq_ticker(posts: list[dict], mode: dict) -> str:
     user = "Most recent posts on /b/ (newest first):\n" + json.dumps(payload, ensure_ascii=False, indent=2)
     for attempt in range(2):
         try:
-            resp = client.chat.completions.create(
+            resp = groq_limits.chat(
+                client,
                 model=GROQ_MODEL,
                 messages=[
                     {"role": "system", "content": system},

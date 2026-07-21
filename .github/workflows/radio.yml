@@ -10,12 +10,14 @@ on:
 jobs:
   broadcast:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # Generation now paces itself against the 12k tokens/min cap (groq_limits.py),
+    # so a block takes ~3 min instead of ~1, on top of TTS render + ffmpeg stitch.
+    timeout-minutes: 30
     env:
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
       YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-      GROQ_MODEL: meta-llama/llama-4-scout-17b-16e-instruct
+      GROQ_MODEL: llama-3.3-70b-versatile
       # Route through the CF Worker proxy — GH Actions runner IPs hit
       # Indiachan with 403 if they connect directly.
       IMAGEBOARD_BASE: https://induschan-proxy.asphocal.workers.dev

@@ -34,7 +34,7 @@ except Exception:
 WORK = ROOT / "work"
 WORK.mkdir(exist_ok=True)
 
-GROQ_MODEL = os.getenv("GROQ_MODEL") or "meta-llama/llama-4-scout-17b-16e-instruct"
+GROQ_MODEL = os.getenv("GROQ_MODEL") or "llama-3.3-70b-versatile"
 BOARD = "b"
 SLEEP = float(os.getenv("RADIO_SLEEP", "6"))
 SUPABASE_URL = "https://nfpdtjqncwibgyrzvffr.supabase.co"
@@ -52,13 +52,14 @@ FFPROBE = shutil.which("ffprobe") or r"C:\ffmpeg-8.0-essentials_build\bin\ffprob
 # ----------------------------------------------------------------- groq
 def call_groq(system, user, max_tokens=900, json_mode=True):
     from groq import Groq
+    import groq_limits
     client = Groq(api_key=os.getenv("GROQ_API_KEY"))
     kwargs = dict(model=GROQ_MODEL,
                   messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
                   temperature=0.85, max_tokens=max_tokens)
     if json_mode:
         kwargs["response_format"] = {"type": "json_object"}
-    return client.chat.completions.create(**kwargs).choices[0].message.content
+    return groq_limits.chat(client, **kwargs).choices[0].message.content
 
 
 # ----------------------------------------------------------------- time + weather

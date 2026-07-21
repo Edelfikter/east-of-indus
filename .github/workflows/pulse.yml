@@ -23,7 +23,7 @@ jobs:
         env:
           AI_PROVIDER: groq
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          GROQ_MODEL: meta-llama/llama-4-scout-17b-16e-instruct
+          GROQ_MODEL: llama-3.3-70b-versatile
           SUPABASE_URL: https://nfpdtjqncwibgyrzvffr.supabase.co
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           EOI_BUCKET: eoi
