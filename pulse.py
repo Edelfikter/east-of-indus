@@ -36,7 +36,7 @@ SERVICE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or ""
 BUCKET = os.getenv("EOI_BUCKET") or "eoi"
 
 PROVIDER = (os.getenv("AI_PROVIDER") or "groq").lower().strip()
-GROQ_MODEL = os.getenv("GROQ_MODEL") or "llama-3.3-70b-versatile"
+GROQ_MODEL = os.getenv("GROQ_MODEL") or "qwen/qwen3.8-27b"
 
 
 TICKER_SHARED = """You are writing the LIVE TICKER line for East of Inch, a small newspaper covering the Indiachan /b/ imageboard.
@@ -245,14 +245,19 @@ def main() -> int:
     mode = pick_ticker_mode()
     print(f"  Ticker source: {len(fresh)} freshest posts. Mode: {mode['name']}")
     ticker = call_groq_ticker(fresh, mode) if fresh else ""
+    ticker_ok = bool(ticker)
     if not ticker:
         ticker = "Anon is currently posting, replying, and refusing to leave."
-        print("  (ticker generation failed; using fallback)")
+        print("  WARNING: ticker generation failed, publishing the canned fallback.")
+        print("  The job still exits 0 (metrics are fine and hourly failure mail is")
+        print("  noise), so this flag is the only trace. If pulse.json carries it for")
+        print("  more than an hour or two, the model is gone. Check GET /v1/models.")
     else:
         print(f"  Ticker: {ticker}")
 
     pulse = {
         "ticker": ticker,
+        "ticker_fallback": not ticker_ok,
         "synced_at": now.isoformat(),
         "threads_since_issue": delta,
         "metrics": metrics,

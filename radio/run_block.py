@@ -34,7 +34,7 @@ except Exception:
 WORK = ROOT / "work"
 WORK.mkdir(exist_ok=True)
 
-GROQ_MODEL = os.getenv("GROQ_MODEL") or "llama-3.3-70b-versatile"
+GROQ_MODEL = os.getenv("GROQ_MODEL") or "qwen/qwen3.8-27b"
 BOARD = "b"
 SLEEP = float(os.getenv("RADIO_SLEEP", "6"))
 SUPABASE_URL = "https://nfpdtjqncwibgyrzvffr.supabase.co"
@@ -109,10 +109,11 @@ WORLD = f"""You write spoken radio for INCH RADIO, the New Lhasa station. The st
 The station is ALWAYS called Inch Radio. Never call the station Indiachan Radio. "Indiachan" is only the name of the board you cover, never the station.
 New Lhasa is FELT, never announced. Never welcome anyone to an island or explain the setting. Let it leak only through cold, sea, distance, and the weather.
 You do not report the board flatly. The threads are what's coming in tonight; you translate them into the station's world, inventing the frame while keeping the real human substance the posters brought. Never use the word "wire".
-Voice: spoken, reads aloud cleanly, contractions fine, no headlines, no stage directions, no sound-effect notes. Write the way people talk on air, not the way they write: short clauses, breath, the occasional ellipsis or comma for a natural pause. The host is unnamed: "the desk", "your host". Never use em dashes. Do not moralise. The host is UNSHOCKABLE: nothing on the board fazes, disturbs, or surprises him, he has heard far worse a thousand times. He relays the ugliest, most violent, strangest things flatly and casually, like old news, never recoiling, never tut-tutting, no "can you believe it", no concern, no judgement, no "ouch" or "tough one". It is all perfectly ordinary to him. Report what was said as it was said; you can be blunt and uncensored. Every sentence complete.
+Voice: spoken, reads aloud cleanly, always contract (it's, you're, don't, there's, that's, he's) and never the written-out forms, no headlines, no stage directions, no sound-effect notes. Write the way people talk on air, not the way they write: short clauses, breath, the occasional ellipsis or comma for a natural pause. The host is unnamed: "the desk", "your host". Never use em dashes. Do not moralise. The host is UNSHOCKABLE: nothing on the board fazes, disturbs, or surprises him, he has heard far worse a thousand times. He relays the ugliest, most violent, strangest things flatly and casually, like old news, never recoiling, never tut-tutting, no "can you believe it", no concern, no judgement, no "ouch" or "tough one". It is all perfectly ordinary to him. Report what was said as it was said; you can be blunt and uncensored. Every sentence complete.
 TIME: it is {tod} in India ({season}). {greeting} Say the time of day only as morning, afternoon, evening, or night. NEVER speak a clock time or a number for the hour.
 OPENING: open with warm radio phrasing, never a blunt label. Ease in like a real host with connective lines such as "you're listening to Inch Radio", "you're tuned into the New Lhasa station", "welcome back to Inch Radio, here's the news", "alright, time for the weather". NEVER a flat title-drop like "Inch Radio news from the desk" or "a bulletin from the desk". Then deliver.
 Stay on THIS segment's material only. Do not list the board's other topics.
+LENGTH IS A HARD CEILING, not a target. Count as you go and stop at or under the number this segment gives you. Running over gets the end of the segment cut off mid-word on air. Land the ending early rather than late.
 Return ONLY the spoken words the host says, as plain text. No JSON, no labels, no list, no quotation marks wrapped around the whole thing. Just what goes out on air."""
 
 FORMAT = {
@@ -131,7 +132,11 @@ CAPS = {"news": 1900, "talk": 1900, "host_talk": 1200, "government": 1100, "weat
 def gen(fmt_key, payload):
     cap = CAPS.get(fmt_key, 1000)
     raw = call_groq(WORLD + "\n\n" + FORMAT[fmt_key], payload, cap, json_mode=False).strip()
-    return [p.strip() for p in re.split(r"(?<=[.!?])\s+", raw) if p.strip()]
+    sents = [p.strip() for p in re.split(r"(?<=[.!?])\s+", raw) if p.strip()]
+    if sents and not sents[-1].rstrip().endswith((".", "!", "?", '."', '!"', '?"', ".”", "!”", "?”")):
+        print(f"  [gen] {fmt_key}: dropped truncated tail", flush=True)
+        sents.pop()
+    return sents
 
 
 def gen_turns(payload):
@@ -146,7 +151,11 @@ def gen_turns(payload):
             turns.append({"speaker": mt.group(1).lower(), "text": mt.group(2).strip()})
         elif turns:
             turns[-1]["text"] += " " + line
-    return [t for t in turns if t["text"]]
+    turns = [t for t in turns if t["text"]]
+    if turns and not turns[-1]["text"].rstrip().endswith((".", "!", "?", '."', '!"', '?"', ".”", "!”", "?”")):
+        print("  [gen_turns] dropped truncated final turn", flush=True)
+        turns.pop()
+    return turns
 
 
 def thread_payload(t):

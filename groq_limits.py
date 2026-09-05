@@ -1,8 +1,8 @@
 """
 Shared Groq rate limiting for the paper and the radio.
 
-Groq's free tier caps tokens-per-minute per model (12,000 on
-llama-3.3-70b-versatile). A full radio block is ~25,000 tokens across ~15 calls,
+Groq's free tier caps tokens-per-minute per model (8,000 across the current
+roster). A full radio block is ~25,000 tokens across ~15 calls,
 so firing it at full tilt trips the limit partway through. There is no daily
 token cap, only a per-day *request* cap we are nowhere near, so pacing the calls
 costs nothing: the block just takes ~3 minutes instead of ~1.
@@ -27,7 +27,10 @@ import time
 from typing import Optional
 
 # Per-model tokens per minute. Override with GROQ_TPM if the model changes.
-TPM = int(os.getenv("GROQ_TPM", "12000"))
+# 8,000 across every model on the free roster as of Sept 2026. It was 12,000
+# on llama-3.3-70b-versatile, which Groq removed; leaving the old ceiling here
+# means the throttle lets through half again as many tokens as we are allowed.
+TPM = int(os.getenv("GROQ_TPM", "8000"))
 # Leave headroom rather than riding the ceiling; our estimate is approximate.
 SAFETY = 0.9
 BUDGET = TPM * SAFETY

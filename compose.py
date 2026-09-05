@@ -26,7 +26,7 @@ load_dotenv()
 
 DATA_DIR = Path(__file__).parent / "data"
 PROVIDER = (os.getenv("AI_PROVIDER") or "groq").lower().strip()
-GROQ_MODEL = os.getenv("GROQ_MODEL") or "llama-3.3-70b-versatile"
+GROQ_MODEL = os.getenv("GROQ_MODEL") or "qwen/qwen3.8-27b"
 ANTHROPIC_MODEL = os.getenv("ANTHROPIC_MODEL") or "claude-opus-4-7"
 OPENAI_MODEL = os.getenv("OPENAI_MODEL") or "gpt-5"
 
