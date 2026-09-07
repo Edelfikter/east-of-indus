@@ -1,0 +1,30 @@
+name: hosttalk-test
+
+# Text-only test of the host talk redesign. Reads the live board, prints the
+# generated segments to the run log, uploads them as an artifact. Publishes
+# nothing and touches no bucket. Exists because Groq blocks Tarush's home
+# network (403 "Access denied"), so the only place to run the model is here.
+on:
+  workflow_dispatch:
+
+jobs:
+  hosttalk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      GROQ_MODEL: qwen/qwen3.8-27b
+      IMAGEBOARD_BASE: https://induschan-proxy.asphocal.workers.dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: pip install -r radio/requirements.txt
+      - name: Generate host talk
+        run: python hosttalk_test.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hosttalk-output
+          path: hosttalk_test_output.txt
