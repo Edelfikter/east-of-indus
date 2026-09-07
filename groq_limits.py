@@ -31,14 +31,23 @@ from typing import Optional
 # on llama-3.3-70b-versatile, which Groq removed; leaving the old ceiling here
 # means the throttle lets through half again as many tokens as we are allowed.
 TPM = int(os.getenv("GROQ_TPM", "8000"))
+# Groq added a separate, much tighter cap on OUTPUT tokens per minute (1,000 on
+# the free tier as of Sept 2026). It is enforced per request against max_tokens,
+# so a call asking for 1,900 is refused outright no matter how quiet the last
+# minute was, and retrying it unchanged just burns all five attempts. That was
+# killing roughly half the radio blocks. We clamp max_tokens to the ceiling and
+# meter output separately from total tokens.
+OTPM = int(os.getenv("GROQ_OTPM", "1000"))
 # Leave headroom rather than riding the ceiling; our estimate is approximate.
 SAFETY = 0.9
 BUDGET = TPM * SAFETY
+OUT_BUDGET = int(OTPM * SAFETY)
 WINDOW = 60.0
 MAX_ATTEMPTS = 5
 
 _lock = threading.Lock()
 _window: list = []  # (timestamp, tokens_used)
+_out_window: list = []  # (timestamp, completion_tokens)
 
 
 def _prune(now: float) -> None:
@@ -58,24 +67,37 @@ def _estimate(kwargs: dict) -> int:
     return chars // 4 + int(kwargs.get("max_tokens") or 1000)
 
 
-def _record(tokens: int) -> None:
+def _record(tokens: int, out_tokens: int = 0) -> None:
     with _lock:
-        _window.append((time.time(), tokens))
+        now = time.time()
+        _window.append((now, tokens))
+        if out_tokens:
+            _out_window.append((now, out_tokens))
 
 
-def _wait_for_room(cost: int) -> None:
+def _out_used(now: float) -> int:
+    cutoff = now - WINDOW
+    while _out_window and _out_window[0][0] < cutoff:
+        _out_window.pop(0)
+    return sum(tok for _, tok in _out_window)
+
+
+def _wait_for_room(cost: int, out_cost: int = 0) -> None:
     while True:
         with _lock:
             now = time.time()
             used = _used(now)
-            # If the window is empty we go regardless, otherwise a single call
+            out = _out_used(now)
+            # If a window is empty we go regardless, otherwise a single call
             # larger than the whole budget would block forever.
-            if not _window or used + cost <= BUDGET:
+            total_ok = (not _window) or used + cost <= BUDGET
+            out_ok = (not _out_window) or out + out_cost <= OUT_BUDGET
+            if total_ok and out_ok:
                 return
-            oldest = _window[0][0]
+            oldest = min(w[0][0] for w in (_window, _out_window) if w)
         sleep = max(0.5, oldest + WINDOW - time.time() + 0.25)
-        print(f"  [groq] throttle: {used} tok used in last 60s, next call ~{cost}, "
-              f"waiting {sleep:.1f}s", flush=True)
+        print(f"  [groq] throttle: {used} tok / {out} out-tok used in last 60s, "
+              f"next call ~{cost} ({out_cost} out), waiting {sleep:.1f}s", flush=True)
         time.sleep(sleep)
 
 
@@ -96,14 +118,23 @@ def _retry_after(exc: Exception) -> Optional[float]:
         return None
 
 
+def _is_output_cap(exc: Exception) -> bool:
+    msg = str(getattr(exc, "message", "") or exc).lower()
+    return "output tokens per minute" in msg or "otpm" in msg
+
+
 def chat(client, **kwargs):
     """Drop-in for client.chat.completions.create(**kwargs), throttled + retried."""
+    if kwargs.get("max_tokens") and kwargs["max_tokens"] > OUT_BUDGET:
+        print(f"  [groq] clamping max_tokens {kwargs['max_tokens']} -> {OUT_BUDGET} (OTPM cap)", flush=True)
+        kwargs["max_tokens"] = OUT_BUDGET
     cost = _estimate(kwargs)
     delay = 2.0
     last_exc = None
 
     for attempt in range(MAX_ATTEMPTS):
-        _wait_for_room(cost)
+        out_cost = int(kwargs.get("max_tokens") or 0)
+        _wait_for_room(cost, out_cost)
         try:
             resp = client.chat.completions.create(**kwargs)
         except Exception as exc:
@@ -111,7 +142,13 @@ def chat(client, **kwargs):
                 raise
             last_exc = exc
             # The refused request still counted against us, so book the estimate.
-            _record(cost)
+            _record(cost, out_cost)
+            # An output-cap refusal is deterministic: retrying the same max_tokens
+            # fails identically every time, so come down before trying again.
+            if _is_output_cap(exc) and kwargs.get("max_tokens"):
+                kwargs["max_tokens"] = max(300, int(kwargs["max_tokens"] * 0.75))
+                cost = _estimate(kwargs)
+                print(f"  [groq] output cap hit, dropping max_tokens to {kwargs['max_tokens']}", flush=True)
             wait = _retry_after(exc) or delay
             print(f"  [groq] 429 on attempt {attempt + 1}/{MAX_ATTEMPTS}, "
                   f"retrying in {wait:.1f}s", flush=True)
@@ -120,7 +157,8 @@ def chat(client, **kwargs):
             continue
 
         usage = getattr(resp, "usage", None)
-        _record(getattr(usage, "total_tokens", None) or cost)
+        _record(getattr(usage, "total_tokens", None) or cost,
+                getattr(usage, "completion_tokens", None) or out_cost)
         return resp
 
     raise last_exc

@@ -186,7 +186,7 @@ def main():
                 "\nHow you feel about it, in your own words: " + str(r.get("reaction")) +
                 "\n\nThe threads, with real posts to quote:\n" +
                 json.dumps(mat, ensure_ascii=False))
-        text = call_groq(WORLD + "\n\n" + HOST_FMT, user, 1200, temp=0.9).strip()
+        text = call_groq(WORLD + "\n\n" + HOST_FMT, user, 900, temp=0.9).strip()
         sents = [p.strip() for p in re.split(r"(?<=[.!?])\s+", text) if p.strip()]
         if sents and not sents[-1].rstrip().endswith((".", "!", "?", '."', '!"', '?"')):
             sents.pop()

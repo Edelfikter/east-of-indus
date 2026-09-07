@@ -107,7 +107,7 @@ def falkland_weather():
 # ----------------------------------------------------------------- prompts
 WORLD = f"""You write spoken radio for INCH RADIO, the New Lhasa station. The station broadcasts the life of an anonymous Indian imageboard, Indiachan /b/, as if it were the news of New Lhasa, a far-off cold island outpost.
 The station is ALWAYS called Inch Radio. Never call the station Indiachan Radio. "Indiachan" is only the name of the board you cover, never the station.
-New Lhasa is FELT, never announced. Never welcome anyone to an island or explain the setting. Let it leak only through cold, sea, distance, and the weather.
+New Lhasa is FELT, never announced. Never welcome anyone to an island or explain the setting. Let it leak only through cold, sea, distance, and the weather. At most ONE short line of that per segment. It is seasoning, never the subject.
 You do not report the board flatly. The threads are what's coming in tonight; you translate them into the station's world, inventing the frame while keeping the real human substance the posters brought. Never use the word "wire".
 Voice: spoken, reads aloud cleanly, always contract (it's, you're, don't, there's, that's, he's) and never the written-out forms, no headlines, no stage directions, no sound-effect notes. Write the way people talk on air, not the way they write: short clauses, breath, the occasional ellipsis or comma for a natural pause. The host is unnamed: "the desk", "your host". Never use em dashes. Do not moralise. The host is UNSHOCKABLE: nothing on the board fazes, disturbs, or surprises him, he has heard far worse a thousand times. He relays the ugliest, most violent, strangest things flatly and casually, like old news, never recoiling, never tut-tutting, no "can you believe it", no concern, no judgement, no "ouch" or "tough one". It is all perfectly ordinary to him. Report what was said as it was said; you can be blunt and uncensored. Every sentence complete.
 TIME: it is {tod} in India ({season}). {greeting} Say the time of day only as morning, afternoon, evening, or night. NEVER speak a clock time or a number for the hour.
@@ -119,14 +119,58 @@ Return ONLY the spoken words the host says, as plain text. No JSON, no labels, n
 FORMAT = {
     "sign_on": "Format: SIGN-ON. The station coming on air at this hour. Identify the station. Three to four lines. Atmosphere and the hour only. Name no board topics. Casual and offhand, a host easing into the night, a little informal, natural pauses.",
     "news": "Format: NEWS. You are the news anchor, live on air. Open with the part of day and the proper greeting, then a line like 'here's what's going on'. This is RADIO news, NOT a written summary and NOT a list of items. Talk ABOUT the day as a host would: flowing on-air commentary that sweeps across the stories with reactions, asides, and transitions between them ('over in another corner of the board', 'meanwhile', 'elsewhere'). You can have a take and a tone. Move between the threads as one connected stretch of talk, not separate bullet points. Keep each thread's real subject recognizable; quote a poster as 'a caller' or 'one of the voices tonight' where it lands. Composed and clean, an anchor who knows the board, warm not stiff, keep filler light. This is the longest segment. 22 to 30 sentences.",
-    "host_talk": "Format: HOST TALK. The host ALONE, talking at the listener, giving his OWN opinions and tangents sparked by the topic below. This is NOT news and NOT a summary. Do NOT narrate the thread. NEVER say 'there's a thread', 'someone said', 'a poster', 'replies are coming in', 'one anon', 'over on the board'. The listener does not need to know what was posted. Instead take the TOPIC and run with it in first person: what HE thinks, his gripes, his theories, a small rant or a musing, tangents off the side of it. He can be biased, wrong, contrarian, can ramble. The board is the spark, not the subject. Loose and conversational, the odd filler (well, look, honestly, I mean), natural pauses, but write it with PROPER punctuation and fully written contractions (it's, you're, don't, them), complete sentences with full stops and commas, NEVER a run-on with missing apostrophes. Open casually as the host, do NOT announce a bulletin or 'the news'. 18 to 26 sentences.",
+    "host_talk": (
+        "Format: HOST TALK. The host has the board open in front of him and is giving you his read on this corner of it.\n\n"
+        "OPEN by looking at the board and saying what he noticed, in his own words. Something in the shape of \"so, taking a look at the board\", "
+        "\"right, so I've been scrolling through this lot\", \"alright, what have we got tonight\". Never a bulletin, never 'here's the news', never a flat title drop.\n\n"
+        "Then WALK THE THREADS. For each one, NAME the actual subject plainly and QUOTE or closely paraphrase a real line from a real poster, "
+        "attributed as \"this anon\", \"one anon said\", \"another post\", \"someone further down\". BE CONCRETE. If a poster is on about a caste fight, "
+        "a slur, his sister, a job rejection, a specific game or show, SAY exactly that. BANNED phrasings: \"a particular topic\", \"certain activities\", "
+        "\"a recent event\", \"strong opinions\", \"social issues\", \"their thoughts on something\", \"mixed reactions\", \"an interesting discussion\".\n\n"
+        "The opinion comes from REACTING to the posts, not from the host's inner life. He is allowed to take a side, to find it stupid, to be amused, "
+        "to say he doesn't get what the issue is. He is NOT allowed to talk about himself, his room, his tea, his loneliness, or his feelings. He has no "
+        "biography. If he says \"I\", it must be \"I don't get it\", \"I've seen this one before\", \"I'd say\", never \"I remember\" or \"I feel\".\n\n"
+        "NO ATMOSPHERE IN THIS SEGMENT. Do not mention the sea, the cold, the harbor, the rain, the wind, the island, or the weather. Not one line, not even "
+        "at the end. This overrides the general instruction about letting the setting leak in.\n\n"
+        "HE DOES NOT DIAGNOSE THE BOARD. He is a man reading posts out loud and reacting, not a critic explaining a place to you. BANNED sentence shapes: "
+        "\"it's the board's ...\", \"it's just ...\", \"there's no actual ... happening\", \"everyone is just ...\", \"the collective ...\", \"it's all very ...\", "
+        "and any sentence that sums up what the board IS or why people are the way they are. React to one specific post at a time. If you want to make a point, "
+        "quote another post instead.\n\n"
+        "Every claim he makes must be traceable to a post below. If he cannot source it, he does not say it.\n\n"
+        "END on a specific post, or on him not getting it, or on the thing still going. Never on a summary of what it all means. Good endings: \"and I really "
+        "don't get what the issue is here\", \"that's where it's sitting as of now\", \"nobody's answered him yet\". Bad endings: any sentence that explains the "
+        "board to the listener.\n\n"
+        "14 to 20 sentences."),
     "talk": "Format: TALK HOUR. A real two-person interview drawn from this ONE thread. Write it as a back-and-forth where EACH LINE begins with 'HOST:' or 'GUEST:' (these labels are markers only, NEVER spoken aloud). The host welcomes the person on and introduces them NATURALLY, by who they are or what they're into, and NEVER uses the word 'guest'. The other person's lines are invented but true to what the poster actually argued. Several exchanges deep, the host asks, follows up, reacts, pushes; loose and informal, the odd filler, small reactions, natural pauses. Return plain text, one labeled line per turn, nothing else. 22 to 32 turns.",
     "government": "Format: GOVERNMENT BULLETIN. Identify this as a bulletin from the New Lhasa state desk, then reframe this ONE thread's anxiety as calm official address, decree, or reassurance. The state always sounds composed. 9 to 13 sentences.",
     "weather": "Format: WEATHER. Identify the weather break, then report the REAL conditions below as New Lhasa's own weather: a cold frigid southern island. Genuine weather, vivid and short, not a metaphor for the board. Refer to time of day only, never a clock time. 5 to 8 sentences.",
 }
 
 
-CAPS = {"news": 1900, "talk": 1900, "host_talk": 1200, "government": 1100, "weather": 700, "sign_on": 400}
+# Ceilings sit under Groq's 1,000 output-tokens-per-minute cap (see groq_limits.OTPM);
+# a request asking for more than that is refused outright, not throttled.
+CAPS = {"news": 900, "talk": 900, "host_talk": 900, "government": 800, "weather": 600, "sign_on": 400}
+
+# Host talk used to be handed ONE thread with an order to riff from the host's own
+# head, which produced segments about his loneliness and the sea and nothing about
+# the board. Now a first pass reads several threads and finds what actually relates,
+# and the segment is written from that cluster with real posts to quote.
+READ_SYS = """You are the host of a radio station that covers an anonymous Indian imageboard, Indiachan /b/. You have just opened the board and you are scanning what is on it right now, the way a person actually does: not thread by thread in order, but noticing that a few of them are circling the same nerve.
+
+Group the threads below into readings. A reading is threads that genuinely share something: the same argument, the same grievance, the same obsession, the same kind of person posting, or two threads that flatly contradict each other. Contradiction counts, and is often the best reading.
+
+HARD RULE: every reading must list EXACTLY 3 or 4 thread ids. A reading with 1 or 2 ids is invalid and gets thrown away. If the third thread is only a loose fit, include it anyway and let the looseness show.
+
+For each reading give:
+  "noticed": one plain spoken sentence, at most 20 words, said the way you would say it to someone sitting in the room. Name the actual subject. "The caste fight is back and this time it's the jatts" is good. "Users are discussing identity" is worthless. Do not write an essay sentence.
+  "ids": exactly 3 or 4 thread ids.
+  "reaction": one short spoken sentence of the host reacting out loud, the way a person does when something is stupid, funny, tedious, or confusing. Plain and a little dumb. "I really don't get what the issue is here" is good. "It reveals the underlying anxiety of the board" is banned. Do not explain anything. Just react.
+
+Never use the words "theme", "discourse", "narrative", "community", "conversation", "dynamic", "phenomenon", or "vulnerability".
+
+Return JSON: {"readings": [{"noticed": "...", "ids": [1,2,3], "reaction": "..."}]}."""
+
+REPAIR_SYS = """You are grouping imageboard threads for a radio host. You will be given a reading (a few threads that go together) and a list of threads that have not been placed yet. Add the 1 or 2 unplaced threads that fit the reading best, so the reading ends up with 3 or 4 threads total. Pick the least bad fit if nothing fits well. Return JSON: {"add": [id, ...]} and nothing else."""
 
 
 def gen(fmt_key, payload):
@@ -140,7 +184,7 @@ def gen(fmt_key, payload):
 
 
 def gen_turns(payload):
-    raw = call_groq(WORLD + "\n\n" + FORMAT["talk"], payload, 2400, json_mode=False).strip()
+    raw = call_groq(WORLD + "\n\n" + FORMAT["talk"], payload, CAPS["talk"], json_mode=False).strip()
     turns = []
     for line in raw.splitlines():
         line = line.strip()
@@ -161,6 +205,56 @@ def gen_turns(payload):
 def thread_payload(t):
     return {"subject": t.get("subject", ""), "op": (t.get("body", "") or "")[:600],
             "replies": [(r.get("body", "") or "")[:200] for r in (t.get("replies", []) or [])[:12]]}
+
+
+def brief(t, n_replies=5, op_chars=280, rep_chars=150):
+    """A cheap thread sketch, for the passes that scan many threads at once."""
+    return {"id": t.get("no"), "subject": (t.get("subject") or "").strip(),
+            "op": (t.get("body") or "")[:op_chars],
+            "replies": [(r.get("body") or "")[:rep_chars] for r in (t.get("replies") or [])[:n_replies]]}
+
+
+def read_board(pool, n_readings):
+    """Scan a pool of threads and return readings: what the host noticed, and which
+    threads it spans. The model reliably under-fills a reading, so short ones get
+    topped up from the threads it left unplaced (its pick, not ours, where it will make one)."""
+    if len(pool) < 3:
+        return []
+    by_id = {t.get("no"): t for t in pool}
+    try:
+        raw = call_groq(READ_SYS, "The board right now:\n" + json.dumps([brief(t) for t in pool], ensure_ascii=False)
+                        + "\n\nGive %d readings." % n_readings, 900, json_mode=True)
+        readings = json.loads(raw).get("readings", [])
+    except Exception as e:
+        print("  read_board failed:", e, flush=True)
+        return []
+    time.sleep(SLEEP)
+    readings = [r for r in readings if [x for x in (r.get("ids") or []) if x in by_id]][:n_readings]
+    placed = {x for r in readings for x in (r.get("ids") or [])}
+    for r in readings:
+        ids = [x for x in (r.get("ids") or []) if x in by_id]
+        if len(ids) >= 3:
+            r["ids"] = ids[:4]
+            continue
+        spare = [t for t in pool if t.get("no") not in placed]
+        want = 3 - len(ids)
+        add = []
+        if spare:
+            ask = ("The reading: " + str(r.get("noticed")) +
+                   "\nThreads already in it:\n" + json.dumps([brief(by_id[x]) for x in ids], ensure_ascii=False) +
+                   "\n\nUnplaced threads:\n" + json.dumps([brief(t) for t in spare], ensure_ascii=False) +
+                   "\n\nAdd exactly %d." % want)
+            try:
+                add = json.loads(call_groq(REPAIR_SYS, ask, 200, json_mode=True)).get("add", [])
+                time.sleep(SLEEP)
+            except Exception as e:
+                print("  repair failed:", e, flush=True)
+            add = [x for x in add if x in by_id and x not in placed][:want]
+            if len(add) < want:      # declined, or hallucinated ids: fall back to the biggest spares
+                add += [t["no"] for t in spare if t["no"] not in add and t["no"] not in placed][:want - len(add)]
+        r["ids"] = ids + add
+        placed.update(r["ids"])
+    return [r for r in readings if len(r.get("ids") or []) >= 2]
 
 
 # ----------------------------------------------------------------- generation
@@ -242,20 +336,34 @@ def generate():
                 used.add(tid)
         return picked
 
-    news1, host1 = take(3, "news"), take(1)
+    news1 = take(3, "news")
     talk_sel, gov_sel = take(1, "talk"), take(1, "government")
-    news2, host2 = take(2, "news"), take(1)
-    host3, host4 = take(1), take(1)   # a couple more host riffs; types get interleaved in build_order
+    news2 = take(2, "news")
+    # Whatever news/talk/government didn't claim goes to host talk, which reads it as
+    # a group rather than one thread at a time. Two segments of 3-4 threads, not four of one.
+    host_pool = [t for t in threads if t.get("no") not in used]
+    by_id = {t.get("no"): t for t in threads}
+    print("read_board over %d spare threads" % len(host_pool), flush=True)
+    readings = read_board(host_pool, 2)
+    for r in readings:
+        print("  noticed:", r.get("noticed"), r.get("ids"), flush=True)
+        used.update(r.get("ids") or [])
 
     def ids(ts):
         return ", ".join("#" + str(t.get("no")) for t in ts)
 
+    def ids2(r):
+        return ", ".join("#" + str(x) for x in r.get("ids") or [])
+
     def pl(ts):
         return json.dumps([thread_payload(t) for t in ts], ensure_ascii=False)
 
-    def hpl(ts):
-        return json.dumps([{"topic": (t.get("subject") or (t.get("body", "") or "")[:120]),
-                            "gist": (t.get("body", "") or "")[:300]} for t in ts], ensure_ascii=False)
+    def hpl(r):
+        """Host talk payload: what the host noticed, how he feels, and the real posts to quote."""
+        mat = [brief(by_id[x], n_replies=10, op_chars=600, rep_chars=220) for x in r["ids"] if x in by_id]
+        return ("What you noticed when you opened the board: " + str(r.get("noticed")) +
+                "\nHow you feel about it, in your own words: " + str(r.get("reaction")) +
+                "\n\nThe threads, with real posts to quote:\n" + json.dumps(mat, ensure_ascii=False))
 
     segs = []
 
@@ -267,8 +375,8 @@ def generate():
     add("SIGN-ON", "sign_on", "Coming on air.")
     if news1:
         add(f"NEWS 1 ({ids(news1)})", "news", pl(news1))
-    if host1:
-        add(f"HOST TALK 1 ({ids(host1)})", "host_talk", hpl(host1))
+    if len(readings) > 0:
+        add(f"HOST TALK 1 ({ids2(readings[0])})", "host_talk", hpl(readings[0]))
     if talk_sel:
         print("gen TALK HOUR (two voices)")
         tt = gen_turns(pl(talk_sel))
@@ -277,21 +385,13 @@ def generate():
     add("WEATHER 1", "weather", json.dumps(wx, ensure_ascii=False))
     if news2:
         add(f"NEWS 2 ({ids(news2)})", "news", pl(news2))
-    if host2:
-        add(f"HOST TALK 2 ({ids(host2)})", "host_talk", hpl(host2))
+    if len(readings) > 1:
+        add(f"HOST TALK 2 ({ids2(readings[1])})", "host_talk", hpl(readings[1]))
     if gov_sel:
         add(f"GOVERNMENT ({ids(gov_sel)})", "government", pl(gov_sel))
-    if host3:
-        add(f"HOST TALK 3 ({ids(host3)})", "host_talk", hpl(host3))
-    if host4:
-        add(f"HOST TALK 4 ({ids(host4)})", "host_talk", hpl(host4))
     add("WEATHER 2", "weather", json.dumps(wx, ensure_ascii=False))   # a second weather break, placed elsewhere in the block
 
     print("gen IDENTS (batch)")
-    activity = json.dumps([{"subject": (t.get("subject") or "").strip(),
-                            "op": (t.get("body", "") or "")[:260],
-                            "replies": [(r.get("body", "") or "")[:160] for r in (t.get("replies", []) or [])[:5]]}
-                           for t in threads], ensure_ascii=False)
     ident_sys = WORLD + ('\n\nFormat: IDENTS. Short station idents for between songs. Each ident is TWO to THREE sentences: it places '
                          'the listener with connective phrasing ("you\'re listening to Inch Radio", "you\'re tuned into the New Lhasa '
                          'station", "welcome back to Inch Radio"), then folds in a dry, unhurried glance at ONE specific thing on the '
@@ -302,12 +402,24 @@ def generate():
                          "fight, a slur, a breakup, a specific game or show, SAY exactly that, plainly. The host is unshockable and never "
                          "euphemises or softens, he relays the real subject flatly. Each ident is about a DIFFERENT thread than the one "
                          "before it. Vary the opener every time. Write each ident as ONE single line, idents separated by a newline. Plain text, nothing else.")
-    try:
-        raw = call_groq(ident_sys, "The live threads right now (cover as many different ones as you can, naming each real subject):\n" + activity + "\n\nWrite about 24 idents, each grounded in a specific thread above. Do not invent topics that aren't there.", 2800, json_mode=False)
-        idents = [re.sub(r"^[\s\-•\d.)]+", "", l).strip() for l in raw.splitlines() if l.strip()]
-    except Exception as e:
-        idents = []
-        print("  idents failed", e)
+    # Two calls of twelve rather than one of twenty-four: 24 idents is ~950 output
+    # tokens, over the per-request output ceiling, and a clamped single call just
+    # returns half of them silently.
+    idents = []
+    for half in (threads[:len(threads) // 2], threads[len(threads) // 2:]):
+        if not half:
+            continue
+        act = json.dumps([{"subject": (t.get("subject") or "").strip(),
+                           "op": (t.get("body", "") or "")[:260],
+                           "replies": [(r.get("body", "") or "")[:160] for r in (t.get("replies", []) or [])[:5]]}
+                          for t in half], ensure_ascii=False)
+        try:
+            raw = call_groq(ident_sys, "The live threads right now (cover as many different ones as you can, naming each real subject):\n" + act + "\n\nWrite about 12 idents, each grounded in a specific thread above. Do not invent topics that aren't there.", 900, json_mode=False)
+            idents += [re.sub(r"^[\s\-•\d.)]+", "", l).strip() for l in raw.splitlines() if l.strip()]
+        except Exception as e:
+            print("  idents failed", e)
+        time.sleep(SLEEP)
+    random.shuffle(idents)
     save_recent(list(used), recent_list)                # so the next blocks rotate to different threads
     return segs, idents, wx
 
