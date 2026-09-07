@@ -74,16 +74,20 @@ Return ONLY the spoken words the host says, as plain text. No JSON, no labels, n
 
 READ_SYS = """You are the host of a radio station that covers an anonymous Indian imageboard, Indiachan /b/. You have just opened the board and you are scanning what is on it right now, the way a person actually does: not thread by thread in order, but noticing that a few of them are circling the same nerve.
 
-Group the threads below into readings. Each reading is 3 or 4 threads that genuinely share something: the same argument, the same grievance, the same obsession, the same kind of person posting, or two threads that flatly contradict each other. Contradiction counts, and is often the best reading.
+Group the threads below into readings. A reading is threads that genuinely share something: the same argument, the same grievance, the same obsession, the same kind of person posting, or two threads that flatly contradict each other. Contradiction counts, and is often the best reading.
+
+HARD RULE: every reading must list EXACTLY 3 or 4 thread ids. A reading with 1 or 2 ids is invalid and gets thrown away. If the third thread is only a loose fit, include it anyway and let the looseness show.
 
 For each reading give:
-  "noticed": one plain spoken sentence saying what you noticed, in the host's mouth. Concrete and specific, naming the actual subject. "The caste fight is back and this time it's the jatts" is good. "Users are discussing identity" is worthless.
-  "ids": the thread ids in that reading.
-  "angle": one sentence on the host's stance. He can be baffled, amused, dismissive, on one side, or genuinely unable to see what the issue is.
+  "noticed": one plain spoken sentence, at most 20 words, said the way you would say it to someone sitting in the room. Name the actual subject. "The caste fight is back and this time it's the jatts" is good. "Users are discussing identity" is worthless. Do not write an essay sentence.
+  "ids": exactly 3 or 4 thread ids.
+  "reaction": one short spoken sentence of the host reacting out loud, the way a person does when something is stupid, funny, tedious, or confusing. Plain and a little dumb. "I really don't get what the issue is here" is good. "It reveals the underlying anxiety of the board" is banned. Do not explain anything. Just react.
 
-Do NOT force a grouping that isn't there. If threads only relate loosely, say what the loose thing is honestly, in the host's voice. Never use the words "theme", "discourse", "narrative", "community", or "conversation".
+Never use the words "theme", "discourse", "narrative", "community", "conversation", "dynamic", "phenomenon", or "vulnerability".
 
-Return JSON: {"readings": [{"noticed": "...", "ids": [1,2,3], "angle": "..."}]}. Give 3 readings."""
+Return JSON: {"readings": [{"noticed": "...", "ids": [1,2,3], "reaction": "..."}]}. Give 3 readings."""
+
+REPAIR_SYS = """You are grouping imageboard threads for a radio host. You will be given a reading (a few threads that go together) and a list of threads that have not been placed yet. Add the 1 or 2 unplaced threads that fit the reading best, so the reading ends up with 3 or 4 threads total. Pick the least bad fit if nothing fits well. Return JSON: {"add": [id, ...]} and nothing else."""
 
 HOST_FMT = """Format: HOST TALK. The host has the board open in front of him and is giving you his read on this corner of it.
 
@@ -91,11 +95,15 @@ OPEN by looking at the board and saying what he noticed, in his own words. Somet
 
 Then WALK THE THREADS. For each one, NAME the actual subject plainly and QUOTE or closely paraphrase a real line from a real poster, attributed as "this anon", "one anon said", "another post", "someone further down". BE CONCRETE. If a poster is on about a caste fight, a slur, his sister, a job rejection, a specific game or show, SAY exactly that. BANNED phrasings: "a particular topic", "certain activities", "a recent event", "strong opinions", "social issues", "their thoughts on something", "mixed reactions", "an interesting discussion".
 
-The opinion comes from REACTING to the posts, not from the host's inner life. He is allowed to take a side, to find it stupid, to be amused, to say he doesn't get what the issue is. He is NOT allowed to talk about himself, his room, his tea, his loneliness, the sea, the cold, or his feelings. He has no biography. If he says "I", it must be "I don't get it", "I've seen this one before", "I'd say", never "I remember" or "I feel".
+The opinion comes from REACTING to the posts, not from the host's inner life. He is allowed to take a side, to find it stupid, to be amused, to say he doesn't get what the issue is. He is NOT allowed to talk about himself, his room, his tea, his loneliness, or his feelings. He has no biography. If he says "I", it must be "I don't get it", "I've seen this one before", "I'd say", never "I remember" or "I feel".
+
+NO ATMOSPHERE IN THIS SEGMENT. Do not mention the sea, the cold, the harbor, the rain, the wind, the island, or the weather. Not one line, not even at the end. This overrides the general instruction about letting the setting leak in.
+
+HE DOES NOT DIAGNOSE THE BOARD. He is a man reading posts out loud and reacting, not a critic explaining a place to you. BANNED sentence shapes: "it's the board's ...", "it's just ...", "there's no actual ... happening", "everyone is just ...", "the collective ...", "it's all very ...", and any sentence that sums up what the board IS or why people are the way they are. React to one specific post at a time. If you want to make a point, quote another post instead.
 
 Every claim he makes must be traceable to a post below. If he cannot source it, he does not say it.
 
-End on the noticing, not on a moral. No lesson, no wrap-up wisdom, no "at the end of the day".
+END on a specific post, or on him not getting it, or on the thing still going. Never on a summary of what it all means. Good endings: "and I really don't get what the issue is here", "that's where it's sitting as of now", "nobody's answered him yet". Bad endings: any sentence that explains the board to the listener.
 
 14 to 20 sentences."""
 
@@ -132,9 +140,39 @@ def main():
     payload = json.dumps([brief(t) for t in threads], ensure_ascii=False)
     raw = call_groq(READ_SYS, "The board right now:\n" + payload, 900, json_mode=True, temp=0.9)
     readings = json.loads(raw).get("readings", [])
+    readings = [r for r in readings if [x for x in (r.get("ids") or []) if x in by_id]][:3]
+
+    # The model reliably under-fills: it asks for 3-4 and hands back 2. Top any
+    # short reading up from the threads it left unplaced, letting it choose the fit.
+    placed = {x for r in readings for x in (r.get("ids") or [])}
+    for r in readings:
+        ids = [x for x in (r.get("ids") or []) if x in by_id]
+        if len(ids) >= 3:
+            r["ids"] = ids[:4]
+            continue
+        spare = [t for t in threads if t.get("no") not in placed]
+        if not spare:
+            r["ids"] = ids
+            continue
+        want = 3 - len(ids)
+        ask = ("The reading: " + str(r.get("noticed")) +
+               "\nThreads already in it:\n" + json.dumps([brief(by_id[x]) for x in ids], ensure_ascii=False) +
+               "\n\nUnplaced threads:\n" + json.dumps([brief(t) for t in spare], ensure_ascii=False) +
+               "\n\nAdd exactly %d." % want)
+        try:
+            add = json.loads(call_groq(REPAIR_SYS, ask, 200, json_mode=True, temp=0.7)).get("add", [])
+        except Exception as e:
+            print("  repair failed:", e, flush=True)
+            add = []
+        add = [x for x in add if x in by_id and x not in placed][:want]
+        if len(add) < want:   # model declined or hallucinated ids; take the biggest spares
+            add += [t["no"] for t in spare if t["no"] not in add and t["no"] not in placed][:want - len(add)]
+        r["ids"] = ids + add
+        placed.update(r["ids"])
+
     for r in readings:
         print("  NOTICED: %s" % r.get("noticed"))
-        print("    ids: %s  angle: %s\n" % (r.get("ids"), r.get("angle")), flush=True)
+        print("    ids: %s  reaction: %s\n" % (r.get("ids"), r.get("reaction")), flush=True)
 
     print("--- PASS 2: writing host talk ---\n", flush=True)
     out = []
@@ -145,7 +183,7 @@ def main():
             continue
         mat = [brief(by_id[x], n_replies=10, op_chars=600, rep_chars=220) for x in ids]
         user = ("What you noticed when you opened the board: " + str(r.get("noticed")) +
-                "\nYour angle on it: " + str(r.get("angle")) +
+                "\nHow you feel about it, in your own words: " + str(r.get("reaction")) +
                 "\n\nThe threads, with real posts to quote:\n" +
                 json.dumps(mat, ensure_ascii=False))
         text = call_groq(WORLD + "\n\n" + HOST_FMT, user, 1200, temp=0.9).strip()
@@ -167,7 +205,7 @@ def main():
         for r, ids, body, ns, words in out:
             f.write("=" * 78 + "\n")
             f.write("threads %s\n" % ", ".join("#" + str(x) for x in ids))
-            f.write("noticed: %s\nangle: %s\n" % (r.get("noticed"), r.get("angle")))
+            f.write("noticed: %s\nreaction: %s\n" % (r.get("noticed"), r.get("reaction")))
             f.write("%d sentences, %d words, ~%.0fs\n\n%s\n\n" % (ns, words, words / 2.4, body))
     print("written to hosttalk_test_output.txt")
 
