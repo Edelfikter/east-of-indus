@@ -44,6 +44,38 @@ BUDGET = TPM * SAFETY
 OUT_BUDGET = int(OTPM * SAFETY)
 WINDOW = 60.0
 MAX_ATTEMPTS = 5
+# A retry-after longer than this is not a wait, it is an outage. Groq's daily
+# window hands back 1,000+ second cooldowns, and sleeping one off inside a
+# 30-minute CI job guarantees the job is cancelled with nothing published.
+# 10 Sep 2026: five consecutive radio blocks died exactly this way (429 ->
+# "retrying in 1009.0s" -> cancelled at 30m), so the 06:33 IST block stayed on
+# air saying "good morning" until the evening.
+MAX_RETRY_WAIT = float(os.getenv("GROQ_MAX_RETRY_WAIT", "120"))
+
+class BudgetExceeded(RuntimeError):
+    """Raised instead of sleeping past the caller's deadline, so the caller can
+    degrade (publish a shorter block) rather than be killed mid-sleep."""
+
+
+_deadline = None  # absolute unix time after which no call may sleep
+
+
+def set_deadline(ts: Optional[float]) -> None:
+    """Cap how long calls may block. None disables the cap."""
+    global _deadline
+    _deadline = ts
+
+
+def _budget_left() -> Optional[float]:
+    return None if _deadline is None else _deadline - time.time()
+
+
+def _check_budget(wait: float, what: str) -> None:
+    left = _budget_left()
+    if left is not None and wait >= left:
+        raise BudgetExceeded(
+            f"{what} wants {wait:.0f}s, only {left:.0f}s of generation budget left")
+
 
 _lock = threading.Lock()
 _window: list = []  # (timestamp, tokens_used)
@@ -96,6 +128,7 @@ def _wait_for_room(cost: int, out_cost: int = 0) -> None:
                 return
             oldest = min(w[0][0] for w in (_window, _out_window) if w)
         sleep = max(0.5, oldest + WINDOW - time.time() + 0.25)
+        _check_budget(sleep, "throttle")
         print(f"  [groq] throttle: {used} tok / {out} out-tok used in last 60s, "
               f"next call ~{cost} ({out_cost} out), waiting {sleep:.1f}s", flush=True)
         time.sleep(sleep)
@@ -150,6 +183,13 @@ def chat(client, **kwargs):
                 cost = _estimate(kwargs)
                 print(f"  [groq] output cap hit, dropping max_tokens to {kwargs['max_tokens']}", flush=True)
             wait = _retry_after(exc) or delay
+            if wait > MAX_RETRY_WAIT:
+                # Waiting this out and retrying just burns the remaining attempts
+                # against a window that has not moved. Surface it instead.
+                raise BudgetExceeded(
+                    f"Groq asked for a {wait:.0f}s cooldown (cap {MAX_RETRY_WAIT:.0f}s); "
+                    f"abandoning this call so the rest of the block can still go out") from exc
+            _check_budget(wait, f"429 backoff on attempt {attempt + 1}")
             print(f"  [groq] 429 on attempt {attempt + 1}/{MAX_ATTEMPTS}, "
                   f"retrying in {wait:.1f}s", flush=True)
             time.sleep(wait)

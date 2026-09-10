@@ -25,6 +25,7 @@ REPO = ROOT.parent                               # eoi/
 load_dotenv(REPO / ".env")
 sys.path.insert(0, str(REPO))                    # so `import simplechan` resolves
 import simplechan
+import groq_limits
 
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -47,6 +48,46 @@ PLAYLISTS = ["PL8F6B0753B2CCA128", "PLJqaCrWsnLdDBWSIF6UVSCRkohB4KZTC0", "PL8XkU
 PRONOUNCE = [("Indiachan", "India Chan")]
 FFMPEG = shutil.which("ffmpeg") or r"C:\ffmpeg-8.0-essentials_build\bin\ffmpeg.exe"
 FFPROBE = shutil.which("ffprobe") or r"C:\ffmpeg-8.0-essentials_build\bin\ffprobe.exe"
+
+
+# ----------------------------------------------------------------- idents
+IDENT_MAX_CHARS = 300
+# One ident per line is what the prompt asks for. When the model ignores that and
+# returns the whole batch as a single paragraph, splitlines() hands back one
+# enormous "ident": 10 Sep 2026 shipped id_11.mp3, 153 seconds and 36 cues, twelve
+# idents welded together, cycling "Good morning / Welcome back to Inch Radio /
+# You're tuned into the New Lhasa station" over and over between songs.
+_OPENER = r"(?:You\s?['’]?re listening to|You\s?['’]?re tuned into|Welcome back to|Good (?:morning|afternoon|evening))"
+_SPLIT_AT_OPENER = re.compile(r"(?<=[.!?])\s+(?=" + _OPENER + ")")
+_SENTENCE = re.compile(r"(?<=[.!?])\s+")
+
+
+def _split_idents(raw):
+    """Lines -> idents, re-splitting any run-on batch and dropping what will not fit.
+
+    Splits only at an opener that follows a sentence end, so "Good morning, you're
+    tuned into Inch Radio." stays one ident rather than two fragments.
+    """
+    out = []
+    for line in raw.splitlines():
+        line = re.sub(r"^[\s\-•\d.)]+", "", line).strip()
+        if not line:
+            continue
+        parts = _SPLIT_AT_OPENER.split(line) if len(line) > IDENT_MAX_CHARS else [line]
+        for part in parts:
+            part = part.strip()
+            if not part:
+                continue
+            if len(part) > IDENT_MAX_CHARS:
+                # Still oversized (no openers to cut on): keep the opening two
+                # sentences, which is what an ident is supposed to be anyway.
+                sents = _SENTENCE.split(part)
+                part = " ".join(sents[:2]).strip()
+                if len(part) > IDENT_MAX_CHARS:
+                    print(f"  drop oversized ident ({len(part)} chars)", flush=True)
+                    continue
+            out.append(part)
+    return out
 
 
 # ----------------------------------------------------------------- groq
@@ -345,7 +386,11 @@ def generate():
     host_pool = [t for t in threads if t.get("no") not in used]
     by_id = {t.get("no"): t for t in threads}
     print("read_board over %d spare threads" % len(host_pool), flush=True)
-    readings = read_board(host_pool, 2)
+    try:
+        readings = read_board(host_pool, 2)
+    except Exception as e:
+        print(f"  SKIP read_board: {type(e).__name__}: {e}", flush=True)
+        readings = []
     for r in readings:
         print("  noticed:", r.get("noticed"), r.get("ids"), flush=True)
         used.update(r.get("ids") or [])
@@ -369,8 +414,15 @@ def generate():
     segs = []
 
     def add(label, fmt_key, payload):
+        # A segment that cannot be generated is skipped, never fatal. A block that
+        # is short a weather break still goes on air; a block that raises leaves
+        # the previous one playing for hours (see 10 Sep 2026).
         print("gen", label)
-        segs.append({"label": label, "sentences": gen(fmt_key, payload)})
+        try:
+            segs.append({"label": label, "sentences": gen(fmt_key, payload)})
+        except Exception as e:
+            print(f"  SKIP {label}: {type(e).__name__}: {e}", flush=True)
+            return
         time.sleep(SLEEP)
 
     add("SIGN-ON", "sign_on", "Coming on air.")
@@ -380,9 +432,12 @@ def generate():
         add(f"HOST TALK 1 ({ids2(readings[0])})", "host_talk", hpl(readings[0]))
     if talk_sel:
         print("gen TALK HOUR (two voices)")
-        tt = gen_turns(pl(talk_sel))
-        segs.append({"label": f"TALK HOUR ({ids(talk_sel)})", "turns": tt, "sentences": [t["text"] for t in tt]})
-        time.sleep(SLEEP)
+        try:
+            tt = gen_turns(pl(talk_sel))
+            segs.append({"label": f"TALK HOUR ({ids(talk_sel)})", "turns": tt, "sentences": [t["text"] for t in tt]})
+            time.sleep(SLEEP)
+        except Exception as e:
+            print(f"  SKIP TALK HOUR: {type(e).__name__}: {e}", flush=True)
     add("WEATHER 1", "weather", json.dumps(wx, ensure_ascii=False))
     if news2:
         add(f"NEWS 2 ({ids(news2)})", "news", pl(news2))
@@ -416,7 +471,7 @@ def generate():
                           for t in half], ensure_ascii=False)
         try:
             raw = call_groq(ident_sys, "The live threads right now (cover as many different ones as you can, naming each real subject):\n" + act + "\n\nWrite about 12 idents, each grounded in a specific thread above. Do not invent topics that aren't there.", 900, json_mode=False)
-            idents += [re.sub(r"^[\s\-•\d.)]+", "", l).strip() for l in raw.splitlines() if l.strip()]
+            idents += _split_idents(raw)
         except Exception as e:
             print("  idents failed", e)
         time.sleep(SLEEP)
@@ -693,14 +748,28 @@ def publish(manifest):
     print("public base:", f"{SUPABASE_URL}/storage/v1/object/public/{BUCKET}/")
 
 
+MIN_SEGMENTS = 3   # below this the block is not worth putting over a working one
+
+
 def main():
     print(f"=== INCH RADIO block · {tod} · {season} ===")
+    # Generation gets a hard budget; render, stitch and upload get the rest of the
+    # job. Anything that would sleep past it raises instead, and the segment is
+    # skipped. The whole point is that a thin block beats yesterday's block.
+    budget = float(os.getenv("GEN_BUDGET_SEC", "900"))
+    groq_limits.set_deadline(time.time() + budget)
+    print(f"generation budget: {budget / 60:.0f} min", flush=True)
     segs, idents, wx = generate()
+    groq_limits.set_deadline(None)          # rendering and upload are not rate limited
     seg_items, ident_items = render_all(segs, idents)
     song_pool = fetch_song_pool(load_playlists())
     print(f"song pool: {len(song_pool)} tracks with durations")
     manifest = build_order(seg_items, ident_items, song_pool)
     print(f"manifest: {len(manifest['items'])} items, {len(seg_items)} segments, {len(ident_items)} idents")
+    if len(seg_items) < MIN_SEGMENTS:
+        print(f"ABORT: only {len(seg_items)} segments rendered (need {MIN_SEGMENTS}). "
+              f"Leaving the previous block on air rather than publishing dead air.", flush=True)
+        sys.exit(1)
     publish(manifest)
     print("DONE")
 
