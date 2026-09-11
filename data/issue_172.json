@@ -1,0 +1,66 @@
+{
+  "issue_no": "No. 172",
+  "date": "11 September 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 100,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 2,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      6,
+      14,
+      3,
+      13,
+      12,
+      8,
+      10,
+      7,
+      9,
+      2,
+      3,
+      2,
+      5,
+      3,
+      1,
+      2
+    ],
+    "hourly_sparkline": "▁▁▁▁▁▁▁▁▄█▂▇▇▅▆▄▅▂▂▂▃▂▁▂",
+    "peak_hour_ist": "17:00 IST",
+    "peak_count": 14,
+    "quiet_hour_ist": "08:00 IST",
+    "rating": "Stale",
+    "total_lifetime_posts": 1243,
+    "computed_at": "2026-09-11T01:31:02.098875+00:00"
+  },
+  "quote_of_day": null,
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A single, dense high pressure system of existential dread sat over the board from dawn until the servers cooled. The front was narrow but heavy, centered entirely on the question of whether Indiachan could survive the specific toxins its posters exhaled daily.\n\nVisibility was low. The air was thick. One anon listed the hazards: caste kanging, religion wars, and Aryan abbo. The list read less like a forecast and more like a list of causes of death.\n\nThere were no squalls of reply, only a stagnant hum. The pressure did not break. It simply waited for someone to open a window and let the poison in, or to close it and suffocate.\n\nThe board remained under the weight of its own atmosphere, trembling under the sheer mass of potential self-destruction.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Anons Debate Whether Indiachan Can Survive Its Own Toxin",
+      "body": "Anons in a general thread argued over whether Indiachan could ever produce a large-scale cultural impact. The consensus quickly turned to the idea that the site's current structure prevents any meaningful creative output.\n\nOne Anon asked how Inch could create impact, noting that the platform does not produce things that reach a mass audience. Another replied that 4chan had created a massive impact, but none of it was for the better.\n\nThe suggestion was made that to have an effect, the site would need to gut ninety-nine percent of its current content, specifically the baiters, casteists, and kangers.\n\nOne poster warned that removing these elements would kill the website entirely, meaning a new site would be required to achieve any positive outcome. A user named iac proposed building a new website focused on young creatives in India, including writers and artists.\n\nThe goal was to promote wholesome spirits and inquisitive minds, distinct from the existing board. Another Anon expressed doubt, stating that the journey to create such a digital space would likely die before reaching success.\n\nThey claimed to have full faith in the anons, but believed the task was too enormous to be fazed by. Ozymandias argued that imageboards do not incentivize users to contribute because they lack a direct association or sense of community.\n\nThey cited that even good imageboards fail to create identity, while niche boards like Sharty are filled with individuals who view other anons as friends for parasocial reasons. Iac responded that discussion-based communities always turn to shit, using Reddit as an example.\n\nThey argued that housing creatives who produce stories and ideas is necessary, comparing discussion to a buffet where eaters eventually shit in the trays. Iac mentioned postponing the second run of a mail club because one Anon was adamant about doxxing threats.\n\nThey expressed a desire to do cool stuff for free but were limited by the toxic radiation of the site. The risk of being doxxed and harassed adds problems to any creative project.\n\nAnother Anon noted that if they did something exceptionally shocking, they might get a news headline, though it would take months to realize. The thread ended with mixed feelings about the feasibility of the new project.\n\nOne Anon stated that the biggest hurdle for Inch being great is Inch itself. Ozymandias said they had faith and that IAC is one of the greatest things the niche has produced.\n\nThey called for more brainstorming anons who could give productive ideas on how and what to do next. The discussion remained focused on the necessity of removing toxicity to allow for genuine creation.",
+      "flow": true,
+      "source_thread_id": 158798
+    }
+  ],
+  "composed_at": "2026-09-11T01:40:35.135448+00:00",
+  "source_raw": "raw_20260911T013109Z.json",
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "mode": "multi-pass"
+}
