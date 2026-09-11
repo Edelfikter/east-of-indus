@@ -698,10 +698,15 @@ def fetch_song_pool(playlists=None):
     return pool
 
 
-# The cron puts a block on air every 3 hours, so a block shorter than that leaves
+# The cron puts a block on air every 6 hours, so a block shorter than that leaves
 # the station to run dry or loop. Music, not speech, is what fills it.
-TARGET_BLOCK_SEC = float(os.getenv("TARGET_BLOCK_SEC", "10800"))
-MAX_SONGS_PER_GAP = int(os.getenv("MAX_SONGS_PER_GAP", "5"))
+#
+# Why 6 and not 3: a block costs a fixed ~15 Groq calls regardless of how long it
+# runs, because the call count follows the segment count and only the song count
+# follows the length. Halving the block frequency and doubling the length is the
+# same airtime for half the daily tokens, which is what was starving the segments.
+TARGET_BLOCK_SEC = float(os.getenv("TARGET_BLOCK_SEC", "21600"))
+MAX_SONGS_PER_GAP = int(os.getenv("MAX_SONGS_PER_GAP", "9"))
 
 
 def build_order(seg_items, ident_items, song_pool, playlists=None):
