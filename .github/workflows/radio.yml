@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     # Generation paces itself against the 8k tokens/min cap (groq_limits.py), so a
     # block takes ~4-5 min instead of ~1, on top of TTS render + ffmpeg stitch.
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
@@ -22,12 +22,25 @@ jobs:
       # Indiachan with 403 if they connect directly.
       IMAGEBOARD_BASE: https://induschan-proxy.asphocal.workers.dev
     steps:
+      # Captured before anything installs, so the script budgets against the job's
+      # real remaining time. 11 Sep 2026: an apt mirror took 24 of the 30 minutes
+      # and generation started with five left, still believing it had fifteen.
+      - name: Set job deadline
+        run: echo "RUN_DEADLINE=$(( $(date +%s) + 40 * 60 ))" >> $GITHUB_ENV
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - name: Install ffmpeg
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+        # Skip entirely when the runner image already has it, and take none of the
+        # recommends (libass, libmysofa, libopenmpt and friends) when it does not.
+        run: |
+          if command -v ffmpeg >/dev/null && command -v ffprobe >/dev/null; then
+            echo "ffmpeg already present: $(ffmpeg -version | head -1)"
+          else
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends ffmpeg
+          fi
       - name: Install deps
         run: pip install -r radio/requirements.txt
       - name: Generate, render, and publish a block

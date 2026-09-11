@@ -815,6 +815,8 @@ def publish(manifest):
 
 
 MIN_SEGMENTS = 3   # below this the block is not worth putting over a working one
+RENDER_RESERVE_SEC = float(os.getenv("RENDER_RESERVE_SEC", "600"))   # TTS + ffmpeg + upload
+MIN_GEN_SEC = float(os.getenv("MIN_GEN_SEC", "240"))                 # not worth starting below this
 
 
 def main():
@@ -822,9 +824,22 @@ def main():
     # Generation gets a hard budget; render, stitch and upload get the rest of the
     # job. Anything that would sleep past it raises instead, and the segment is
     # skipped. The whole point is that a thin block beats yesterday's block.
-    budget = float(os.getenv("GEN_BUDGET_SEC", "900"))
-    groq_limits.set_deadline(time.time() + budget)
-    print(f"generation budget: {budget / 60:.0f} min", flush=True)
+    # RUN_DEADLINE is stamped by the workflow before anything installs, so a slow
+    # apt mirror eats into the budget instead of being invisible to it. Render,
+    # stitch and upload need the reserve after generation stops.
+    deadline = time.time() + float(os.getenv("GEN_BUDGET_SEC", "900"))
+    if os.getenv("RUN_DEADLINE"):
+        try:
+            deadline = min(deadline, float(os.environ["RUN_DEADLINE"]) - RENDER_RESERVE_SEC)
+        except ValueError:
+            pass
+    left = deadline - time.time()
+    if left < MIN_GEN_SEC:
+        print(f"ABORT: {left / 60:.1f} min left for generation, need {MIN_GEN_SEC / 60:.0f}. "
+              f"Setup ate the job. Leaving the previous block on air.", flush=True)
+        sys.exit(1)
+    groq_limits.set_deadline(deadline)
+    print(f"generation budget: {left / 60:.1f} min", flush=True)
     segs, idents, wx = generate()
     groq_limits.set_deadline(None)          # rendering and upload are not rate limited
     seg_items, ident_items = render_all(segs, idents)
