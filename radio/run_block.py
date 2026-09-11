@@ -301,6 +301,29 @@ def read_board(pool, n_readings):
 
 # ----------------------------------------------------------------- generation
 RECENT_FILE = "recent_threads.json"
+IDENTS_FILE = "recent_idents.json"
+MIN_IDENTS = 8          # below this the block loses most of its songs too
+
+
+def load_cached_idents():
+    """Last block's idents, for when Groq will not give us new ones."""
+    try:
+        url = f"{SUPABASE_URL}/storage/v1/object/public/{BUCKET}/{IDENTS_FILE}"
+        with urllib.request.urlopen(url, timeout=15) as r:
+            v = json.loads(r.read().decode("utf-8"))
+            return [x for x in v if isinstance(x, str)] if isinstance(v, list) else []
+    except Exception:
+        return []
+
+
+def save_cached_idents(idents):
+    try:
+        sb("POST", f"{SUPABASE_URL}/storage/v1/object/{BUCKET}/{IDENTS_FILE}",
+           data=json.dumps(idents[:24], ensure_ascii=False).encode("utf-8"),
+           ctype="application/json", upsert=True)
+    except Exception as e:
+        print("save_cached_idents:", e)
+
 
 
 def load_recent():
@@ -475,6 +498,20 @@ def generate():
         except Exception as e:
             print("  idents failed", e)
         time.sleep(SLEEP)
+    # Idents are the cheapest thing in the block and the most load-bearing: each one
+    # drags a song in behind it, so losing them collapses the block length (10 Sep
+    # 2026: 13 idents lost = 13 songs lost = 135 min down to 38). Reuse the last
+    # good set rather than going out thin. They are two-sentence station tags, so
+    # they age far better than the thread segments do.
+    if len(idents) >= MIN_IDENTS:
+        save_cached_idents(idents)
+    else:
+        cached = [c for c in load_cached_idents() if c not in idents]
+        if cached:
+            print(f"  only {len(idents)} fresh idents, topping up with {len(cached)} cached", flush=True)
+            idents += cached
+        else:
+            print(f"  only {len(idents)} idents and no cache to fall back on", flush=True)
     random.shuffle(idents)
     save_recent(list(used), recent_list)                # so the next blocks rotate to different threads
     return segs, idents, wx
@@ -661,7 +698,13 @@ def fetch_song_pool(playlists=None):
     return pool
 
 
-def build_order(seg_items, ident_items, song_pool):
+# The cron puts a block on air every 3 hours, so a block shorter than that leaves
+# the station to run dry or loop. Music, not speech, is what fills it.
+TARGET_BLOCK_SEC = float(os.getenv("TARGET_BLOCK_SEC", "10800"))
+MAX_SONGS_PER_GAP = int(os.getenv("MAX_SONGS_PER_GAP", "5"))
+
+
+def build_order(seg_items, ident_items, song_pool, playlists=None):
     def has(s, kw):
         return kw in s["label"].upper()
     signon = [s for s in seg_items if has(s, "SIGN-ON")]
@@ -672,12 +715,18 @@ def build_order(seg_items, ident_items, song_pool):
     govt = [s for s in seg_items if has(s, "GOVERNMENT")]
     order, idents = [], list(ident_items)
 
+    fallback_pls = playlists or PLAYLISTS      # honour the configured bucket, not just the defaults
+    plan, gap_i = [], [0]                      # songs per gap, filled in once speech is counted
+
     def music():
-        if song_pool:
-            s = song_pool.pop(0)
-            order.append({"type": "song", "videoId": s["videoId"], "duration": s["duration"]})
-        else:
-            order.append({"type": "music", "playlist": random.choice(PLAYLISTS), "songs": 1})
+        n = plan[gap_i[0]] if gap_i[0] < len(plan) else 1
+        gap_i[0] += 1
+        for _ in range(n):
+            if song_pool:
+                s = song_pool.pop(0)
+                order.append({"type": "song", "videoId": s["videoId"], "duration": s["duration"]})
+            else:
+                order.append({"type": "music", "playlist": random.choice(fallback_pls), "songs": 1})
 
     # Uniform chattiness: do NOT front-load the big talk. Spread every big segment
     # evenly across the whole block, woven into the ident stream, then put one song
@@ -701,6 +750,23 @@ def build_order(seg_items, ident_items, song_pool):
         talk_stream.append(idt)
     while bi < nb:                                         # leftover bigs (few-idents case)
         talk_stream.append(bigs[bi]); bi += 1
+
+    # How many songs go in each gap is a function of how much speech we ended up
+    # with. A full block needs one per gap; a block that lost half its segments to
+    # rate limits needs several, or it comes out a third of the length it should be.
+    spoken = sum((it.get("duration") or 0) for it in ([signon[0]] if signon else []) + talk_stream)
+    gaps = len(talk_stream) + (1 if signon else 0)
+    avg_song = (sum(x["duration"] for x in song_pool) / len(song_pool)) if song_pool else 240.0
+    if gaps:
+        need = max(0.0, TARGET_BLOCK_SEC - spoken)
+        # Spread the shortfall across the gaps rather than rounding each one up,
+        # which overshot the target by half an hour on a healthy block.
+        total_songs = int(round(need / avg_song))
+        total_songs = max(gaps, min(total_songs, gaps * MAX_SONGS_PER_GAP))
+        base, extra = divmod(total_songs, gaps)
+        plan[:] = [base + (1 if i < extra else 0) for i in range(gaps)]
+    print(f"  block plan: {spoken / 60:.0f} min spoken over {gaps} gaps, "
+          f"{sum(plan)} songs, target {TARGET_BLOCK_SEC / 60:.0f} min", flush=True)
 
     if signon:
         order.append(signon[0]); music()                  # open the hour, then a song
@@ -762,9 +828,10 @@ def main():
     segs, idents, wx = generate()
     groq_limits.set_deadline(None)          # rendering and upload are not rate limited
     seg_items, ident_items = render_all(segs, idents)
-    song_pool = fetch_song_pool(load_playlists())
+    playlists = load_playlists()
+    song_pool = fetch_song_pool(playlists)
     print(f"song pool: {len(song_pool)} tracks with durations")
-    manifest = build_order(seg_items, ident_items, song_pool)
+    manifest = build_order(seg_items, ident_items, song_pool, playlists)
     print(f"manifest: {len(manifest['items'])} items, {len(seg_items)} segments, {len(ident_items)} idents")
     if len(seg_items) < MIN_SEGMENTS:
         print(f"ABORT: only {len(seg_items)} segments rendered (need {MIN_SEGMENTS}). "
