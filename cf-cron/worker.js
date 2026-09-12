@@ -14,7 +14,7 @@ const SCHEDULES = {
   "7 * * * *":   "pulse.yml",  // hourly pulse: ticker + live metrics
   "30 1 * * *":  "eoi.yml",    // 01:30 UTC = 07:00 IST  morning issue
   "30 12 * * *": "eoi.yml",    // 12:30 UTC = 18:00 IST  evening issue
-  "45 */6 * * *": "radio.yml", // inch radio: fresh block every 6 hours
+  "45 */3 * * *": "radio.yml", // inch radio: fresh block every 3 hours
 };
 
 async function trigger(workflow, token) {

@@ -698,15 +698,11 @@ def fetch_song_pool(playlists=None):
     return pool
 
 
-# The cron puts a block on air every 6 hours, so a block shorter than that leaves
-# the station to run dry or loop. Music, not speech, is what fills it.
-#
-# Why 6 and not 3: a block costs a fixed ~15 Groq calls regardless of how long it
-# runs, because the call count follows the segment count and only the song count
-# follows the length. Halving the block frequency and doubling the length is the
-# same airtime for half the daily tokens, which is what was starving the segments.
-TARGET_BLOCK_SEC = float(os.getenv("TARGET_BLOCK_SEC", "21600"))
-MAX_SONGS_PER_GAP = int(os.getenv("MAX_SONGS_PER_GAP", "9"))
+# ONE SONG PER GAP. Do not pad the block out to a target length by stacking songs.
+# Tried it on 11 Sep to stop short blocks and it produced a jukebox: 95% music,
+# 5% speech, 26 minutes of unbroken music at the worst point, against 15% speech
+# and a one-song gap before. Block length is allowed to be whatever the amount of
+# talk makes it. Density is the thing worth protecting, not duration.
 
 
 def build_order(seg_items, ident_items, song_pool, playlists=None):
@@ -721,17 +717,13 @@ def build_order(seg_items, ident_items, song_pool, playlists=None):
     order, idents = [], list(ident_items)
 
     fallback_pls = playlists or PLAYLISTS      # honour the configured bucket, not just the defaults
-    plan, gap_i = [], [0]                      # songs per gap, filled in once speech is counted
 
     def music():
-        n = plan[gap_i[0]] if gap_i[0] < len(plan) else 1
-        gap_i[0] += 1
-        for _ in range(n):
-            if song_pool:
-                s = song_pool.pop(0)
-                order.append({"type": "song", "videoId": s["videoId"], "duration": s["duration"]})
-            else:
-                order.append({"type": "music", "playlist": random.choice(fallback_pls), "songs": 1})
+        if song_pool:
+            s = song_pool.pop(0)
+            order.append({"type": "song", "videoId": s["videoId"], "duration": s["duration"]})
+        else:
+            order.append({"type": "music", "playlist": random.choice(fallback_pls), "songs": 1})
 
     # Uniform chattiness: do NOT front-load the big talk. Spread every big segment
     # evenly across the whole block, woven into the ident stream, then put one song
@@ -756,22 +748,9 @@ def build_order(seg_items, ident_items, song_pool, playlists=None):
     while bi < nb:                                         # leftover bigs (few-idents case)
         talk_stream.append(bigs[bi]); bi += 1
 
-    # How many songs go in each gap is a function of how much speech we ended up
-    # with. A full block needs one per gap; a block that lost half its segments to
-    # rate limits needs several, or it comes out a third of the length it should be.
     spoken = sum((it.get("duration") or 0) for it in ([signon[0]] if signon else []) + talk_stream)
     gaps = len(talk_stream) + (1 if signon else 0)
-    avg_song = (sum(x["duration"] for x in song_pool) / len(song_pool)) if song_pool else 240.0
-    if gaps:
-        need = max(0.0, TARGET_BLOCK_SEC - spoken)
-        # Spread the shortfall across the gaps rather than rounding each one up,
-        # which overshot the target by half an hour on a healthy block.
-        total_songs = int(round(need / avg_song))
-        total_songs = max(gaps, min(total_songs, gaps * MAX_SONGS_PER_GAP))
-        base, extra = divmod(total_songs, gaps)
-        plan[:] = [base + (1 if i < extra else 0) for i in range(gaps)]
-    print(f"  block plan: {spoken / 60:.0f} min spoken over {gaps} gaps, "
-          f"{sum(plan)} songs, target {TARGET_BLOCK_SEC / 60:.0f} min", flush=True)
+    print(f"  block plan: {spoken / 60:.0f} min spoken over {gaps} gaps, one song each", flush=True)
 
     if signon:
         order.append(signon[0]); music()                  # open the hour, then a song
