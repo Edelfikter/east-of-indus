@@ -690,13 +690,19 @@ def fetch_song_pool(playlists=None):
                     if not st.get("embeddable") or st.get("privacyStatus") != "public":
                         continue   # only songs that can actually play in an embed
                     du = iso_dur(it.get("contentDetails", {}).get("duration"))
-                    if 30 < du < 900:
+                    # Upper bound is a talk-density setting, not a music one. At 900 a
+                    # single 12-minute track sat between two talk items and the station
+                    # went quiet for twelve minutes.
+                    if 30 < du < SONG_MAX_SEC:
                         pool.append({"videoId": it["id"], "duration": du})
         except Exception as e:
             print("yt pool fetch failed for", pid, e)
     random.shuffle(pool)
     return pool
 
+
+SONG_MAX_SEC = float(os.getenv("SONG_MAX_SEC", "330"))   # longest track allowed in the pool
+TALK_ITEMS_MIN = int(os.getenv("TALK_ITEMS_MIN", "30"))  # idents cycle up to this many talk slots
 
 # ONE SONG PER GAP. Do not pad the block out to a target length by stacking songs.
 # Tried it on 11 Sep to stop short blocks and it produced a jukebox: 95% music,
@@ -738,6 +744,15 @@ def build_order(seg_items, ident_items, song_pool, playlists=None):
         tagged.sort(key=lambda t: t[0])
         return [it for _, it in tagged]
     bigs = spread([news, hosts, talk, weather, govt])    # varied lineup; sign-on opens separately
+
+    # Real stations repeat their idents all day. Ours used each one once and then
+    # ran out, so the back half of a block had long unbroken music. Cycling them
+    # costs nothing: same generated text, same rendered mp3, played again.
+    if idents and len(idents) < TALK_ITEMS_MIN:
+        base = list(idents)
+        while len(idents) < TALK_ITEMS_MIN:
+            idents.append(base[len(idents) % len(base)])
+
     nb, ni = len(bigs), len(idents)
     talk_stream, bi = [], 0
     for k, idt in enumerate(idents):
