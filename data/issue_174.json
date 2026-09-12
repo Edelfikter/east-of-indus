@@ -1,0 +1,66 @@
+{
+  "issue_no": "No. 174",
+  "date": "12 September 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 100,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 1,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      4,
+      5,
+      6,
+      8,
+      8,
+      9,
+      8,
+      9,
+      6,
+      6,
+      13,
+      7,
+      3,
+      1,
+      3,
+      3,
+      1
+    ],
+    "hourly_sparkline": "▁▁▁▁▁▁▁▃▃▄▅▅▅▅▅▄▄█▄▂▁▂▂▁",
+    "peak_hour_ist": "01:00 IST",
+    "peak_count": 13,
+    "quiet_hour_ist": "08:00 IST",
+    "rating": "Rotting",
+    "total_lifetime_posts": 1438,
+    "computed_at": "2026-09-12T01:30:30.273234+00:00"
+  },
+  "quote_of_day": null,
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Observations",
+      "title": "Weather on the board today",
+      "body": "A low pressure system of external bait settled over the board in the morning, carrying the distinct scent of Reddit.\n\nThe system was dry but persistent, generating a fine drizzle of cynical replies as Anon parsed the incoming signal. No heavy rain fell, only a steady mist of skepticism that reduced visibility on the local front.\n\nThe atmospheric conditions remained static through the afternoon, with no significant fronts moving in to displace the foreign influence.",
+      "flow": false,
+      "source_thread_id": null
+    },
+    {
+      "section": "Leading",
+      "title": "Bait from the Reddit trench",
+      "body": "Anon asked what everyone was thinking about a post from the r/IndianWomen subreddit. The question was open-ended, but the replies were not.\n\nOne respondent immediately pivoted to the Lindsay Clancy case, claiming that women as a whole are destructive to society if given enough power. This anon argued that Iran and Afghanistan use this logic as a failsafe against the strongest army in the world.\n\nThe same poster suggested India offers leniency to feminists as a form of bait. Another anon countered that India has its own problems with gender and misogyny but is obviously better off than Afghanistan or Iran right now.\n\nThis respondent noted that grouping India with those nations was a valid tactic because no one actually cares about the comparison. The thread quickly devolved into a meta-commentary on the source material.\n\nOne poster described Reddit as half-baked musings that are often just bait disguised as questions. Another anon admitted stumbling upon the post because the title was unskippable, knowing full well that most posts in that subreddit are designed to provoke.\n\nThe original ask stands as a simple inquiry, but the answers were layered with defensive posturing and generalizations about national character. A cluster of replies focused on demographic theories and conspiracy.\n\nOne anon claimed feminism is a tool to decline the total fertility rate of paganist countries and their enemies.\n\nThis theory was supported by another poster who argued that egalitarianism is fundamentally unnatural and breaks a nation's social fabric, making societies susceptible to Jewish control.\n\nA third contributor added that while the debate rages, an orthodox Jewish man is already engaging in sexual activity and giving birth to his tenth child.\n\nThe thread became a space for anti-Semetic and anti-Pakistani slurs, with one user calling the respondents subhumans and another accusing a poster of being a \"paki\" spreading lies. Legal and political structures were also targeted.\n\nOne poster asserted that India has a problem with misandry and matriarchy codified in laws, calling it an unnatural power structure. Another agreed, stating that women need to be kept out of politics and the military for everything to be fine.\n\nA respondent countered that giving women power in a weak country like India is self-destruction. The insults grew more personal and profane, with one user telling another to go home and masturbate to their mother.\n\nThe thread ended with a user stating they needed to quit the website, while others continued to trade insults about Jewish mind control and fertility rates.\n\nThe initial question about thoughts remained unanswered in any substantive way, buried under layers of xenophobia and misogyny.",
+      "flow": true,
+      "source_thread_id": 160202
+    }
+  ],
+  "composed_at": "2026-09-12T01:38:00.787822+00:00",
+  "source_raw": "raw_20260912T013036Z.json",
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "mode": "multi-pass"
+}
