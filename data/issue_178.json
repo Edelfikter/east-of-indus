@@ -1,0 +1,66 @@
+{
+  "issue_no": "No. 178",
+  "date": "14 September 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 100,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 4,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      14,
+      22,
+      8,
+      18,
+      14,
+      9,
+      4,
+      5,
+      0,
+      0,
+      2,
+      4
+    ],
+    "hourly_sparkline": "▁▁▁▁▁▁▁▁▁▁▁▁▅█▃▆▅▃▂▂▁▁▁▂",
+    "peak_hour_ist": "21:00 IST",
+    "peak_count": 22,
+    "quiet_hour_ist": "08:00 IST",
+    "rating": "Brisk",
+    "total_lifetime_posts": 1066,
+    "computed_at": "2026-09-14T01:30:55.433834+00:00"
+  },
+  "quote_of_day": null,
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Leading",
+      "title": "Manipal, Tulu Nadu, and the Economics of Hate",
+      "body": "Anon called Manipal university students \"librandu retards\" and urged locals in Udupi to beat them up. The poster framed the university as a hub of degeneracy and suggested that nearby residents should take physical action against the student body.\n\nOne respondent argued that locals could not act because money matters. They claimed the city was full of upper-middle-class individuals who cared more about commerce than community standards.\n\nThis same anon noted that Manipal also has a campus in Rajasthan, situated in the middle of a traditional village, where they claimed the same social dynamics persisted. Another reply pointed out that Tulu Nadu residents often work cleaning jobs for wealthy Gulf sheikhs.\n\nThis anon questioned why these individuals did not beat up the students every day, noting that a bus ticket from Udupi to the university costs only ten rupees. The discussion turned to the reliability of local interaction.\n\nOne poster advised newcomers not to trust Kannada or Tulu locals, describing them as greedy who would not spare even their own kin. When asked for context, another user clarified they were talking about shopkeepers, hotel owners, and service workers rather than students.\n\nA separate thread of replies focused on the region's reputation. One anon stated that Manipal was in Tulu Nadu, which they considered the most based region of South India, and described the college as a liberal institution in a traditional Hindutva city.\n\nViolence became a specific topic of debate. One user claimed that the only lynching cases involving Muslim clerics in the south occurred in Tulu Nadu. A different respondent suggested that such violence should target rich upper-class Muslims rather than poor Pasmandas.\n\nThe OP’s original stance remained consistent, with one later reply saying they would change colleges next year because they did not care what the students did. Another user dismissed the local culture by comparing the university to a woman dancing on a sheikh’s cock.\n\nPractical advice emerged as a counterpoint to the rage. One poster suggested registering for the JEE exam if the current situation was unacceptable, while another claimed Noida was not that bad.\n\nOne user reported having a good personal experience with the locals, though another immediately asked for the context of that claim.\n\nThe thread ended with a user asking why they would remain in such an environment, to which a respondent replied with a vulgar phrase about sex and marijuana.",
+      "flow": true,
+      "source_thread_id": 163526
+    },
+    {
+      "section": "Notices",
+      "title": "Bhagigram Anon Tracks Down Sick Teacher",
+      "body": "An anons reported finding a college teacher in Bhagigram diagnosed with stage 4 cancer. The poster stated the man was a heavy smoker and expressed hope that he was already dead.\n\nRespondents added details, noting the teacher had posted about bone marrow donation earlier in the year. One user claimed smoking rarely kills directly, while another insisted the link between smoking and cancer was a myth.\n\nThe thread concluded with users wishing the teacher further harm and asking how many women he had been with.",
+      "flow": false,
+      "source_thread_id": 164044
+    }
+  ],
+  "composed_at": "2026-09-14T01:43:17.555657+00:00",
+  "source_raw": "raw_20260914T013101Z.json",
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "mode": "multi-pass"
+}
