@@ -1,0 +1,66 @@
+{
+  "issue_no": "No. 180",
+  "date": "15 September 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 100,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 2,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      14,
+      27,
+      5,
+      17,
+      17,
+      9,
+      4,
+      2,
+      0,
+      3,
+      2
+    ],
+    "hourly_sparkline": "▁▁▁▁▁▁▁▁▁▁▁▁▁▄█▂▅▅▃▂▁▁▁▁",
+    "peak_hour_ist": "22:00 IST",
+    "peak_count": 27,
+    "quiet_hour_ist": "08:00 IST",
+    "rating": "Stale",
+    "total_lifetime_posts": 1043,
+    "computed_at": "2026-09-15T01:31:08.164834+00:00"
+  },
+  "quote_of_day": null,
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Leading",
+      "title": "The Traditionalist's Dilemma and the BDL Cure",
+      "body": "Anon inquired how a man can maintain traditional values in a world he described as degenerate, where sane traditionalists are isolated, punished by the government, and targeted by social media.\n\nThe questioner clarified his definition of tradition, specifying that he wanted a future wife to wear a ghunghat, be forbidden from leaving the house without his permission, and be denied a phone.\n\nHe argued that such conditions were feasible a decade ago but are now impossible because even women in villages have gained access to social media, which he claimed is used by \"pongis\" to brainwash them with feminism.\n\nRespondents immediately attacked the premise of the request. One Anon replied by demanding the questioner's mother for \"BDL treatment,\" claiming this would demonstrate true tradition.\n\nThis responder predicted that the traditionalist would become a pervert, taking creepshots of girls and posting them while labeling himself as traditional. Another poster dismissed the reference to BDL as a cope, asserting that only BBC was real.\n\nThe thread devolved into regional and racial categorization. One Anon noted that the person receiving the harsh reply was Aryan, not an abbo or Dravidian.\n\nThis comment was met with a reply referencing the \"power of BDL,\" describing an act of pulling an entire vehicle with BDL.\n\nThe exchange highlighted a divide within the board's traditionalist factions, where claims of purity were checked against specific ethnic or regional identities. The final entries in the thread were brief and cryptic.\n\nTwo posters simply replied with the words \"yaar Shin\" and \"raju,\" respectively. These names did not connect to any previous context in the thread.\n\nThe discussion on maintaining traditional domestic control thus ended without resolution, leaving the original query about isolation and government punishment unanswered by any constructive policy or philosophical counter-argument.",
+      "flow": true,
+      "source_thread_id": 166457
+    },
+    {
+      "section": "Notices",
+      "title": "Anon Lists Physical Affection Signals",
+      "body": "Anon filed a notice claiming that young women physically rub against men they like, though the behavior reportedly stops after college age.\n\nThe poster listed specific acts, including a woman rubbing her bare thigh against his on a sofa and pressing her chest onto his shoulder under the pretext of getting closer. He asked for confirmation from other users on the board.\n\nReplies confirmed the behavior as common mammalian instinct. One anon noted that biting and physical contact are standard ways to mark territory. Another added that women may become brash or slightly hostile as a defense mechanism if they are interested.\n\nA respondent argued that being smart and well-spoken boosts social value even for men who do not fit the traditional ideal.\n\nHowever, another user countered that proximity is the only factor that matters, noting that randirakshaks would lynch outspoken men in public spaces. One anon admitted that despite a girl groping his thigh in a school canteen, he remains an incel.",
+      "flow": false,
+      "source_thread_id": 166285
+    }
+  ],
+  "composed_at": "2026-09-15T01:39:40.661496+00:00",
+  "source_raw": "raw_20260915T013114Z.json",
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "mode": "multi-pass"
+}
