@@ -1,0 +1,66 @@
+{
+  "issue_no": "No. 182",
+  "date": "16 September 2026",
+  "metrics": {
+    "threads_in_catalog": 100,
+    "threads_active_24h": 100,
+    "threads_active_7d": 100,
+    "bumps_last_hour": 0,
+    "hourly_buckets_24h": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      11,
+      11,
+      21,
+      15,
+      8,
+      10,
+      11,
+      6,
+      2,
+      2,
+      3,
+      0
+    ],
+    "hourly_sparkline": "▁▁▁▁▁▁▁▁▁▁▁▁▄▄█▆▃▄▄▃▁▁▂▁",
+    "peak_hour_ist": "22:00 IST",
+    "peak_count": 21,
+    "quiet_hour_ist": "08:00 IST",
+    "rating": "Dead",
+    "total_lifetime_posts": 1011,
+    "computed_at": "2026-09-16T01:30:57.571140+00:00"
+  },
+  "quote_of_day": null,
+  "guest_letters": [],
+  "articles": [
+    {
+      "section": "Leading",
+      "title": "Brahmin Ballistics and the Myth of the Intellectual Soldier",
+      "body": "Anon posted two Wikipedia links, one for Audie Murphy and one for Mike Vining, without a caption. The board immediately interpreted the juxtaposition as a hierarchy of lethality and racial competence.\n\nOne respondent claimed that many top killers are \"pongas,\" listing Daya Nayak, Pradeep Sharma, and Rajesh Kumar Pandey as evidence of a specialized caste of encounter specialists.\n\nA separate anon argued that planned killing, such as military action, requires significant psychological fortitude, distinguishing it from the low impulse control and \"bigger chimpout\" associated with lower IQ individuals.\n\nAnother poster rejected the common Indian trope that military service is a low-IQ field requiring only muscle, asserting that modern war is the most complex human activity possible.\n\nThey claimed a serious officer has read more history and books than any STEM graduate or arts student. This view was countered by a reply stating that low IQ is no longer compensatable by mass in modern warfare, which relies on tactics and coordination.\n\nThe discussion of specific individuals turned factual and then devolved.\n\nOne anon noted that Shri Prakash Shukla, a major Bihar gangster, was killed by Rajesh Pandey, an IPS officer identified as a \"Baman.\" Another claimed the attackers of Ankit Balyan were Bhumihar shooters from Bihar.\n\nA respondent corrected this, stating the attackers were Marathi Brahmins who had smuggled AK-47s and night gear from Afghanistan via Nepal, despite wearing gamcha and baniyan.\n\nAnother anon agreed on the attire but dismissed the gear, claiming Balyan was drunk and killed by paid assassins.\n\nThe thread also touched on the killing of Bharat Tiwari, with one poster arguing it was designed to avoid intercaste feud, a claim another anon disputed by noting a different \"ponga\" led that specific killing. The thread also generated unrelated racial generalizations.\n\nOne anon stated that whites are natural predators of other races and that they would wipe out \"niggers\" in days if they chose to. Another claimed 70% of poor people survive on USAID and German charity.\n\nA respondent noted that German Aryans performed the most complex genocide in history while fighting a war on three fronts.\n\nOne poster suggested that in \"lundia,\" anarchy is preferable to dictatorship, citing Lalu Prasad Yadav as an example of what happens when government power increases.\n\nThe thread concluded with a request for a \"Tor anon\" to write a blog, noting that the takes were generic enough to appeal to the masses.",
+      "flow": true,
+      "source_thread_id": 168902
+    },
+    {
+      "section": "Notices",
+      "title": "Hindi Inspection of Simplicity",
+      "body": "Anon posted a short Hindi phrase on the board this afternoon. The text read, \"Yeh tu simp nikla,\" which translates roughly to \"You turned out to be a simp.\" No other users responded to the post. The thread remained silent after the initial message, leaving the accusation of simping as the sole recorded activity for that entry.",
+      "flow": false,
+      "source_thread_id": 168313
+    }
+  ],
+  "composed_at": "2026-09-16T01:38:44.881983+00:00",
+  "source_raw": "raw_20260916T013103Z.json",
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "mode": "multi-pass"
+}
